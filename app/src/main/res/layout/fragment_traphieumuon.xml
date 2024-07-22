@@ -2,7 +2,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.home.BookBackFragment" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,6 +13,7 @@
 
         <!-- Tiêu đề -->
         <TextView
+            android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Trả Phiếu Mượn Sách"
@@ -21,6 +24,7 @@
 
         <!-- Mã phiếu mượn -->
         <TextView
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mã Phiếu Mượn"
@@ -36,26 +40,29 @@
             android:background="@drawable/edit_text_background"
             android:inputType="text" />
 
-        <!-- Mã sách -->
+        <!-- Số lượng trả -->
         <TextView
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mã Sách"
+            android:text="Số lượng sách trả"
             android:textSize="16sp"
             android:textStyle="bold"
             android:padding="10dp"
             android:layout_marginTop="16dp" />
 
         <EditText
-            android:id="@+id/etBookCode"
+            android:textColor="@color/black"
+            android:id="@+id/etQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nhập mã sách"
+            android:hint="Nhập số lượng"
             android:background="@drawable/edit_text_background"
             android:inputType="text" />
 
         <!-- Ngày trả -->
         <TextView
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ngày Trả"
@@ -65,6 +72,7 @@
             android:layout_marginTop="16dp" />
 
         <EditText
+            android:textColor="@color/black"
             android:id="@+id/etReturnDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,6 +82,7 @@
 
         <!-- Tình trạng sách -->
         <TextView
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tình Trạng Sách"
@@ -104,6 +113,7 @@
 
         <!-- Ghi chú -->
         <TextView
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ghi Chú"
@@ -123,6 +133,7 @@
 
         <!-- Nút hoàn tất -->
         <Button
+            android:fontFamily="@font/poppins_bold"
             android:id="@+id/btnCompleteReturn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

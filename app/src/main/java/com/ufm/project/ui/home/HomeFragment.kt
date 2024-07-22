@@ -49,8 +49,8 @@ class HomeFragment : Fragment() {
         parent = binding.idLLsearch
 
         // Xóa và populate lại cơ sở dữ liệu
-        context?.deleteDatabase(DatabaseHelper.DATABASE_NAME)
-        populateDatabase()
+//        context?.deleteDatabase(DatabaseHelper.DATABASE_NAME)
+//        populateDatabase()
 
         // Đặt background cho view
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.activity_home, parent, false)
@@ -65,13 +65,14 @@ class HomeFragment : Fragment() {
                 return@setOnClickListener
             } else {
                 loadingPB.visibility = View.VISIBLE
-                getBooksData(searchEdt.text.toString())
+                getBooksData2(searchEdt.text.toString())
                 loadingPB.visibility = View.GONE
+                Toast.makeText(context,"Search", Toast.LENGTH_SHORT).show()
             }
         }
 
         // Load dữ liệu mặc định
-        getBooksData2("Sample")
+        getBooksData2("")
     }
 
     private fun getBooksData(searchQuery: String) {

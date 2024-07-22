@@ -17,9 +17,16 @@
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
 
+
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.ufm.project.ui.home.ProfileFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/nav_trasach"
+        android:name="com.ufm.project.ui.home.BookBackFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_traphieumuon" />
 </navigation>
