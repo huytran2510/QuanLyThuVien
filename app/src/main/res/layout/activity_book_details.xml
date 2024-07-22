@@ -30,6 +30,7 @@
 
                 <!--Text view for displaying book publisher-->
                 <TextView
+                    android:fontFamily="@font/poppins_regular"
                     android:id="@+id/idTVpublisher"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -41,22 +42,24 @@
                 <!--text view for displaying number of pages of book-->
                 <TextView
                     android:id="@+id/idTVNoOfPages"
+                    android:fontFamily="@font/poppins_regular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:padding="4dp"
-                    android:text="Number of Pages"
+                    android:text="Còn "
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <!--text view for displaying book publish date-->
                 <TextView
                     android:id="@+id/idTVPublishDate"
+                    android:fontFamily="@font/poppins_regular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:padding="4dp"
-                    android:text="Publish Date"
+                    android:text="Ngày xuất bản"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
@@ -71,6 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:padding="4dp"
+            android:fontFamily="@font/poppins_regular"
             android:text="title"
             android:textColor="@color/black"
             android:textSize="15sp" />
@@ -84,6 +88,7 @@
             android:padding="4dp"
             android:text="subtitle"
             android:textColor="@color/black"
+            android:fontFamily="@font/poppins_regular"
             android:textSize="12sp" />
 
         <!--text view for displaying book description-->
@@ -92,6 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:fontFamily="@font/poppins_regular"
             android:padding="4dp"
             android:text="description"
             android:textColor="@color/black"
@@ -106,22 +112,24 @@
 
             <!--button for displaying book preview-->
             <Button
+                android:fontFamily="@font/poppins_bold"
                 android:id="@+id/idBtnPreview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:text="Preview"
+                android:text="Quay lại"
                 android:textAllCaps="false" />
 
             <!--button for opening buying page of the book-->
             <Button
+                android:fontFamily="@font/poppins_bold"
                 android:id="@+id/idBtnBuy"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:text="Buy"
+                android:text="Mượn sách"
                 android:textAllCaps="false" />
 
         </LinearLayout>
