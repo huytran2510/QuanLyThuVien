@@ -40,7 +40,7 @@ class AdminActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_admin)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+                R.id.nav_admin
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

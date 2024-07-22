@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MainActivity">
-
+    tools:context=".ui.home.ProfileFragment">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="test"
+            android:text="Profile"
             android:textStyle="bold"
             android:textSize="30sp"
             android:fontFamily="@font/poppins_bold"
@@ -52,9 +51,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="test"
+                        android:id="@+id/edtName"
                         android:textAlignment="center"
                         android:textSize="20sp"
-                        android:fontFamily="@font/poppins_regular"
+                        android:fontFamily="@font/poppins_bold"
                         android:textColor="@color/black"
                         android:textStyle="bold"/>
 
@@ -73,46 +73,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:cardCornerRadius="10dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="15dp">
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:text="test"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textSize="15sp"
-                        android:layout_alignParentStart="true"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:textColor="@color/black"
-                        android:text="test"
-                        android:fontFamily="@fon"
-                        android:textSize="15sp"
-                        android:layout_alignParentStart="true" />
-                </RelativeLayout>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -135,8 +96,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="test"
-                        android:fontFamily="@font/poppins_regular"
+                        android:text="Thông tin người dùng"
+                        android:fontFamily="@font/poppins_bold"
                         android:textSize="15sp"
                         android:layout_alignParentStart="true"
                         android:textStyle="bold"/>
@@ -152,7 +113,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="username"
+                        android:text="Tài khoản"
                         android:fontFamily="@font/poppins_regular"
                         android:textSize="15sp"
                         android:layout_alignParentStart="true"
@@ -162,6 +123,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#6E6C6C"
                         android:text="test"
+                        android:id="@+id/edtUsername"
                         android:fontFamily="@font/poppins_regular"
                         android:textSize="15sp"
                         android:layout_alignParentEnd="true"
@@ -178,7 +140,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="gender"
+                        android:text="Giới tính"
                         android:fontFamily="@font/poppins_regular"
                         android:textSize="15sp"
                         android:layout_alignParentStart="true"
@@ -188,11 +150,14 @@
                         android:layout_height="wrap_content"
                         android:textColor="#6E6C6C"
                         android:text="male"
+                        android:id="@+id/edtGender"
                         android:fontFamily="@font/poppins_regular"
                         android:textSize="15sp"
                         android:layout_alignParentEnd="true"
                         android:textStyle="bold"/>
                 </RelativeLayout>
+
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -204,33 +169,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="age"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textSize="15sp"
-                        android:layout_alignParentStart="true"
-                        android:textStyle="bold"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#6E6C6C"
-                        android:text="Test"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textSize="15sp"
-                        android:layout_alignParentEnd="true"
-                        android:textStyle="bold"/>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:text="date of birth"
+                        android:text="Ngày sinh"
                         android:fontFamily="@font/poppins_regular"
                         android:textSize="15sp"
                         android:layout_alignParentStart="true"
@@ -240,6 +179,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#6E6C6C"
                         android:text="test"
+                        android:id="@+id/edtDob"
                         android:fontFamily="@font/poppins_regular"
                         android:textSize="15sp"
                         android:layout_alignParentEnd="true"
@@ -256,7 +196,34 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="mobile"
+                        android:text="Địa chỉ"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textSize="15sp"
+                        android:layout_alignParentStart="true"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#6E6C6C"
+                        android:text="test"
+                        android:id="@+id/edtAddress"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textSize="15sp"
+                        android:layout_alignParentEnd="true"
+                        android:textStyle="bold"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="Số điện thoại"
                         android:fontFamily="@font/poppins_regular"
                         android:textSize="15sp"
                         android:layout_alignParentStart="true"
@@ -266,6 +233,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#6E6C6C"
                         android:text="090909909"
+                        android:id="@+id/edtPhone"
                         android:fontFamily="@font/poppins_regular"
                         android:textSize="15sp"
                         android:layout_alignParentEnd="true"
@@ -282,7 +250,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="email"
+                        android:text="Email"
                         android:fontFamily="@font/poppins_regular"
                         android:textSize="15sp"
                         android:layout_alignParentStart="true"
@@ -291,6 +259,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#6E6C6C"
+                        android:id="@+id/edtEmail"
                         android:text="axxxxxxa_gmail_com"
                         android:fontFamily="@font/poppins_regular"
                         android:textSize="15sp"

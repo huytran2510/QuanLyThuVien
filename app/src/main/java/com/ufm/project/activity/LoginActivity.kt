@@ -13,11 +13,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.ufm.project.MainActivity
 import com.ufm.project.R
+import com.ufm.project.dao.AccountDao
 import com.ufm.project.database.DatabaseHelper
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var db : SQLiteDatabase
     private lateinit var dbHelper : DatabaseHelper
+    private lateinit var accountDao: AccountDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,14 +29,30 @@ class LoginActivity : AppCompatActivity() {
         Toast.makeText(this,"Tạo database thành công", Toast.LENGTH_SHORT).show()
         val username : EditText = findViewById(R.id.usernameEditText)
         val password : EditText = findViewById(R.id.passwordEditText)
+        accountDao = AccountDao()
         findViewById<ImageButton>(R.id.loginButton).setOnClickListener {
+            db = dbHelper.readableDatabase
             val usernameValue = username.text.toString()
             val passwordValue = password.text.toString()
-            if(usernameValue.equals("test") && passwordValue.equals("test")) {
-                val intent = Intent(this, AdminActivity::class.java)
+            val userId = accountDao.checkUser(usernameValue, passwordValue, db)
+            if (userId != null) {
+                // Lưu trạng thái đăng nhập và mã tài khoản vào SharedPreferences
+                val sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+                with(sharedPreferences.edit()) {
+                    putBoolean("isLoggedIn", true)
+                    putInt("userId", userId)
+                    apply()
+                }
+
+                // Chuyển đến Activity mới
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
+                Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Sai mật khẩu hoặc tài khoản", Toast.LENGTH_SHORT).show()
             }
+            db.close()
         }
 
         val tvRegister = findViewById<TextView>(R.id.tvRegister)
@@ -43,4 +61,5 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
 }

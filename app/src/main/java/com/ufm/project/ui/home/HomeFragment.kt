@@ -71,7 +71,7 @@ class HomeFragment : Fragment() {
         }
 
         // Load dữ liệu mặc định
-        getBooksData("Sample")
+        getBooksData2("Sample")
     }
 
     private fun getBooksData(searchQuery: String) {
@@ -131,6 +131,75 @@ class HomeFragment : Fragment() {
                     thumbnail,
                     previewLink,
                     infoLink,
+                    ""
+                )
+                booksList.add(bookInfo)
+            }
+        }
+        cursor.close()
+
+        val adapter = BookRVAdapter(booksList, requireContext())
+        val layoutManager = GridLayoutManager(requireContext(), 3)
+        val mRecyclerView = binding.idRVBooks
+        mRecyclerView.layoutManager = layoutManager
+
+        mRecyclerView.adapter = adapter
+    }
+    private fun getBooksData2(searchQuery: String) {
+        booksList = ArrayList()
+        val dbHelper = DatabaseHelper(requireContext())
+        val db = dbHelper.readableDatabase
+
+        val projection = arrayOf(
+            DatabaseHelper.COLUMN_BOOK_MASACH,
+            DatabaseHelper.COLUMN_BOOK_TENSACH,
+            DatabaseHelper.COLUMN_BOOK_PHUDE,
+            DatabaseHelper.COLUMN_BOOK_MOTA,
+            DatabaseHelper.COLUMN_BOOK_TACGIA,
+            DatabaseHelper.COLUMN_BOOK_NXB,
+            DatabaseHelper.COLUMN_BOOK_NGAYNHAP,
+            DatabaseHelper.COLUMN_BOOK_SOLUONG,
+            DatabaseHelper.COLUMN_BOOK_ANH
+        )
+
+        val selection = "${DatabaseHelper.COLUMN_BOOK_TENSACH} LIKE ?"
+        val selectionArgs = arrayOf("%$searchQuery%")
+
+        val cursor = db.query(
+            DatabaseHelper.TABLE_BOOK_NAME,
+            projection,
+            selection,
+            selectionArgs,
+            null,
+            null,
+            null
+        )
+
+        with(cursor) {
+            while (moveToNext()) {
+                val masach = getString(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_MASACH))
+                val tensach = getString(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_TENSACH))
+                val phude = getString(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_PHUDE))
+                val mota = getString(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_MOTA))
+                val tacgia = getString(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_TACGIA))
+                val nxb = getString(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_NXB))
+                val ngaynhap = getString(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_NGAYNHAP))
+                val soluong = getInt(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_SOLUONG))
+                val anh = getString(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_ANH))
+
+                val authorsArrayList = ArrayList(tacgia.split(", "))
+
+                val bookInfo = BookRVModal(
+                    tensach,
+                    phude,
+                    authorsArrayList,
+                    nxb,
+                    ngaynhap,
+                    mota,
+                    soluong,
+                    anh,
+                    "", // You might want to adapt this to the correct value or remove it
+                    "", // You might want to adapt this to the correct value or remove it
                     ""
                 )
                 booksList.add(bookInfo)
