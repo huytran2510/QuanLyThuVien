@@ -1,0 +1,133 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Tiêu đề -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Trả Phiếu Mượn Sách"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:paddingBottom="16dp" />
+
+        <!-- Mã phiếu mượn -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mã Phiếu Mượn"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/etBorrowingSlipCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập mã phiếu mượn"
+            android:background="@drawable/edit_text_background"
+            android:inputType="text" />
+
+        <!-- Mã sách -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mã Sách"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/etBookCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập mã sách"
+            android:background="@drawable/edit_text_background"
+            android:inputType="text" />
+
+        <!-- Ngày trả -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ngày Trả"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/etReturnDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập ngày trả (dd/MM/yyyy)"
+            android:background="@drawable/edit_text_background"
+            android:inputType="date" />
+
+        <!-- Tình trạng sách -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tình Trạng Sách"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:layout_marginTop="16dp" />
+
+        <RadioGroup
+            android:id="@+id/rgBookCondition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbGoodCondition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tốt" />
+
+            <RadioButton
+                android:id="@+id/rbDamagedCondition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hư hỏng" />
+
+        </RadioGroup>
+
+        <!-- Ghi chú -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ghi Chú"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/etNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập ghi chú nếu có"
+            android:background="@drawable/edit_text_background"
+            android:inputType="textMultiLine"
+            android:minLines="3" />
+
+        <!-- Nút hoàn tất -->
+        <Button
+            android:id="@+id/btnCompleteReturn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hoàn Tất"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp" />
+    </LinearLayout>
+</ScrollView>
