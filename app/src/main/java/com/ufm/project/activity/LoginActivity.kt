@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 // Chuyển đến Activity mới
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, AdminActivity::class.java)
                 startActivity(intent)
                 finish()
                 Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()

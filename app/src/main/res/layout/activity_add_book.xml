@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp">
 
     <EditText
-        android:id="@+id/productNameEditText"
+        android:id="@+id/etBookTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Product Name"
-        android:inputType="text" />
+        android:hint="Title"/>
 
     <EditText
-        android:id="@+id/productDescriptionEditText"
+        android:id="@+id/etBookAuthor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Product Description"
-        android:inputType="text" />
+        android:hint="Author"
+        android:layout_below="@id/etBookTitle"
+        android:layout_marginTop="16dp"/>
 
-    <EditText
-        android:id="@+id/productPriceEditText"
+    <Spinner
+        android:id="@+id/spinnerLoai"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Product Price"
-        android:inputType="numberDecimal" />
+        android:layout_below="@id/etBookAuthor"
+        android:layout_marginTop="16dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerNCC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerLoai"
+        android:layout_marginTop="16dp"/>
 
     <Button
-        android:id="@+id/addProductButton"
-        android:layout_width="match_parent"
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Product" />
-
-</LinearLayout>
+        android:text="Save"
+        android:layout_below="@id/spinnerNCC"
+        android:layout_marginTop="16dp"/>
+</RelativeLayout>
