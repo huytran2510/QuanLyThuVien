@@ -22,6 +22,8 @@ class BookBackFragment : Fragment() {
     private lateinit var etNotes: EditText
     private lateinit var btnCompleteReturn: Button
     private lateinit var databaseHelper: DatabaseHelper
+    private var borrowBookId: String? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +38,12 @@ class BookBackFragment : Fragment() {
         rgBookCondition = view.findViewById(R.id.rgBookCondition)
         etNotes = view.findViewById(R.id.etNotes)
         btnCompleteReturn = view.findViewById(R.id.btnCompleteReturn)
+
+        borrowBookId = arguments?.getString("borrowBookId")
+        if (borrowBookId != null) {
+            etBorrowingSlipCode.setText(borrowBookId.toString())
+        }
+
 
         databaseHelper = DatabaseHelper(requireContext())
 
@@ -124,6 +132,7 @@ class BookBackFragment : Fragment() {
         cursor.close()
         return borrowedQuantity
     }
+
     private fun getBorrowedBooks(borrowingSlipCode: String): List<String> {
         val db = databaseHelper.readableDatabase
         val query = "SELECT ${DatabaseHelper.COLUMN_CTPM_MASACH} FROM ${DatabaseHelper.TABLE_CTPM_NAME} WHERE ${DatabaseHelper.COLUMN_CTPM_MAPM} = (SELECT ${DatabaseHelper.COLUMN_CTPM_MAPM} FROM ${DatabaseHelper.TABLE_PT_NAME} WHERE ${DatabaseHelper.COLUMN_CTPM_MAPM} = ?)"

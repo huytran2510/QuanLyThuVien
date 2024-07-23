@@ -12,10 +12,12 @@ import com.ufm.project.R
 
 data class Book(val title: String, val author: String)
 
-class BookAdapter(private val context: Context, private val books: List<Book>) : ArrayAdapter<Book>(context, 0, books) {
+class BookAdapter(private val context: Context, private val books: List<Book>) :
+    ArrayAdapter<Book>(context, 0, books) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.item_book, parent, false)
+        val view =
+            convertView ?: LayoutInflater.from(context).inflate(R.layout.item_book, parent, false)
 
         val book = getItem(position)
 

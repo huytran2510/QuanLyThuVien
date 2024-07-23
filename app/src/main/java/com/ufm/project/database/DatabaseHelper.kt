@@ -10,7 +10,7 @@ class DatabaseHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     companion object {
         const val DATABASE_NAME = "library.db"
-        const val DATABASE_VERSION = 4
+        const val DATABASE_VERSION = 5
         const val TABLE_NAME = "Book"
         const val COLUMN_TITLE = "title"
         const val COLUMN_SUBTITLE = "subtitle"
@@ -268,6 +268,7 @@ class DatabaseHelper(context: Context) :
                 " ('Truyện cổ Grimm', 'Những câu chuyện cổ tích kinh điển', 'Tập hợp những câu chuyện cổ tích kinh điển của anh em Grimm', 'Anh em Grimm', 'NXB Văn Học', '2023-06-06', 10, 'https://cdn0.fahasa.com/media/catalog/product/8/9/8935236425872.jpg', 6, 5);"
         db?.execSQL(insertTableBook)
         val insertPM = "INSERT INTO $TABLE_PM_NAME (\n" +
+                "    $COLUMN_PM_ID,\n" +
                 "    $COLUMN_PM_NGAYMUON,\n" +
                 "    $COLUMN_PM_NGAYTRA,\n" +
                 "    $COLUMN_PM_MAKH,\n" +
@@ -275,13 +276,13 @@ class DatabaseHelper(context: Context) :
                 "    $COLUMN_PM_SOLUONG,\n" +
                 "    $COLUMN_PM_GHICHU\n" +
                 ") VALUES \n" +
-                "('2024-07-01','2024-07-15',1,1,3,'First borrow' ) ," +
-                "('2024-07-05','2024-07-20',2,2,2,'Second borrow' );"
+                "('PM20240701','2024-07-01','2024-07-15',1,1,3,'First borrow' ) ," +
+                "('PM20240705','2024-07-05','2024-07-20',2,2,2,'Second borrow' );"
         val insertCTPM = "INSERT INTO $TABLE_CTPM_NAME (\n" +
                 "    $COLUMN_CTPM_MASACH,\n" +
                 "    $COLUMN_CTPM_MAPM\n" +
                 ") VALUES \n" +
-                "(1,2),(3,1);"
+                "(1,'PM20240701'),(3,'PM20240705');"
         db?.execSQL(insertPM)
         db?.execSQL(insertCTPM)
     }

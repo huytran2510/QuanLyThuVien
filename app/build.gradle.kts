@@ -7,6 +7,7 @@ android {
     namespace = "com.ufm.project"
     compileSdk = 34
 
+
     defaultConfig {
         applicationId = "com.ufm.project"
         minSdk = 24
@@ -36,6 +37,11 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    packagingOptions {
+        // Exclude các tệp gây xung đột
+        exclude ("META-INF/NOTICE.md")
+        exclude ("META-INF/LICENSE.md")
+    }
 }
 
 dependencies {
@@ -52,8 +58,11 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.volley)
     implementation(libs.androidx.ui.graphics.android)
+    implementation(libs.androidx.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(group = "com.airbnb.android", name = "lottie", version = "6.0.0")
+    implementation ("com.sun.mail:android-mail:1.6.7")
+    implementation ("com.sun.mail:android-activation:1.6.7")
 }

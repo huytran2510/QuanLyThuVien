@@ -20,6 +20,7 @@ import com.ufm.project.MainActivity
 import com.ufm.project.R
 import com.ufm.project.dao.BorrowBookDao
 import com.ufm.project.database.DatabaseHelper
+import com.ufm.project.service.EmailSender
 import com.ufm.project.ui.home.HomeFragment
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -36,6 +37,7 @@ class BookDetailsActivity: AppCompatActivity() {
     lateinit var buyBtn: Button
     lateinit var bookIV: ImageView
     private lateinit var borrowBookDao: BorrowBookDao
+    private lateinit var emailSender: EmailSender
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,6 +89,7 @@ class BookDetailsActivity: AppCompatActivity() {
             finish()
         }
 
+
         buyBtn.setOnClickListener {
             // Inflate the dialog layout
             val dialogView = layoutInflater.inflate(R.layout.dialog_borrow_book, null)
@@ -132,6 +135,7 @@ class BookDetailsActivity: AppCompatActivity() {
                 val ghichu = ghichuEditText.text.toString()
                 borrowBookDao = BorrowBookDao()
                 // Validate the input
+                emailSender = EmailSender(this)
                 if (quantity != null) {
                     // Handle the borrow book logic here
                     // For example, insert the data into the database
@@ -140,7 +144,14 @@ class BookDetailsActivity: AppCompatActivity() {
 
                     borrowBookDao.borrowBook(borrowDate,returnDate,quantity,ghichu, userId, idBook, db)
                     Toast.makeText(this, "Mượn thành công", Toast.LENGTH_SHORT).show()
-                    // Close the dialog
+                    val toEmail = "huy251003@gmail.com" // Thay đổi email người nhận
+                    val subject = "Thông báo mượn sách thành công"
+                    val messageBody = "Bạn đã mượn thành công sách với các thông tin sau:\n" +
+                            "Ngày mượn: $borrowDate\n" +
+                            "Ngày trả: $returnDate\n" +
+                            "Số lượng: $quantity\n" +
+                            "Ghi chú: $ghichu"
+                    emailSender.sendEmail(toEmail, subject, messageBody)                    // Close the dialog
                     alertDialog.dismiss()
                 } else {
                     // Show an error message
@@ -149,6 +160,7 @@ class BookDetailsActivity: AppCompatActivity() {
             }
         }
     }
+
     private fun checkLoginState(): Pair<Boolean, Int> {
         val sharedPreferences =
             this.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)

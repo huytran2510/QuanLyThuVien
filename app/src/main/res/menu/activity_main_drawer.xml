@@ -18,6 +18,11 @@
             android:id="@+id/nav_trasach"
             android:icon="@drawable/logo_back"
             android:title="Trả Sách" />
+
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/baseline_history_24"
+            android:title="Lịch sử mượn sách" />
     </group>
 
     <item

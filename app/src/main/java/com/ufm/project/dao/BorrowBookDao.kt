@@ -22,7 +22,7 @@ class BorrowBookDao {
         }
 
         val contentValuesCTPM = ContentValues().apply {
-            put(DatabaseHelper.COLUMN_PM_ID, borrowId)
+            put(DatabaseHelper.COLUMN_CTPM_MAPM, borrowId)
             put(DatabaseHelper.COLUMN_CTPM_MASACH , idBook)
         }
 
