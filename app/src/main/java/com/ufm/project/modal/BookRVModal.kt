@@ -1,6 +1,7 @@
 package com.ufm.project.modal
 
 data class BookRVModal(
+    var idBook : Int,
     var title: String,
     var subtitle: String,
     var authors: ArrayList<String>,

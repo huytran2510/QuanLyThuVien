@@ -141,7 +141,7 @@ class DatabaseHelper(context: Context) :
                 "$COLUMN_NCC_DIENTHOAI VARCHAR)"
 
         val createTablePM = "CREATE TABLE $TABLE_PM_NAME (" +
-                "$COLUMN_PM_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "$COLUMN_PM_ID VARCHAR PRIMARY KEY ," +
                 "$COLUMN_PM_NGAYMUON DATE," +
                 "$COLUMN_PM_NGAYTRA DATE," +
                 "$COLUMN_PM_MAKH INTEGER," +
@@ -153,7 +153,7 @@ class DatabaseHelper(context: Context) :
 
         val createTableCTPM = "CREATE TABLE $TABLE_CTPM_NAME (" +
                 "$COLUMN_CTPM_MASACH INTEGER," +
-                "$COLUMN_CTPM_MAPM INTEGER," +
+                "$COLUMN_CTPM_MAPM VARCHAR," +
                 "FOREIGN KEY ($COLUMN_CTPM_MASACH) REFERENCES $TABLE_BOOK_NAME($COLUMN_BOOK_MASACH) ON DELETE CASCADE," +
                 "FOREIGN KEY ($COLUMN_CTPM_MAPM) REFERENCES $TABLE_PM_NAME($COLUMN_PM_ID) ON DELETE CASCADE)"
 
@@ -162,17 +162,17 @@ class DatabaseHelper(context: Context) :
                 "$COLUMN_TENLOAI VARCHAR)"
 
         val createTablePT = "CREATE TABLE $TABLE_PT_NAME (" +
-                "$COLUMN_PT_MAPT INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "$COLUMN_PT_MAPT VARCHAR PRIMARY KEY," +
                 "$COLUMN_PT_NGAYTRA DATE," +
                 "$COLUMN_PT_SOLUONGMUON INTEGER," +
                 "$COLUMN_PT_SOLUONGTRA INTEGER," +
                 "$COLUMN_PT_GHICHU VARCHAR," +
-                "$COLUMN_PM_ID INTEGER ," +
+                "$COLUMN_PM_ID VARCHAR ," +
                 "FOREIGN KEY ($COLUMN_PM_ID) REFERENCES $TABLE_PM_NAME($COLUMN_PM_ID) ON DELETE CASCADE )"
 
         val createTableCTPT = "CREATE TABLE $TABLE_CTPT_NAME (" +
                 "$COLUMN_CTPT_MASACH INTEGER," +
-                "$COLUMN_CTPT_MAPT INTEGER," +
+                "$COLUMN_CTPT_MAPT VARCHAR," +
                 "FOREIGN KEY ($COLUMN_CTPT_MASACH) REFERENCES $TABLE_BOOK_NAME($COLUMN_BOOK_MASACH) ON DELETE CASCADE," +
                 "FOREIGN KEY ($COLUMN_CTPT_MAPT) REFERENCES $TABLE_PT_NAME($COLUMN_CTPT_MAPT) ON DELETE CASCADE)"
 

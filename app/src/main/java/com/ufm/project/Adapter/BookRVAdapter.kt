@@ -50,7 +50,7 @@ class BookRVAdapter(
             i.putExtra("previewLink", bookInfo.previewLink)
             i.putExtra("infoLink", bookInfo.infoLink)
             i.putExtra("buyLink", bookInfo.buyLink)
-
+            i.putExtra("idBook", bookInfo.idBook)
             // after passing that data we are
             // starting our new  intent.
             ctx.startActivity(i)

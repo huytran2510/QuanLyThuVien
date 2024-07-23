@@ -75,77 +75,6 @@ class HomeFragment : Fragment() {
         getBooksData2("")
     }
 
-    private fun getBooksData(searchQuery: String) {
-        booksList = ArrayList()
-        val dbHelper = DatabaseHelper(requireContext())
-        val db = dbHelper.readableDatabase
-
-        val projection = arrayOf(
-            DatabaseHelper.COLUMN_TITLE,
-            DatabaseHelper.COLUMN_SUBTITLE,
-            DatabaseHelper.COLUMN_AUTHORS,
-            DatabaseHelper.COLUMN_PUBLISHER,
-            DatabaseHelper.COLUMN_PUBLISHED_DATE,
-            DatabaseHelper.COLUMN_DESCRIPTION,
-            DatabaseHelper.COLUMN_PAGE_COUNT,
-            DatabaseHelper.COLUMN_THUMBNAIL,
-            DatabaseHelper.COLUMN_PREVIEW_LINK,
-            DatabaseHelper.COLUMN_INFO_LINK
-        )
-
-        val selection = "${DatabaseHelper.COLUMN_TITLE} LIKE ?"
-        val selectionArgs = arrayOf("%$searchQuery%")
-
-        val cursor = db.query(
-            DatabaseHelper.TABLE_NAME,
-            projection,
-            selection,
-            selectionArgs,
-            null,
-            null,
-            null
-        )
-
-        with(cursor) {
-            while (moveToNext()) {
-                val title = getString(getColumnIndexOrThrow(DatabaseHelper.COLUMN_TITLE))
-                val subtitle = getString(getColumnIndexOrThrow(DatabaseHelper.COLUMN_SUBTITLE))
-                val authors = getString(getColumnIndexOrThrow(DatabaseHelper.COLUMN_AUTHORS))
-                val publisher = getString(getColumnIndexOrThrow(DatabaseHelper.COLUMN_PUBLISHER))
-                val publishedDate = getString(getColumnIndexOrThrow(DatabaseHelper.COLUMN_PUBLISHED_DATE))
-                val description = getString(getColumnIndexOrThrow(DatabaseHelper.COLUMN_DESCRIPTION))
-                val pageCount = getInt(getColumnIndexOrThrow(DatabaseHelper.COLUMN_PAGE_COUNT))
-                val thumbnail = getString(getColumnIndexOrThrow(DatabaseHelper.COLUMN_THUMBNAIL))
-                val previewLink = getString(getColumnIndexOrThrow(DatabaseHelper.COLUMN_PREVIEW_LINK))
-                val infoLink = getString(getColumnIndexOrThrow(DatabaseHelper.COLUMN_INFO_LINK))
-
-                val authorsArrayList = ArrayList(authors.split(", "))
-
-                val bookInfo = BookRVModal(
-                    title,
-                    subtitle,
-                    authorsArrayList,
-                    publisher,
-                    publishedDate,
-                    description,
-                    pageCount,
-                    thumbnail,
-                    previewLink,
-                    infoLink,
-                    ""
-                )
-                booksList.add(bookInfo)
-            }
-        }
-        cursor.close()
-
-        val adapter = BookRVAdapter(booksList, requireContext())
-        val layoutManager = GridLayoutManager(requireContext(), 3)
-        val mRecyclerView = binding.idRVBooks
-        mRecyclerView.layoutManager = layoutManager
-
-        mRecyclerView.adapter = adapter
-    }
     private fun getBooksData2(searchQuery: String) {
         booksList = ArrayList()
         val dbHelper = DatabaseHelper(requireContext())
@@ -178,7 +107,7 @@ class HomeFragment : Fragment() {
 
         with(cursor) {
             while (moveToNext()) {
-                val masach = getString(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_MASACH))
+                val masach = getInt(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_MASACH))
                 val tensach = getString(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_TENSACH))
                 val phude = getString(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_PHUDE))
                 val mota = getString(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_MOTA))
@@ -191,6 +120,7 @@ class HomeFragment : Fragment() {
                 val authorsArrayList = ArrayList(tacgia.split(", "))
 
                 val bookInfo = BookRVModal(
+                    masach,
                     tensach,
                     phude,
                     authorsArrayList,
@@ -215,27 +145,6 @@ class HomeFragment : Fragment() {
         mRecyclerView.adapter = adapter
     }
 
-    private fun populateDatabase() {
-        val dbHelper = DatabaseHelper(requireContext())
-        val db = dbHelper.writableDatabase
-
-        val values = ContentValues().apply {
-            put(DatabaseHelper.COLUMN_TITLE, "Sample Book Title")
-            put(DatabaseHelper.COLUMN_SUBTITLE, "Sample Book Subtitle")
-            put(DatabaseHelper.COLUMN_AUTHORS, "Author1, Author2")
-            put(DatabaseHelper.COLUMN_PUBLISHER, "Sample Publisher")
-            put(DatabaseHelper.COLUMN_PUBLISHED_DATE, "2024-01-01")
-            put(DatabaseHelper.COLUMN_DESCRIPTION, "Sample Description")
-            put(DatabaseHelper.COLUMN_PAGE_COUNT, 123)
-            put(
-                DatabaseHelper.COLUMN_THUMBNAIL,
-                "https://btacademy.vn/post/56/El8Sw0a2Udacyt3X1pj86BumK.png"
-            )
-            put(DatabaseHelper.COLUMN_PREVIEW_LINK, "https://example.com/preview")
-            put(DatabaseHelper.COLUMN_INFO_LINK, "https://example.com/info")
-        }
-        db.insert(DatabaseHelper.TABLE_NAME, null, values)
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
