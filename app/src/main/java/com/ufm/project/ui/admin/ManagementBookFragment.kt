@@ -37,6 +37,8 @@ class ManagementBookFragment : Fragment() {
         // Initialize adapter
         bookAdapter = BookAdapter(requireContext(), books)
         binding.bookListView.adapter = bookAdapter
+        bookAdapter.updateBooks(books)
+
 
         // Load books from database
         loadBooksFromDatabase()
@@ -63,12 +65,14 @@ class ManagementBookFragment : Fragment() {
 
         books.clear()
         while (cursor.moveToNext()) {
+            val idBook = (cursor.getColumnIndex(DatabaseHelper.COLUMN_BOOK_MASACH))
             val title = (cursor.getColumnIndex(DatabaseHelper.COLUMN_BOOK_TENSACH))
             val author = (cursor.getColumnIndex(DatabaseHelper.COLUMN_BOOK_TACGIA))
             if (title != -1 && author != -1) {
+                val bookId = cursor.getInt(idBook)
                 val bookTitle = cursor.getString(title)
                 val bookAuthor = cursor.getString(author)
-                books.add(Book(bookTitle, bookAuthor))
+                books.add(Book(bookId,bookTitle, bookAuthor))
             }
         }
         cursor.close()

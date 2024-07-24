@@ -31,9 +31,6 @@ class AdminActivity : AppCompatActivity() {
         setSupportActionBar(binding.appBarAdmin.toolbarAdmin)
 
         binding.appBarAdmin.fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null)
-//                .setAnchorView(R.id.fab).show()
             val intent = Intent(this, AddBookActivity::class.java)
             startActivity(intent)
         }
