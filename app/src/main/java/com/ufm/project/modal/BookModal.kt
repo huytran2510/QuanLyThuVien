@@ -21,3 +21,8 @@ data class BookEdit(
     val maloai: Long,
     val nccId: Long
 )
+
+data class CategoryBook(
+    val idCategory: Int,
+    val categoryName : String
+)

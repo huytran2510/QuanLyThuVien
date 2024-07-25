@@ -11,6 +11,10 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_management_book" />
 
-
+    <fragment
+        android:id="@+id/nav_manage_category_book"
+        android:name="com.ufm.project.ui.admin.ManagementCategoryBookFragment"
+        android:label="Thêm sách"
+        tools:layout="@layout/fragement_management_category_book" />
 
 </navigation>

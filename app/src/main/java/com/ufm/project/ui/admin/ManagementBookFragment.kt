@@ -68,11 +68,13 @@ class ManagementBookFragment : Fragment() {
             val idBook = (cursor.getColumnIndex(DatabaseHelper.COLUMN_BOOK_MASACH))
             val title = (cursor.getColumnIndex(DatabaseHelper.COLUMN_BOOK_TENSACH))
             val author = (cursor.getColumnIndex(DatabaseHelper.COLUMN_BOOK_TACGIA))
+            val quantity = (cursor.getColumnIndex(DatabaseHelper.COLUMN_BOOK_SOLUONG))
             if (title != -1 && author != -1) {
                 val bookId = cursor.getInt(idBook)
                 val bookTitle = cursor.getString(title)
                 val bookAuthor = cursor.getString(author)
-                books.add(Book(bookId,bookTitle, bookAuthor))
+                val bookQuantity = cursor.getInt(quantity)
+                books.add(Book(bookId,bookTitle, bookAuthor, bookQuantity))
             }
         }
         cursor.close()

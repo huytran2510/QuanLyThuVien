@@ -7,7 +7,13 @@
     <group android:checkableBehavior="single">
         <item android:id="@+id/nav_admin"
             android:icon="@drawable/logo_book"
-            android:title="Home"/>
+            android:title="Quản lý sách"/>
+
+        <item android:id="@+id/nav_manage_category_book"
+            android:icon="@drawable/logo_book"
+            android:title="Quản lý loại sách"/>
+
+
         <item android:id="@+id/nav_manage_users"
             android:icon="@drawable/logo_reader"
             android:title="Quản lý độc giả" />

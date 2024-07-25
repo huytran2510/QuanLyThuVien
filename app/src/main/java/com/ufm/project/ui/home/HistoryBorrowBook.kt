@@ -96,6 +96,7 @@ class HistoryBorrowBook : Fragment() {
                 )
             }
         }
+
         cursor.close()
         historyAdapter.updateData(historyList)
     }
