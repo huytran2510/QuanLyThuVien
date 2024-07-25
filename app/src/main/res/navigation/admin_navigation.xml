@@ -6,10 +6,16 @@
     app:startDestination="@+id/nav_admin">
 
     <fragment
-        android:id="@+id/nav_admin"
-        android:name="com.ufm.project.ui.admin.ManagementBookFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_management_book" />
+        android:id="@+id/nav_management_borrow_book"
+        android:name="com.ufm.project.ui.admin.ManagementBorrowBookFragment"
+        android:label="@string/menu_management_borrow_book"
+        tools:layout="@layout/fragment_managementborrowbook" />
+
+    <fragment
+        android:id="@+id/nav_management_reader"
+        android:name="com.ufm.project.ui.admin.ManagementReaderFragment"
+        android:label="@string/menu_management_reader"
+        tools:layout="@layout/activity_book_management" />
 
     <fragment
         android:id="@+id/nav_manage_category_book"

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvMaPM"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:padding="3dp"
+            android:singleLine="true"
+            android:text="Mã phiếu"
+            android:textColor="#ff0000"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/tvDocGia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:padding="3dp"
+            android:singleLine="true"
+            android:text="Độc giả"
+            android:textSize="20sp"/>
+        <TextView
+            android:padding="3dp"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:text="Tên sách"
+            android:id="@+id/tvTenSach"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:padding="3dp"
+            android:textColor="#008000"
+            android:textSize="18sp"
+            android:text="Ngày mượn"
+            android:id="@+id/tvNgayMuon"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:padding="3dp"
+            android:textColor="#8b0000"
+            android:textSize="18sp"
+            android:text="Ngày hến hạn"
+            android:id="@+id/tvNgayTra"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:padding="3dp"
+            android:textColor="#2f4f4f"
+            android:textSize="18sp"
+            android:text="Số lượng mượn"
+            android:id="@+id/tvSoLuongMuon"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:layout_width="80dp"
+            android:id="@+id/imgDeleteLS"
+            android:layout_height="85dp"
+            android:layout_weight="10"
+            android:layout_marginTop="-150dp"
+            android:layout_marginLeft="300dp"
+            android:src="@drawable/baseline_mode_edit_outline_24"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

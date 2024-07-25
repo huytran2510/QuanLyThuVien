@@ -34,7 +34,9 @@ class LoginActivity : AppCompatActivity() {
             db = dbHelper.readableDatabase
             val usernameValue = username.text.toString()
             val passwordValue = password.text.toString()
-            val userId = accountDao.checkUser(usernameValue, passwordValue, db)
+//            val userId = accountDao.checkUser(usernameValue, passwordValue, db)
+
+            val (userId, accountType) = accountDao.checkUser(usernameValue, passwordValue, db)
             if (userId != null) {
                 // Lưu trạng thái đăng nhập và mã tài khoản vào SharedPreferences
                 val sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
@@ -45,7 +47,12 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 // Chuyển đến Activity mới
-                val intent = Intent(this, AdminActivity::class.java)
+                val intent = if (accountType == "khachhang") {
+                    Intent(this, MainActivity::class.java)
+                } else {
+                    Intent(this, AdminActivity::class.java) // Replace AnotherActivity with the actual activity for other account types
+                }
+//                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
                 Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()

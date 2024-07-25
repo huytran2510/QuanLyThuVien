@@ -58,7 +58,7 @@ class HistoryBorrowBook : Fragment() {
         val cursor = db.query(
             DatabaseHelper.TABLE_PM_NAME,
             null,
-            "${DatabaseHelper.COLUMN_PM_MAKH} = ?",
+            "${DatabaseHelper.COLUMN_DG_ID} = ?",
             arrayOf(idKh.toString()),
             null,
             null,
@@ -71,7 +71,7 @@ class HistoryBorrowBook : Fragment() {
             val idColumnIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_PM_ID)
             val ngayMuonColumnIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_PM_NGAYMUON)
             val ngayTraColumnIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_PM_NGAYTRA)
-            val maKhachHangColumnIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_PM_MAKH)
+            val maKhachHangColumnIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_DG_ID)
             val maThuColumnIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_PM_MATHU)
             val soLuongColumnIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_PM_SOLUONG)
             val ghiChuColumnIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_PM_GHICHU)

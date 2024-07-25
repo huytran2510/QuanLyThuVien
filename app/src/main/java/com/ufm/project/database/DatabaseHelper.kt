@@ -10,7 +10,7 @@ class DatabaseHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     companion object {
         const val DATABASE_NAME = "library.db"
-        const val DATABASE_VERSION = 5
+        const val DATABASE_VERSION = 6
         const val TABLE_NAME = "Book"
         const val COLUMN_TITLE = "title"
         const val COLUMN_SUBTITLE = "subtitle"
@@ -144,11 +144,11 @@ class DatabaseHelper(context: Context) :
                 "$COLUMN_PM_ID VARCHAR PRIMARY KEY ," +
                 "$COLUMN_PM_NGAYMUON DATE," +
                 "$COLUMN_PM_NGAYTRA DATE," +
-                "$COLUMN_PM_MAKH INTEGER," +
+                "$COLUMN_DG_ID INTEGER," +
                 "$COLUMN_PM_MATHU INTEGER," +
                 "$COLUMN_PM_SOLUONG INTEGER," +
                 "$COLUMN_PM_GHICHU VARCHAR ," +
-                "FOREIGN KEY ($COLUMN_PM_MAKH) REFERENCES $TABLE_DG_NAME($COLUMN_DG_ID) ON DELETE CASCADE ," +
+                "FOREIGN KEY ($COLUMN_DG_ID) REFERENCES $TABLE_DG_NAME($COLUMN_DG_ID) ON DELETE CASCADE ," +
                 "FOREIGN KEY ($COLUMN_PM_MATHU) REFERENCES $TABLE_TT_NAME($COLUMN_TT_ID) ON DELETE CASCADE )"
 
         val createTableCTPM = "CREATE TABLE $TABLE_CTPM_NAME (" +
@@ -271,7 +271,7 @@ class DatabaseHelper(context: Context) :
                 "    $COLUMN_PM_ID,\n" +
                 "    $COLUMN_PM_NGAYMUON,\n" +
                 "    $COLUMN_PM_NGAYTRA,\n" +
-                "    $COLUMN_PM_MAKH,\n" +
+                "    $COLUMN_DG_ID,\n" +
                 "    $COLUMN_PM_MATHU,\n" +
                 "    $COLUMN_PM_SOLUONG,\n" +
                 "    $COLUMN_PM_GHICHU\n" +
