@@ -5,11 +5,13 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_admin"
-            android:icon="@drawable/logo_book"
-            android:title="Home"/>
-        <item android:id="@+id/nav_manage_users"
+        <item android:id="@+id/nav_management_borrow_book"
+            android:icon="@drawable/baseline_library_books_24"
+            android:title="Quản lý phiếu mượn"/>
+
+        <item android:id="@+id/nav_management_reader"
             android:icon="@drawable/logo_reader"
             android:title="Quản lý độc giả" />
+
     </group>
 </menu>

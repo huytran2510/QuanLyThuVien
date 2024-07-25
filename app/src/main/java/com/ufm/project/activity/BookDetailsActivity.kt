@@ -84,9 +84,7 @@ class BookDetailsActivity: AppCompatActivity() {
 
         // adding on click listener for our preview button.
         previewBtn.setOnClickListener {
-            val intent = Intent(this, HomeFragment::class.java)
-            startActivity(intent)
-            finish()
+            onBackPressed()
         }
 
 

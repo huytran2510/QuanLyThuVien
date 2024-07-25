@@ -10,4 +10,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_slideshow">Slideshow</string>
+
+    <string name="menu_management_borrow_book">Quản lý phiếu mượn</string>
+    <string name="menu_management_reader">Quản lý độc giả</string>
 </resources>
