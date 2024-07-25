@@ -65,4 +65,8 @@ dependencies {
     implementation(group = "com.airbnb.android", name = "lottie", version = "6.0.0")
     implementation ("com.sun.mail:android-mail:1.6.7")
     implementation ("com.sun.mail:android-activation:1.6.7")
+    implementation("com.jjoe64:graphview:4.2.2")
+    implementation(libs.mpandroidchart)
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.5.3")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.5.3")
 }

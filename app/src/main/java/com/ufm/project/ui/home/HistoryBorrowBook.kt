@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,12 +34,14 @@ class HistoryBorrowBook : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         // Khởi tạo HistoryAdapter và truyền lambda xử lý sự kiện trả sách
-        historyAdapter = HistoryAdapter(emptyList()) {history ->
-            val fragment = BookBackFragment().apply {
-                arguments = Bundle().apply {
-                    putString("borrowBookId", history.id)  // Truyền mã phiếu vào fragment mới
-                }
+        historyAdapter = HistoryAdapter(emptyList()) { history ->
+            // Trigger navigation with NavController
+            val bundle = Bundle().apply {
+                putString("borrowBookId", history.id)
+                putInt("quantity", history.soLuong)
             }
+            // Trigger navigation with NavController and pass the bundle
+            findNavController().navigate(R.id.action_historyBorrowBookFragment_to_bookBackFragment, bundle)
         }
         recyclerView.adapter = historyAdapter
 

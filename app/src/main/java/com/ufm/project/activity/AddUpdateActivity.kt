@@ -5,7 +5,9 @@ import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ufm.project.R
 import com.ufm.project.database.DatabaseHelper
 import com.ufm.project.modal.CategoryBook
@@ -22,13 +24,11 @@ class AddUpdateActivity : AppCompatActivity() {
         btnSave = findViewById(R.id.btnSave)
 
         etCategoryName = findViewById(R.id.etCategoryName)
-        val bookId = intent.getIntExtra("book_id", -1)
+        val bookId = intent.getIntExtra("category_id", -1)
         if (bookId != -1) {
             findLoaiSachById(bookId)
             btnSave.text = "Cập nhật"
         }
-
-
 
         btnSave.setOnClickListener {
             if (bookId != -1) {
@@ -37,16 +37,28 @@ class AddUpdateActivity : AppCompatActivity() {
                 addLoaiSach(etCategoryName.text.toString())
             }
         }
+
+        val btnBack = findViewById<FloatingActionButton>(R.id.btnBack)
+        btnBack.setOnClickListener {
+            onBackPressed() // Quay lại trang trước đó
+        }
     }
 
 
 
-    fun addLoaiSach(tenLoai: String ): Long {
-        val db = dbHelper.writableDatabase
-        val contentValues = ContentValues().apply {
-            put(DatabaseHelper.COLUMN_TENLOAI, tenLoai)
+    fun addLoaiSach(tenLoai: String ) {
+        try {
+            dbHelper = DatabaseHelper(this)
+            db = dbHelper.writableDatabase
+            val contentValues = ContentValues().apply {
+                put(DatabaseHelper.COLUMN_TENLOAI, tenLoai)
+            }
+            db.insert(DatabaseHelper.TABLE_TL_NAME, null, contentValues)
+            Toast.makeText(this,"Thêm thành công", Toast.LENGTH_LONG).show()
+        } catch (e : Exception) {
+            Toast.makeText(this,"Thêm thành công", Toast.LENGTH_LONG).show()
         }
-        return db.insert(DatabaseHelper.TABLE_TL_NAME, null, contentValues)
+
     }
 
     fun updateLoaiSach(maLoai: Int, tenLoai: String): Int {
@@ -57,29 +69,10 @@ class AddUpdateActivity : AppCompatActivity() {
         return db.update(DatabaseHelper.TABLE_TL_NAME, contentValues, "${DatabaseHelper.COLUMN_MALOAI} = ?", arrayOf(maLoai.toString()))
     }
 
-    fun deleteLoaiSach(maLoai: Int, db: SQLiteDatabase): Int {
-        val db = dbHelper.writableDatabase
-        return db.delete(DatabaseHelper.TABLE_TL_NAME, "${DatabaseHelper.COLUMN_MALOAI} = ?", arrayOf(maLoai.toString()))
-    }
-
-    fun getAllLoaiSach() {
-        loaiSachList = mutableListOf<CategoryBook>()
-        val db = dbHelper.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM ${DatabaseHelper.TABLE_TL_NAME}", null)
-
-        if (cursor.moveToFirst()) {
-            do {
-                val maLoai = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_MALOAI))
-                val tenLoai = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TENLOAI))
-                loaiSachList.add(CategoryBook(maLoai, tenLoai))
-            } while (cursor.moveToNext())
-        }
-
-        cursor.close()
-    }
 
     fun findLoaiSachById(maLoai: Int) {
-        val db = dbHelper.readableDatabase
+        dbHelper = DatabaseHelper(this)
+        db = dbHelper.readableDatabase
         val cursor = db.query(
             DatabaseHelper.TABLE_TL_NAME,
             arrayOf(DatabaseHelper.COLUMN_MALOAI, DatabaseHelper.COLUMN_TENLOAI),
@@ -94,6 +87,7 @@ class AddUpdateActivity : AppCompatActivity() {
             if (cursor.moveToFirst()) {
                 val maLoai = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_MALOAI))
                 val tenLoai = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TENLOAI))
+                etCategoryName.setText(tenLoai)
                 cursor.close()
             }
             cursor.close()

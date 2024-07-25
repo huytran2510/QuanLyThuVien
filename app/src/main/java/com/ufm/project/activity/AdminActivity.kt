@@ -30,18 +30,14 @@ class AdminActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarAdmin.toolbarAdmin)
 
-        binding.appBarAdmin.fab.setOnClickListener { view ->
-            val intent = Intent(this, AddBookActivity::class.java)
-            startActivity(intent)
-        }
+
 
         val drawerLayout: DrawerLayout = binding.drawerLayoutAdmin
         val navView: NavigationView = binding.navViewAdmin
         val navController = findNavController(R.id.nav_host_fragment_content_admin)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_admin,R.id.nav_manage_category_book,
-                R.id.nav_management_borrow_book
+                R.id.nav_admin,R.id.nav_manage_category_book,R.id.nav_management_borrow_book
 //                        R.id.nav_admin
             ), drawerLayout
         )

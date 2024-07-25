@@ -12,4 +12,9 @@ class BookDao (context: Context) {
         val db = dbHelper.writableDatabase
         return db.delete(DatabaseHelper.TABLE_BOOK_NAME, "${DatabaseHelper.COLUMN_BOOK_MASACH} = ?", arrayOf(bookId.toString())) > 0
     }
+
+    fun deleteLoaiSach(maLoai: Int): Int {
+        val db = dbHelper.writableDatabase
+        return db.delete(DatabaseHelper.TABLE_TL_NAME, "${DatabaseHelper.COLUMN_MALOAI} = ?", arrayOf(maLoai.toString()))
+    }
 }

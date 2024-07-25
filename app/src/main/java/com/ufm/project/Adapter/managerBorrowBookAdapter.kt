@@ -33,7 +33,7 @@ class ManagerBorrowBookAdapter(
         if (cursor.moveToPosition(position)) {
             val idBorrow = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PM_ID))
             val nameReader = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DG_NAME))
-            val nameBook = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TITLE))
+            val nameBook = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_TENSACH))
             val dateBorrow = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PM_NGAYMUON))
             val datePay = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PM_NGAYTRA))
             val quantityBorrow = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PM_SOLUONG))

@@ -34,5 +34,9 @@
         android:id="@+id/nav_history"
         android:name="com.ufm.project.ui.home.HistoryBorrowBook"
         android:label="@string/menu_profile"
-        tools:layout="@layout/fragment_borrow_book" />
+        tools:layout="@layout/fragment_borrow_book" >
+        <action
+            android:id="@+id/action_historyBorrowBookFragment_to_bookBackFragment"
+            app:destination="@id/nav_trasach" />
+    </fragment>
 </navigation>

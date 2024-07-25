@@ -2,6 +2,8 @@ package com.ufm.project.ui.home
 
 import android.content.ContentValues
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ufm.project.R
 import com.ufm.project.database.DatabaseHelper
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class BookBackFragment : Fragment() {
     private lateinit var etBorrowingSlipCode: EditText
@@ -23,6 +28,7 @@ class BookBackFragment : Fragment() {
     private lateinit var btnCompleteReturn: Button
     private lateinit var databaseHelper: DatabaseHelper
     private var borrowBookId: String? = null
+    private var quantity: Int? = 0
 
 
     override fun onCreateView(
@@ -40,10 +46,20 @@ class BookBackFragment : Fragment() {
         btnCompleteReturn = view.findViewById(R.id.btnCompleteReturn)
 
         borrowBookId = arguments?.getString("borrowBookId")
+        quantity = arguments?.getInt("quantity")
         if (borrowBookId != null) {
             etBorrowingSlipCode.setText(borrowBookId.toString())
         }
 
+        etQuantity.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                validateQuantity()
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
 
         databaseHelper = DatabaseHelper(requireContext())
 
@@ -52,6 +68,27 @@ class BookBackFragment : Fragment() {
         }
 
         return view
+    }
+
+    private fun validateQuantity() {
+        val quantityString = etQuantity.text.toString().trim()
+
+        val inputQuantity: Int
+        try {
+            inputQuantity = quantityString.toInt()
+        } catch (e: NumberFormatException) {
+            etQuantity.error = "Phải nhập số"
+            return
+        }
+
+        // Validate inputQuantity against the provided quantity
+        if (inputQuantity < 0) {
+            etQuantity.error = "Số không được bé hơn  0"
+        } else if (quantity != null && inputQuantity > quantity!!) {
+            etQuantity.error = "Số không được lớn hơn số lượng mượn = $quantity"
+        } else {
+            etQuantity.error = null // Clear error if valid
+        }
     }
 
     private fun completeReturn() {
@@ -85,8 +122,11 @@ class BookBackFragment : Fragment() {
             return
         }
 
+        val mapt = generateBorrowId()
+
         // Insert into PT (Phiếu Trả)
         val insertPT = ContentValues().apply {
+            put(DatabaseHelper.COLUMN_PT_MAPT,mapt )
             put(DatabaseHelper.COLUMN_PT_NGAYTRA, returnDate)
             put(DatabaseHelper.COLUMN_PT_SOLUONGMUON, borrowedQuantity)
             put(DatabaseHelper.COLUMN_PT_SOLUONGTRA, quantity)
@@ -94,15 +134,15 @@ class BookBackFragment : Fragment() {
             put(DatabaseHelper.COLUMN_PT_GHICHU, notes)
         }
 
-        val ptId = databaseHelper.writableDatabase.insert(DatabaseHelper.TABLE_PT_NAME, null, insertPT)
+        databaseHelper.writableDatabase.insert(DatabaseHelper.TABLE_PT_NAME, null, insertPT)
 
-        if (ptId != -1L) {
+        if (mapt != null) {
             // Insert into CTPT (Chi Tiết Phiếu Trả)
             val borrowedBooks = getBorrowedBooks(borrowingSlipCode)
             borrowedBooks.forEach { bookId ->
                 val insertCTPT = ContentValues().apply {
                     put(DatabaseHelper.COLUMN_CTPT_MASACH, bookId)
-                    put(DatabaseHelper.COLUMN_CTPT_MAPT, ptId)
+                    put(DatabaseHelper.COLUMN_CTPT_MAPT, mapt)
                 }
                 databaseHelper.writableDatabase.insert(DatabaseHelper.TABLE_CTPT_NAME, null, insertCTPT)
             }
@@ -118,7 +158,11 @@ class BookBackFragment : Fragment() {
             Toast.makeText(requireContext(), "Lỗi khi thêm phiếu trả", Toast.LENGTH_SHORT).show()
         }
     }
-
+    fun generateBorrowId(): String {
+        val dateFormat = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault())
+        val currentTime = Date()
+        return "PT" + dateFormat.format(currentTime)
+    }
 
     private fun getBorrowedQuantity(borrowingSlipCode: String): Int {
         val db = databaseHelper.readableDatabase

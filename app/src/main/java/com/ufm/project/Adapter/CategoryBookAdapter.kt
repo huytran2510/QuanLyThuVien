@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.ufm.project.R
 import com.ufm.project.activity.AddBookActivity
+import com.ufm.project.activity.AddUpdateActivity
 import com.ufm.project.dao.BookDao
 import com.ufm.project.modal.CategoryBook
 
@@ -44,7 +45,7 @@ class CategoryBookAdapter(
                 .setTitle("Xóa loại sách")
                 .setMessage("Bạn có chắc chắn muốn xóa loại sách này?")
                 .setPositiveButton("Xóa") { dialog, _ ->
-                    bookDao.deleteBook(book.idCategory)
+                    bookDao.deleteLoaiSach(book.idCategory)
                     books.removeAt(position)  // Xóa sách khỏi danh sách
                     notifyDataSetChanged()  // Cập nhật lại list view
                     Toast.makeText(context, "Loại sách đã được xóa", Toast.LENGTH_LONG).show()
@@ -58,7 +59,7 @@ class CategoryBookAdapter(
 
         editButton.setOnClickListener {
             // Xử lý chỉnh sửa sách
-            val intent = Intent(context, AddBookActivity::class.java).apply {
+            val intent = Intent(context, AddUpdateActivity::class.java).apply {
                 putExtra("category_id", book.idCategory)
             }
             context.startActivity(intent)
