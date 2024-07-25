@@ -33,8 +33,12 @@ class HistoryBorrowBook : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         // Khởi tạo HistoryAdapter và truyền lambda xử lý sự kiện trả sách
-        historyAdapter = HistoryAdapter(emptyList()) {
-
+        historyAdapter = HistoryAdapter(emptyList()) {history ->
+            val fragment = BookBackFragment().apply {
+                arguments = Bundle().apply {
+                    putString("borrowBookId", history.id)  // Truyền mã phiếu vào fragment mới
+                }
+            }
         }
         recyclerView.adapter = historyAdapter
 

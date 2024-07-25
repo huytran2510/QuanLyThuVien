@@ -82,7 +82,6 @@ class BookDetailsActivity: AppCompatActivity() {
         // loading the image using picasso library.
         Picasso.get().load(thumbnail).into(bookIV)
 
-        // adding on click listener for our preview button.
         previewBtn.setOnClickListener {
             onBackPressed()
         }
