@@ -68,7 +68,6 @@ class HistoryBorrowBook : Fragment() {
             null
         )
 
-
         val historyList = mutableListOf<HistoryBorrowBook>()
         while (cursor.moveToNext()) {
             val idColumnIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_PM_ID)
@@ -94,8 +93,40 @@ class HistoryBorrowBook : Fragment() {
                 val soLuong = cursor.getInt(soLuongColumnIndex)
                 val ghiChu = cursor.getString(ghiChuColumnIndex)
 
+                // Kiểm tra phiếu mượn trong bảng phiếu trả
+                val ptCursor = db.query(
+                    DatabaseHelper.TABLE_PT_NAME,
+                    null,
+                    "${DatabaseHelper.COLUMN_PM_ID} = ?",
+                    arrayOf(id),
+                    null,
+                    null,
+                    null
+                )
+
+                var soLuongTra = 0
+                var message = "Chưa trả sách"
+
+                if (ptCursor.moveToFirst()) {
+                    val soLuongMuonColumnIndex = ptCursor.getColumnIndex(DatabaseHelper.COLUMN_PT_SOLUONGMUON)
+                    val soLuongTraColumnIndex = ptCursor.getColumnIndex(DatabaseHelper.COLUMN_PT_SOLUONGTRA)
+
+                    if (soLuongMuonColumnIndex != -1 && soLuongTraColumnIndex != -1) {
+                        val soLuongMuon = ptCursor.getInt(soLuongMuonColumnIndex)
+                        soLuongTra = ptCursor.getInt(soLuongTraColumnIndex)
+
+                        message = if (soLuongTra >= soLuongMuon) {
+                            "Đã trả đủ sách"
+                        } else {
+                            "Đã trả $soLuongTra, còn thiếu ${soLuongMuon - soLuongTra}"
+                        }
+                    }
+                }
+
+                ptCursor.close()
+
                 historyList.add(
-                    HistoryBorrowBook(id, ngayMuon, ngayTra, maKhachHang, maThu, soLuong, ghiChu)
+                    HistoryBorrowBook(id, ngayMuon, ngayTra, maKhachHang, maThu, soLuong, ghiChu  ,message)
                 )
             }
         }
@@ -103,6 +134,7 @@ class HistoryBorrowBook : Fragment() {
         cursor.close()
         historyAdapter.updateData(historyList)
     }
+
 
     private fun checkLoginState(): Pair<Boolean, Int> {
         val sharedPreferences =

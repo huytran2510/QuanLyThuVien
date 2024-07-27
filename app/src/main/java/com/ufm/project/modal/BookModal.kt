@@ -7,7 +7,8 @@ data class HistoryBorrowBook(
     val maKhachHang: Int,
     val maThu: Int,
     val soLuong: Int,
-    val ghiChu: String
+    val ghiChu: String,
+    val tinhtrang : String
 )
 data class BookEdit(
     val idBook: Int,

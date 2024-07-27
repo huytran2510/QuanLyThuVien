@@ -1,5 +1,6 @@
 package com.ufm.project.ui.admin
 
+import android.R
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,18 +18,18 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
-import com.ufm.project.R
 import com.ufm.project.database.DatabaseHelper
 import com.ufm.project.databinding.FragementStatisticsBorrowBookBinding
+import com.ufm.project.databinding.FragementStatisticsReturnBookBinding
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class StatisticsBorrowBookFragment : Fragment() {
+class StatisticsReturnBookFragment : Fragment() {
     private lateinit var barChart: BarChart
     private lateinit var spinnerYear: Spinner
     private lateinit var spinnerMonth: Spinner
-    private var _binding: FragementStatisticsBorrowBookBinding? = null
+    private var _binding: FragementStatisticsReturnBookBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -36,23 +37,18 @@ class StatisticsBorrowBookFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragementStatisticsBorrowBookBinding.inflate(inflater, container, false)
+        _binding = FragementStatisticsReturnBookBinding.inflate(inflater, container, false)
         barChart = binding.barChart
         spinnerYear = binding.spinnerYear
         spinnerMonth = binding.spinnerMonth
         val textViewTodayBorrowing: TextView = binding.textViewTodayBorrowing
         val textViewTotalBorrowing: TextView = binding.textViewTotalBorrowing
-
-        // Populate spinners (example)
-        val months = listOf("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
-        val years = listOf("2022", "2023", "2024")
-
-
+        
         val db = DatabaseHelper(requireContext()).readableDatabase
 
 
-        textViewTodayBorrowing.text = "Số phiếu mượn hôm nay: ${getTodayBorrowingCount(db)}"
-        textViewTotalBorrowing.text = "Tổng số phiếu mượn: ${getTotalBorrowingCount(db)}"
+        textViewTodayBorrowing.text = "Số phiếu trả hôm nay: ${getTodayBorrowingCount(db)}"
+        textViewTotalBorrowing.text = "Tổng số phiếu trả: ${getTotalBorrowingCount(db)}"
 
         return binding.root
     }
@@ -64,8 +60,8 @@ class StatisticsBorrowBookFragment : Fragment() {
 
     private fun getAvailableYears(db: SQLiteDatabase): List<String> {
         val query = """
-            SELECT DISTINCT strftime('%Y', ${DatabaseHelper.COLUMN_PM_NGAYMUON}) as year
-            FROM ${DatabaseHelper.TABLE_PM_NAME}
+            SELECT DISTINCT strftime('%Y', ${DatabaseHelper.COLUMN_PT_NGAYTRA}) as year
+            FROM ${DatabaseHelper.TABLE_PT_NAME}
             ORDER BY year
         """
         val cursor = db.rawQuery(query, null)
@@ -80,9 +76,9 @@ class StatisticsBorrowBookFragment : Fragment() {
 
     private fun getAvailableMonths(db: SQLiteDatabase, year: String): List<String> {
         val query = """
-            SELECT DISTINCT strftime('%m', ${DatabaseHelper.COLUMN_PM_NGAYMUON}) as month
-            FROM ${DatabaseHelper.TABLE_PM_NAME}
-            WHERE strftime('%Y', ${DatabaseHelper.COLUMN_PM_NGAYMUON}) = ?
+            SELECT DISTINCT strftime('%m', ${DatabaseHelper.COLUMN_PT_NGAYTRA}) as month
+            FROM ${DatabaseHelper.TABLE_PT_NAME}
+            WHERE strftime('%Y', ${DatabaseHelper.COLUMN_PT_NGAYTRA}) = ?
             ORDER BY month
         """
         val cursor = db.rawQuery(query, arrayOf(year))
@@ -97,9 +93,9 @@ class StatisticsBorrowBookFragment : Fragment() {
 
     private fun getDailyBookBorrowingStats(db: SQLiteDatabase, year: String, month: String): List<Pair<String, Int>> {
         val query = """
-            SELECT strftime('%d', ${DatabaseHelper.COLUMN_PM_NGAYMUON}) as day, sum(${DatabaseHelper.COLUMN_PM_SOLUONG}) as count
-            FROM ${DatabaseHelper.TABLE_PM_NAME}
-            WHERE strftime('%Y', ${DatabaseHelper.COLUMN_PM_NGAYMUON}) = ? AND strftime('%m', ${DatabaseHelper.COLUMN_PM_NGAYMUON}) = ?
+            SELECT strftime('%d', ${DatabaseHelper.COLUMN_PT_NGAYTRA}) as day, sum(${DatabaseHelper.COLUMN_PT_SOLUONGTRA}) as count
+            FROM ${DatabaseHelper.TABLE_PT_NAME}
+            WHERE strftime('%Y', ${DatabaseHelper.COLUMN_PT_NGAYTRA}) = ? AND strftime('%m', ${DatabaseHelper.COLUMN_PT_NGAYTRA}) = ?
             GROUP BY day
             ORDER BY day
         """
@@ -117,7 +113,7 @@ class StatisticsBorrowBookFragment : Fragment() {
     private fun setupSpinners() {
         val db = DatabaseHelper(requireContext()).readableDatabase
         val years = getAvailableYears(db)
-        val adapterYear = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, years)
+        val adapterYear = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, years)
         adapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerYear.adapter = adapterYear
 
@@ -130,7 +126,7 @@ class StatisticsBorrowBookFragment : Fragment() {
 
             override fun onNothingSelected(parent: AdapterView<*>) {
                 val emptyList: List<String> = listOf()  // Chỉ rõ kiểu dữ liệu là String
-                val adapterMonth = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, emptyList)
+                val adapterMonth = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, emptyList)
                 adapterMonth.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spinnerMonth.adapter = adapterMonth
                 updateBarChart("", "")
@@ -157,14 +153,14 @@ class StatisticsBorrowBookFragment : Fragment() {
     private fun updateMonthSpinner(year: String) {
         val db = DatabaseHelper(requireContext()).readableDatabase
         val months = getAvailableMonths(db, year)
-        val adapterMonth = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, months)
+        val adapterMonth = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, months)
         adapterMonth.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerMonth.adapter = adapterMonth
     }
 
     private fun updateBarChart(year: String, month: String) {
-        val spinnerMonth: Spinner = view?.findViewById(R.id.spinnerMonth)!!
-        val spinnerYear: Spinner = view?.findViewById(R.id.spinnerYear)!!
+        val spinnerMonth: Spinner = view?.findViewById(com.ufm.project.R.id.spinnerMonth)!!
+        val spinnerYear: Spinner = view?.findViewById(com.ufm.project.R.id.spinnerYear)!!
 
         val selectedMonth = spinnerMonth.selectedItem.toString()
         val selectedYear = spinnerYear.selectedItem.toString()
@@ -196,17 +192,17 @@ class StatisticsBorrowBookFragment : Fragment() {
 
     private fun getMonthlyBorrowingCount() {
         val db = DatabaseHelper(requireContext()).readableDatabase
-        val spinnerMonth: Spinner = view?.findViewById(R.id.spinnerMonth)!!
-        val spinnerYear: Spinner = view?.findViewById(R.id.spinnerYear)!!
+        val spinnerMonth: Spinner = view?.findViewById(com.ufm.project.R.id.spinnerMonth)!!
+        val spinnerYear: Spinner = view?.findViewById(com.ufm.project.R.id.spinnerYear)!!
 
         val selectedMonth = spinnerMonth.selectedItem.toString().padStart(2, '0') // Đảm bảo tháng có định dạng hai chữ số
         val selectedYear = spinnerYear.selectedItem.toString()
 
         val query = """
-        SELECT COUNT(${DatabaseHelper.COLUMN_PM_ID}) as count
-        FROM ${DatabaseHelper.TABLE_PM_NAME}
-        WHERE strftime('%Y', ${DatabaseHelper.COLUMN_PM_NGAYMUON}) = ? 
-        AND strftime('%m', ${DatabaseHelper.COLUMN_PM_NGAYMUON}) = ?
+        SELECT COUNT(${DatabaseHelper.COLUMN_PT_MAPT}) as count
+        FROM ${DatabaseHelper.TABLE_PT_NAME}
+        WHERE strftime('%Y', ${DatabaseHelper.COLUMN_PT_NGAYTRA}) = ? 
+        AND strftime('%m', ${DatabaseHelper.COLUMN_PT_NGAYTRA}) = ?
     """
 
         val cursor = db.rawQuery(query, arrayOf(selectedYear, selectedMonth))
@@ -214,16 +210,16 @@ class StatisticsBorrowBookFragment : Fragment() {
         cursor.close()
 
         val textViewBorrowingStats: TextView = binding.textViewBorrowingStats
-        textViewBorrowingStats.text = "Số phiếu mượn tháng ${selectedMonth}-${selectedYear}: $count"
+        textViewBorrowingStats.text = "Số phiếu trả tháng ${selectedMonth}-${selectedYear}: $count"
     }
 
 
     private fun getTodayBorrowingCount(db: SQLiteDatabase): Int {
         val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
         val query = """
-        SELECT COUNT(${DatabaseHelper.COLUMN_PM_ID}) as count
-        FROM ${DatabaseHelper.TABLE_PM_NAME}
-        WHERE DATE(${DatabaseHelper.COLUMN_PM_NGAYMUON}) = ?
+        SELECT COUNT(${DatabaseHelper.COLUMN_PT_MAPT}) as count
+        FROM ${DatabaseHelper.TABLE_PT_NAME}
+        WHERE DATE(${DatabaseHelper.COLUMN_PT_NGAYTRA}) = ?
     """
         val cursor = db.rawQuery(query, arrayOf(today))
         val count = if (cursor.moveToFirst()) cursor.getInt(cursor.getColumnIndexOrThrow("count")) else 0
@@ -234,7 +230,7 @@ class StatisticsBorrowBookFragment : Fragment() {
     private fun getTotalBorrowingCount(db: SQLiteDatabase): Int {
         val query = """
         SELECT COUNT(*) as count
-        FROM ${DatabaseHelper.TABLE_PM_NAME}
+        FROM ${DatabaseHelper.TABLE_PT_NAME}
     """
         val cursor = db.rawQuery(query, null)
         val count = if (cursor.moveToFirst()) cursor.getInt(cursor.getColumnIndexOrThrow("count")) else 0
@@ -242,4 +238,3 @@ class StatisticsBorrowBookFragment : Fragment() {
         return count
     }
 }
-

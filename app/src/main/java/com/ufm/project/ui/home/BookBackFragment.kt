@@ -13,6 +13,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.ufm.project.R
 import com.ufm.project.database.DatabaseHelper
 import java.text.SimpleDateFormat
@@ -65,6 +66,10 @@ class BookBackFragment : Fragment() {
 
         btnCompleteReturn.setOnClickListener {
             completeReturn()
+            if (etQuantity != null && borrowBookId != null) {
+                // Trigger navigation with NavController and pass the bundle
+                findNavController().navigate(R.id.nav_history, savedInstanceState)
+            }
         }
 
         return view

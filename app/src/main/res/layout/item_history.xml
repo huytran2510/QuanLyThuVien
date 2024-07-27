@@ -1,8 +1,11 @@
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:background="@android:color/white">
+    android:padding="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+    android:background="@drawable/rounded_background">
 
     <TableRow
         android:layout_width="match_parent"
@@ -154,9 +157,12 @@
 
     <Button
         android:id="@+id/buttonReturnBook"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:fontFamily="@font/poppins_bold"
+        android:backgroundTint="#5a7ca5"
         android:text="Trả sách" />
 
 
-</TableLayout>
+</LinearLayout>

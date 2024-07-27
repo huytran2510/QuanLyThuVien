@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/nav_admin"
         android:name="com.ufm.project.ui.admin.ManagementBookFragment"
-        android:label="Quản lys sách"
+        android:label="Quản lý sách"
         tools:layout="@layout/fragment_management_book" />
 
     <fragment
@@ -17,11 +17,6 @@
         android:label="@string/menu_management_borrow_book"
         tools:layout="@layout/fragment_managementborrowbook" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/nav_management_reader"-->
-<!--        android:name="com.ufm.project.ui.admin.ManagementReaderFragment"-->
-<!--        android:label="@string/menu_management_reader"-->
-<!--        tools:layout="@layout/fra" />-->
 
     <fragment
         android:id="@+id/nav_manage_category_book"
@@ -32,7 +27,24 @@
     <fragment
         android:id="@+id/nav_statistics_borrow_book"
         android:name="com.ufm.project.ui.admin.StatisticsBorrowBookFragment"
-        android:label="@string/menu_management_reader"
+        android:label="Thống kê phiếu mượn`"
         tools:layout="@layout/fragement_statistics_borrow_book" />
 
+    <fragment
+        android:id="@+id/nav_statistics_return_book"
+        android:name="com.ufm.project.ui.admin.StatisticsReturnBookFragment"
+        android:label="Thống kê phiếu trả"
+        tools:layout="@layout/fragement_statistics_return_book" />
+
+    <fragment
+        android:id="@+id/nav_statistics_of_book_return"
+        android:name="com.ufm.project.ui.admin.StatisticsOfBookReturnFragment"
+        android:label="Thống kê thông tin trả sách"
+        tools:layout="@layout/fragment_statistics_of_book_returns" />
+
+    <fragment
+        android:id="@+id/nav_statistics_top_book"
+        android:name="com.ufm.project.ui.admin.TopBooksFragment"
+        android:label="Top sách được mượn nhiều nhất"
+        tools:layout="@layout/fragment_top_book" />
 </navigation>

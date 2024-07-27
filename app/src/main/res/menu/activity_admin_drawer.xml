@@ -24,6 +24,18 @@
 
         <item android:id="@+id/nav_statistics_borrow_book"
             android:icon="@drawable/logo_reader"
-            android:title="Báo cáo mượn sách" />
+            android:title="Thống kê phiếu mượn sách" />
+
+        <item android:id="@+id/nav_statistics_return_book"
+            android:icon="@drawable/logo_reader"
+            android:title="Thống kê phiếu trả sách" />
+
+        <item android:id="@+id/nav_statistics_of_book_return"
+            android:icon="@drawable/logo_reader"
+            android:title="Thống kê thông tin trả sách trả sách" />
+
+        <item android:id="@+id/nav_statistics_top_book"
+            android:icon="@drawable/logo_reader"
+            android:title="Top sách được mượn nhiều nhất" />
     </group>
 </menu>
