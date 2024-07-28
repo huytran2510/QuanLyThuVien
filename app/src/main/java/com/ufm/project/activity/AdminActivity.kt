@@ -7,10 +7,12 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -35,10 +37,14 @@ class AdminActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = binding.drawerLayoutAdmin
         val navView: NavigationView = binding.navViewAdmin
         val navController = findNavController(R.id.nav_host_fragment_content_admin)
+
         appBarConfiguration = AppBarConfiguration(
             setOf(
-//                R.id.nav_management_borrow_book
-            R.id.nav_admin
+                R.id.nav_admin,
+                R.id.nav_management_borrow_book,
+                R.id.nav_statistics_top_book,
+                R.id.nav_statistics_borrow_book,
+                R.id.nav_statistics_return_book
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -50,7 +56,11 @@ class AdminActivity : AppCompatActivity() {
                     showLogoutConfirmationDialog()
                     true
                 }
-                else -> false
+                else -> {
+                    NavigationUI.onNavDestinationSelected(menuItem, navController)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
             }
         }
 
