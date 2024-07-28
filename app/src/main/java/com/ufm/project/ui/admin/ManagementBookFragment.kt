@@ -1,5 +1,6 @@
 package com.ufm.project.ui.admin
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.ufm.project.Adapter.Book
 import com.ufm.project.Adapter.BookAdapter
+import com.ufm.project.activity.AddBookActivity
 import com.ufm.project.database.DatabaseHelper
 import com.ufm.project.databinding.FragmentManagementBookBinding
 import com.ufm.project.databinding.FragmentSlideshowBinding
@@ -39,6 +41,10 @@ class ManagementBookFragment : Fragment() {
         binding.bookListView.adapter = bookAdapter
         bookAdapter.updateBooks(books)
 
+        binding.fab.setOnClickListener { view ->
+            val intent = Intent(requireContext(), AddBookActivity::class.java)
+            startActivity(intent)
+        }
 
         // Load books from database
         loadBooksFromDatabase()

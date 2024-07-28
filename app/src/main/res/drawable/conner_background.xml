@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/light_pattel"/> <!-- Thay thế bằng màu nền của bạn -->
+    <corners android:radius="20dp"/> <!-- Đặt bán kính bo góc -->
+    <padding android:left="8dp" android:top="8dp" android:right="8dp" android:bottom="8dp"/>
+</shape>

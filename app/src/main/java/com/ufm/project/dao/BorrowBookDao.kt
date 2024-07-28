@@ -32,6 +32,47 @@ class BorrowBookDao {
         db.insert(DatabaseHelper.TABLE_CTPM_NAME , null, contentValuesCTPM)
     }
 
+    fun borrowBookForAdmin(borrowDate : String,returnDate : String,quantity: Int, ghichu : String, madg : Long, matt: Int, idBook : Long, db : SQLiteDatabase) {
+        val borrowId = generateBorrowId()
+        val contentValues = ContentValues().apply {
+            put(DatabaseHelper.COLUMN_PM_ID , borrowId)
+            put(DatabaseHelper.COLUMN_PM_NGAYMUON, borrowDate)
+            put(DatabaseHelper.COLUMN_PM_NGAYTRA, returnDate)
+            put(DatabaseHelper.COLUMN_DG_ID , madg)
+            put(DatabaseHelper.COLUMN_PM_MATHU , matt)
+            put(DatabaseHelper.COLUMN_PM_SOLUONG, quantity)
+            put(DatabaseHelper.COLUMN_PM_GHICHU , ghichu)
+        }
+
+        val contentValuesCTPM = ContentValues().apply {
+            put(DatabaseHelper.COLUMN_CTPM_MAPM, borrowId)
+            put(DatabaseHelper.COLUMN_CTPM_MASACH , idBook)
+        }
+
+        db.insert(DatabaseHelper.TABLE_PM_NAME, null, contentValues)
+        db.insert(DatabaseHelper.TABLE_CTPM_NAME , null, contentValuesCTPM)
+    }
+
+    fun editborrowBook(borrowId: String, borrowDate : String,returnDate : String,quantity: Int, ghichu : String, madg : Long, idBook : Long, db : SQLiteDatabase) {
+        val contentValues = ContentValues().apply {
+            put(DatabaseHelper.COLUMN_PM_NGAYMUON, borrowDate)
+            put(DatabaseHelper.COLUMN_PM_NGAYTRA, returnDate)
+            put(DatabaseHelper.COLUMN_DG_ID , madg)
+            put(DatabaseHelper.COLUMN_PM_SOLUONG, quantity)
+            put(DatabaseHelper.COLUMN_PM_GHICHU , ghichu)
+        }
+
+        val contentValuesCTPM = ContentValues().apply {
+            put(DatabaseHelper.COLUMN_CTPM_MAPM, borrowId)
+            put(DatabaseHelper.COLUMN_CTPM_MASACH , idBook)
+        }
+
+        db.update(DatabaseHelper.TABLE_PM_NAME, contentValues, "${DatabaseHelper.COLUMN_PM_ID} = ?", arrayOf(borrowId))
+        db.update(DatabaseHelper.TABLE_CTPM_NAME, contentValuesCTPM, "${DatabaseHelper.COLUMN_CTPM_MASACH} = ?", arrayOf(idBook.toString()))
+
+    }
+
+
     fun generateBorrowId(): String {
         val dateFormat = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault())
         val currentTime = Date()
@@ -53,15 +94,22 @@ class BorrowBookDao {
         return idKH
     }
 
-    fun getBorrowBook(db: SQLiteDatabase): Cursor? {
+    fun getBorrowBook(valuesSearch: String,db: SQLiteDatabase): Cursor? {
         val query = """
-        SELECT 
+        SELECT DISTINCT
             ${DatabaseHelper.TABLE_PM_NAME}.${DatabaseHelper.COLUMN_PM_ID}, 
             ${DatabaseHelper.TABLE_DG_NAME}.${DatabaseHelper.COLUMN_DG_NAME}, 
+            ${DatabaseHelper.TABLE_DG_NAME}.${DatabaseHelper.COLUMN_DG_ID}, 
             ${DatabaseHelper.TABLE_BOOK_NAME}.${DatabaseHelper.COLUMN_BOOK_TENSACH}, 
+            ${DatabaseHelper.TABLE_BOOK_NAME}.${DatabaseHelper.COLUMN_BOOK_ANH}, 
             ${DatabaseHelper.TABLE_PM_NAME}.${DatabaseHelper.COLUMN_PM_NGAYMUON}, 
             ${DatabaseHelper.TABLE_PM_NAME}.${DatabaseHelper.COLUMN_PM_NGAYTRA}, 
-            ${DatabaseHelper.TABLE_PM_NAME}.${DatabaseHelper.COLUMN_PM_SOLUONG}
+            ${DatabaseHelper.TABLE_PM_NAME}.${DatabaseHelper.COLUMN_PM_SOLUONG},
+            ${DatabaseHelper.TABLE_PM_NAME}.${DatabaseHelper.COLUMN_PM_GHICHU},
+            CASE 
+                WHEN ${DatabaseHelper.TABLE_PT_NAME}.${DatabaseHelper.COLUMN_PM_ID} IS NULL THEN 'Chưa trả'
+                ELSE 'Đã trả'
+            END AS status
         FROM ${DatabaseHelper.TABLE_PM_NAME}
         INNER JOIN ${DatabaseHelper.TABLE_DG_NAME}
             ON ${DatabaseHelper.TABLE_PM_NAME}.${DatabaseHelper.COLUMN_DG_ID} = ${DatabaseHelper.TABLE_DG_NAME}.${DatabaseHelper.COLUMN_DG_ID}
@@ -69,9 +117,19 @@ class BorrowBookDao {
             ON ${DatabaseHelper.TABLE_PM_NAME}.${DatabaseHelper.COLUMN_PM_ID} = ${DatabaseHelper.TABLE_CTPM_NAME}.${DatabaseHelper.COLUMN_CTPM_MAPM}
         INNER JOIN ${DatabaseHelper.TABLE_BOOK_NAME}
             ON ${DatabaseHelper.TABLE_CTPM_NAME}.${DatabaseHelper.COLUMN_CTPM_MASACH} = ${DatabaseHelper.TABLE_BOOK_NAME}.${DatabaseHelper.COLUMN_BOOK_MASACH}
+        LEFT JOIN ${DatabaseHelper.TABLE_PT_NAME}
+            ON ${DatabaseHelper.TABLE_PM_NAME}.${DatabaseHelper.COLUMN_PM_ID} = ${DatabaseHelper.TABLE_PT_NAME}.${DatabaseHelper.COLUMN_PM_ID}
+        WHERE ${DatabaseHelper.TABLE_PM_NAME}.${DatabaseHelper.COLUMN_PM_ID} LIKE '%$valuesSearch%'or
+            ${DatabaseHelper.TABLE_DG_NAME}.${DatabaseHelper.COLUMN_DG_NAME} LIKE '%$valuesSearch%' or
+            ${DatabaseHelper.TABLE_DG_NAME}.${DatabaseHelper.COLUMN_DG_ID} LIKE '%$valuesSearch%' 
     """
         return db.rawQuery(query, null)
     }
+
+
+
+
+
 
 
 }

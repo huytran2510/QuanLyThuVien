@@ -5,6 +5,7 @@
     android:id="@+id/admin_navigation"
     app:startDestination="@+id/nav_admin">
 
+
     <fragment
         android:id="@+id/nav_management_borrow_book"
         android:name="com.ufm.project.ui.admin.ManagementBorrowBookFragment"
@@ -12,10 +13,28 @@
         tools:layout="@layout/fragment_managementborrowbook" />
 
     <fragment
+        android:id="@+id/nav_management_type_book"
+        android:name="com.ufm.project.ui.admin.ManagementTypeBookFragement"
+        android:label="@string/menu_management_type_book"
+        tools:layout="@layout/fragement_management_type_book" />
+
+    <fragment
+        android:id="@+id/nav_management_account"
+        android:name="com.ufm.project.ui.admin.ManagementAccountFragement"
+        android:label="@string/menu_management_account"
+        tools:layout="@layout/fragement_management_account" />
+
+
+    <fragment
         android:id="@+id/nav_management_reader"
         android:name="com.ufm.project.ui.admin.ManagementReaderFragment"
         android:label="@string/menu_management_reader"
-        tools:layout="@layout/activity_book_management" />
+        tools:layout="@layout/fragment_managementreader" />
+    <fragment
+        android:id="@+id/nav_admin"
+        android:name="com.ufm.project.ui.admin.ManagementBookFragment"
+        android:label="@string/menu_management_book"
+        tools:layout="@layout/fragment_management_book" />
 
 
 

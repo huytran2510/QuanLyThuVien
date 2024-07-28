@@ -202,7 +202,9 @@ class DatabaseHelper(context: Context) :
         db?.execSQL(createTablePT)
         db?.execSQL(createTableCTPT)
         db?.execSQL(createTableBook)
-//        Toast.makeText(context, "Database created", Toast.LENGTH_SHORT).show()
+
+        //****************INSERT DATABASE***********************
+        //INSERT THE LOAI
         val insertTableTL = "INSERT INTO $TABLE_TL_NAME ($COLUMN_TENLOAI) VALUES\n" +
                 "('Văn học Việt Nam'),\n" +
                 "('Lập trình'),\n" +
@@ -214,8 +216,8 @@ class DatabaseHelper(context: Context) :
                 "('Kinh tế - Quản trị'),\n" +
                 "('Sách giáo khoa'),\n" +
                 "('Sách thiếu nhi');"
-        db?.execSQL(insertTableTL)
 
+        //INSERT TAI KHOAN
         db?.execSQL("INSERT INTO $TABLE_TK_NAME ($COLUMN_TK_USERNAME, $COLUMN_TK_PASSWORD, $COLUMN_TK_LOAITK) VALUES ('admin', '123456789', 'admin')")
         db?.execSQL("INSERT INTO $TABLE_TK_NAME ($COLUMN_TK_USERNAME, $COLUMN_TK_PASSWORD, $COLUMN_TK_LOAITK) VALUES ('tranhuy', '123456789', 'khachhang')")
         db?.execSQL("INSERT INTO $TABLE_TK_NAME ($COLUMN_TK_USERNAME, $COLUMN_TK_PASSWORD, $COLUMN_TK_LOAITK) VALUES ('huyhoang', '123456789', 'khachhang')")
@@ -227,10 +229,21 @@ class DatabaseHelper(context: Context) :
         db?.execSQL("INSERT INTO $TABLE_TK_NAME ($COLUMN_TK_USERNAME, $COLUMN_TK_PASSWORD, $COLUMN_TK_LOAITK) VALUES ('khanhnguyen', '123456789', 'khachhang')")
         db?.execSQL("INSERT INTO $TABLE_TK_NAME ($COLUMN_TK_USERNAME, $COLUMN_TK_PASSWORD, $COLUMN_TK_LOAITK) VALUES ('tranhoang', '123456789', 'khachhang');")
 
+        //INSERT THU THU
+        val insertTableTT = "INSERT INTO $TABLE_TT_NAME (" +
+                "$COLUMN_TT_NAME," +
+                "$COLUMN_TT_ADDRESS," +
+                "$COLUMN_TT_DIENTHOAI," +
+                "$COLUMN_TT_GIOITINH," +
+                "$COLUMN_TT_NGAYSINH ," +
+                "$COLUMN_TK_ID)" +
+                "VALUES" +
+                "('Nguyễn Văn An', '123 Đường Trần Hưng Đạo, Quận 1, TP.HCM', '1990-01-01', '0901234567', 'Nam', 1)"
+
+        //INSERT DOC GIA
         val insertTableDG =
             "INSERT INTO $TABLE_DG_NAME ($COLUMN_DG_NAME, $COLUMN_DG_ADDRESS, $COLUMN_DG_NGAYSINH, $COLUMN_DG_DIENTHOAI, $COLUMN_DG_GIOITINH, $COLUMN_TK_ID)\n" +
                     "VALUES\n" +
-                    "('Nguyễn Văn An', '123 Đường Trần Hưng Đạo, Quận 1, TP.HCM', '1990-01-01', '0901234567', 'Nam', 1),\n" +
                     "('Trần Thị Hoa', '456 Đường Nguyễn Huệ, Quận 2, TP.HCM', '1992-02-14', '0902345678', 'Nữ', 2),\n" +
                     "('Lê Văn CHí', '789 Đường Võ Văn Tần, Quận 3, TP.HCM', '1988-03-21', '0903456789', 'Nam', 3),\n" +
                     "('Hoàng Thị Dung', '101 Đường Bạch Đằng, Quận 4, TP.HCM', '1995-04-30', '0904567890', 'Nữ', 4),\n" +
@@ -241,6 +254,7 @@ class DatabaseHelper(context: Context) :
                     "('Mai Văn Hải', '606 Đường Lê Văn Việt, Quận 9, TP.HCM', '1987-09-12', '0909012345', 'Nam', 9),\n" +
                     "('Lê Kim Hiền', '707 Đường 385, Quận 10, TP.HCM', '1996-10-05', '0900123456', 'Nữ', 10);"
 
+        //INSERT NHA CUNG CAP
         val insertTableNCC = "INSERT INTO $TABLE_NCC_NAME (mancc, tenncc, diachi, dienthoai)\n" +
                 "VALUES\n" +
                 "  (1, 'Nhà sách Đường Sách TP.HCM', 'Đường Nguyễn Văn Cừ, Quận 1, TP.HCM', '(028) 3822 9782'),\n" +
@@ -248,8 +262,8 @@ class DatabaseHelper(context: Context) :
                 "  (3, 'Nhà sách Kim Đồng', '65 Nguyễn Văn Cừ, Quận 1, TP.HCM', '(028) 3829 2222'),\n" +
                 "  (4, 'Nhà sách Cá Chép', '125 Nguyễn Đình Chiểu, Quận 3, TP.HCM', '(028) 3820 7755'),\n" +
                 "  (5, 'Nhà sách Phương Nam', '281 - 283 Nguyễn Đình Chiểu, Quận 3, TP.HCM', '(028) 3822 8181');\n"
-        db?.execSQL(insertTableNCC)
-        db?.execSQL(insertTableDG)
+
+        //INSERT SACH
         val insertTableBook = "INSERT INTO $TABLE_BOOK_NAME ($COLUMN_BOOK_TENSACH, $COLUMN_BOOK_PHUDE, $COLUMN_BOOK_MOTA, $COLUMN_BOOK_TACGIA, $COLUMN_BOOK_NXB, $COLUMN_BOOK_NGAYNHAP, $COLUMN_BOOK_SOLUONG, $COLUMN_BOOK_ANH, $COLUMN_MALOAI, $COLUMN_NCC_ID )\n VALUES \n "  +
                 "('Dế Mèn Phiêu Lưu Ký', 'Cuộc phiêu lưu kỳ thú của Dế Mèn trên cánh đồng xanh', 'Một câu chuyện đầy màu sắc và trí tưởng tượng của Dế Mèn, từ việc khám phá thế giới xung quanh đến những thử thách bất ngờ. Cuốn sách mở ra một thế giới tuổi thơ tươi đẹp với các bài học sâu sắc.', 'Tô Hoài', 'NXB Kim Đồng', '2023-01-15', 15, 'https://static.8cache.com/cover/o/eJzLyTDW1_VIzDROLfM3Noh31A8LM8zQLQlx8Uj11HeEgrw8V_0o5-Ck1IDyQEf3bP1iAwDLihCU/de-men-phieu-luu-ky.jpg',1, 1 ), \n" +
                 "('Harry Potter và Hòn Đá Phù Thủy', 'Cuộc phiêu lưu ma thuật tại trường Hogwarts','Cuốn sách đưa bạn vào thế giới kỳ diệu của Harry Potter với những bí ẩn chưa được giải đáp và những cuộc chiến đấu ngoạn mục chống lại các thế lực đen tối. Một hành trình đầy ma thuật và phiêu lưu ở trường Hogwarts.', 'J.K. Rowling','NXB Thế Giới', '2023-02-20', 20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaFrm74pTLUb7H9tmrDEpEkenXX9_--_Hcyw&s', 3, 2 ), \n " +
@@ -266,25 +280,106 @@ class DatabaseHelper(context: Context) :
                 "('Pride and Prejudice', 'Kiêu hãnh và định kiến', 'Một tiểu thuyết lãng mạn nổi tiếng của Jane Austen', 'Jane Austen', 'NXB Văn Học', '2023-04-04', 20, 'https://m.media-amazon.com/images/M/MV5BMTA1NDQ3NTcyOTNeQTJeQWpwZ15BbWU3MDA0MzA4MzE@._V1_.jpg', 4, 4), \n" +
                 "('Sherlock Holmes', 'Thám tử lừng danh', 'Bộ truyện trinh thám kinh điển về thám tử Sherlock Holmes', 'Arthur Conan Doyle', 'NXB Kim Đồng', '2023-05-05', 12, 'https://product.hstatic.net/200000343865/product/sherlock-holmes---nhung-cuoc-phieu-luu-cua-sherlock-holmes_2af2e17154b54ce0be4875e51dec52d8_master.jpg', 5, 5), \n" +
                 " ('Truyện cổ Grimm', 'Những câu chuyện cổ tích kinh điển', 'Tập hợp những câu chuyện cổ tích kinh điển của anh em Grimm', 'Anh em Grimm', 'NXB Văn Học', '2023-06-06', 10, 'https://cdn0.fahasa.com/media/catalog/product/8/9/8935236425872.jpg', 6, 5);"
+
+        //INSERT PHIEU MUON
+        val insertPM = """
+            INSERT INTO $TABLE_PM_NAME (
+                $COLUMN_PM_ID,
+                $COLUMN_PM_NGAYMUON,
+                $COLUMN_PM_NGAYTRA,
+                $COLUMN_DG_ID,
+                $COLUMN_PM_MATHU,
+                $COLUMN_PM_SOLUONG,
+                $COLUMN_PM_GHICHU
+            ) VALUES 
+            ('PM20240701', '2024-07-01', '2024-07-15', 8, 1, 3, 'First borrow'),
+            ('PM20240705', '2024-07-05', '2024-07-20', 2, 1, 2, 'Second borrow'),
+            ('PM20240710', '2024-07-10', '2024-07-25', 3, 1, 4, 'Third borrow'),
+            ('PM20240715', '2024-07-15', '2024-07-30', 4, 1, 1, 'Fourth borrow'),
+            ('PM20240720', '2024-07-20', '2024-08-05', 5, 1, 5, 'Fifth borrow'),
+            ('PM20240725', '2024-07-25', '2024-08-10', 6, 1, 3, 'Sixth borrow'),
+            ('PM20240730', '2024-07-30', '2024-08-15', 7, 1, 2, 'Seventh borrow'),
+            ('PM20240801', '2024-08-01', '2024-08-16', 8, 1, 4, 'Eighth borrow'),
+            ('PM20240805', '2024-08-05', '2024-08-20', 9, 1, 1, 'Ninth borrow'),
+            ('PM20240810', '2024-08-10', '2024-08-25', 10, 1, 5, 'Tenth borrow'),
+            ('PM20240815', '2024-08-15', '2024-08-30', 1, 1, 3, 'Eleventh borrow'),
+            ('PM20240820', '2024-08-20', '2024-09-05', 2, 1, 2, 'Twelfth borrow'),
+            ('PM20240825', '2024-08-25', '2024-09-10', 3, 1, 4, 'Thirteenth borrow'),
+            ('PM20240830', '2024-08-30', '2024-09-15', 4, 1, 1, 'Fourteenth borrow'),
+            ('PM20240901', '2024-09-01', '2024-09-16', 5, 1, 5, 'Fifteenth borrow');
+        """
+
+        // Insert data into CHITIETPHIEUMUON table
+        val insertCTPM = "INSERT INTO $TABLE_CTPM_NAME ($COLUMN_CTPM_MASACH, $COLUMN_CTPM_MAPM) VALUES " +
+                "(1, 'PM20240701'), (3, 'PM20240705')," +
+                "(2, 'PM20240701'), (4, 'PM20240705')," +
+                "(3, 'PM20240701'), (5, 'PM20240705')," +
+                "(4, 'PM20240701'), (6, 'PM20240705')," +
+                "(5, 'PM20240701'), (7, 'PM20240705')," +
+                "(6, 'PM20240701'), (8, 'PM20240705')," +
+                "(7, 'PM20240701'), (9, 'PM20240705')," +
+                "(8, 'PM20240701'), (10, 'PM20240705')," +
+                "(9, 'PM20240701'), (11, 'PM20240705')," +
+                "(10, 'PM20240701'), (12, 'PM20240705')," +
+                "(11, 'PM20240701'), (13, 'PM20240705')," +
+                "(12, 'PM20240701'), (14, 'PM20240705')," +
+                "(13, 'PM20240701'), (15, 'PM20240705');"
+
+        // Insert data into PHIEUTRA table
+        val insertPT = """
+            INSERT INTO $TABLE_PT_NAME (
+                $COLUMN_PT_MAPT,
+                $COLUMN_PT_NGAYTRA,
+                $COLUMN_PT_SOLUONGMUON,
+                $COLUMN_PT_SOLUONGTRA,
+                $COLUMN_PT_GHICHU,
+                $COLUMN_PM_ID
+            ) VALUES 
+            ('PT20240701', '2024-07-15', 3, 3, 'First return', 'PM20240701'),
+            ('PT20240705', '2024-07-20', 2, 2, 'Second return', 'PM20240705'),
+            ('PT20240702', '2024-07-16', 4, 4, 'Third return', 'PM20240701'),
+            ('PT20240706', '2024-07-21', 3, 3, 'Fourth return', 'PM20240705'),
+            ('PT20240703', '2024-07-17', 5, 5, 'Fifth return', 'PM20240701'),
+            ('PT20240707', '2024-07-22', 4, 4, 'Sixth return', 'PM20240705'),
+            ('PT20240704', '2024-07-18', 6, 6, 'Seventh return', 'PM20240701'),
+            ('PT20240708', '2024-07-23', 5, 5, 'Eighth return', 'PM20240705'),
+            ('PT20240709', '2024-07-24', 7, 7, 'Ninth return', 'PM20240701'),
+            ('PT20240710', '2024-07-25', 6, 6, 'Tenth return', 'PM20240705'),
+            ('PT20240711', '2024-07-26', 8, 8, 'Eleventh return', 'PM20240701'),
+            ('PT20240712', '2024-07-27', 7, 7, 'Twelfth return', 'PM20240705'),
+            ('PT20240713', '2024-07-28', 9, 9, 'Thirteenth return', 'PM20240701'),
+            ('PT20240714', '2024-07-29', 8, 8, 'Fourteenth return', 'PM20240705'),
+            ('PT20240715', '2024-07-30', 10, 10, 'Fifteenth return', 'PM20240701');
+        """
+
+        // Insert data into CHITIETPHIEUTRA table
+        val insertCTPT = "INSERT INTO $TABLE_CTPT_NAME ($COLUMN_CTPT_MASACH, $COLUMN_CTPT_MAPT) VALUES " +
+                "(1, 'PT20240701'), (2, 'PT20240705')," +
+                "(2, 'PT20240702'), (3, 'PT20240706')," +
+                "(3, 'PT20240703'), (4, 'PT20240707')," +
+                "(4, 'PT20240704'), (5, 'PT20240708')," +
+                "(5, 'PT20240709'), (6, 'PT20240710')," +
+                "(6, 'PT20240711'), (7, 'PT20240712')," +
+                "(7, 'PT20240713'), (8, 'PT20240714')," +
+                "(8, 'PT20240715'), (9, 'PT20240701')," +
+                "(9, 'PT20240705'), (10, 'PT20240702')," +
+                "(10, 'PT20240706'), (11, 'PT20240703')," +
+                "(11, 'PT20240707'), (12, 'PT20240704')," +
+                "(12, 'PT20240708'), (13, 'PT20240709')," +
+                "(13, 'PT20240710'), (14, 'PT20240711')," +
+                "(14, 'PT20240712'), (15, 'PT20240713')," +
+                "(15, 'PT20240714'), (1, 'PT20240715');"
+
+        db?.execSQL(insertTableTL)
+        db?.execSQL(insertTableNCC)
+        db?.execSQL(insertTableDG)
+        db?.execSQL(insertTableTT)
         db?.execSQL(insertTableBook)
-        val insertPM = "INSERT INTO $TABLE_PM_NAME (\n" +
-                "    $COLUMN_PM_ID,\n" +
-                "    $COLUMN_PM_NGAYMUON,\n" +
-                "    $COLUMN_PM_NGAYTRA,\n" +
-                "    $COLUMN_DG_ID,\n" +
-                "    $COLUMN_PM_MATHU,\n" +
-                "    $COLUMN_PM_SOLUONG,\n" +
-                "    $COLUMN_PM_GHICHU\n" +
-                ") VALUES \n" +
-                "('PM20240701','2024-07-01','2024-07-15',1,1,3,'First borrow' ) ," +
-                "('PM20240705','2024-07-05','2024-07-20',2,2,2,'Second borrow' );"
-        val insertCTPM = "INSERT INTO $TABLE_CTPM_NAME (\n" +
-                "    $COLUMN_CTPM_MASACH,\n" +
-                "    $COLUMN_CTPM_MAPM\n" +
-                ") VALUES \n" +
-                "(1,'PM20240701'),(3,'PM20240705');"
         db?.execSQL(insertPM)
         db?.execSQL(insertCTPM)
+        db?.execSQL(insertPT)
+        db?.execSQL(insertCTPT)
+
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -301,5 +396,4 @@ class DatabaseHelper(context: Context) :
         db.execSQL("DROP TABLE IF EXISTS $TABLE_BOOK_NAME")
         onCreate(db)
     }
-
 }

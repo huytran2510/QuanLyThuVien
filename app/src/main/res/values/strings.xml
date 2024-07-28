@@ -12,5 +12,9 @@
     <string name="menu_slideshow">Slideshow</string>
 
     <string name="menu_management_borrow_book">Quản lý phiếu mượn</string>
+    <string name="menu_management_type_book">Quản lý loai sách</string>
+    <string name="menu_management_account">Quản lý tài khoản</string>
     <string name="menu_management_reader">Quản lý độc giả</string>
+    <string name="menu_management_book">Quản lý sách</string>
+    <string name="menu_management_pay_book">Quản lý phiếu trả</string>
 </resources>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tên Sách:"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/light_text"/>
+
+    <TextView
+        android:id="@+id/tvBookName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tên sách" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ngày Mượn:"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/light_text"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/tvDateBorrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ngày mượn"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ngày Trả:"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/light_text"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/tvDatePay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ngày Trả"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Số Lượng Mượn:"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/light_text"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/tvQuantityBorrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Số lượng mượn"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ghi Chú:"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/light_text"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/tvNoteBorrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ghi Chú"
+        android:textSize="16sp" />
+
+
+    <ImageView
+        android:id="@+id/imgBook"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+</LinearLayout>

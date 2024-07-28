@@ -27,8 +27,8 @@ class BookAdapter(private val context: Context, private var books: MutableList<B
 
         val book = books[position]
 
-        val titleTextView = view.findViewById<TextView>(R.id.bookTitle)
-        val authorTextView = view.findViewById<TextView>(R.id.bookAuthor)
+        val titleTextView = view.findViewById<TextView>(R.id.txtMaPhieu)
+        val authorTextView = view.findViewById<TextView>(R.id.txtTenDocGia)
         val deleteButton = view.findViewById<ImageButton>(R.id.deleteButton)
         val editButton = view.findViewById<ImageButton>(R.id.editButton)
 

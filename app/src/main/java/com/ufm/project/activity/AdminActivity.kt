@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.Navigation.findNavController
@@ -30,22 +31,30 @@ class AdminActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarAdmin.toolbarAdmin)
 
-        binding.appBarAdmin.fab.setOnClickListener { view ->
-            val intent = Intent(this, AddBookActivity::class.java)
-            startActivity(intent)
-        }
 
         val drawerLayout: DrawerLayout = binding.drawerLayoutAdmin
         val navView: NavigationView = binding.navViewAdmin
         val navController = findNavController(R.id.nav_host_fragment_content_admin)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_management_borrow_book
-//                        R.id.nav_admin
+//                R.id.nav_management_borrow_book
+            R.id.nav_admin
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_logout -> {
+                    showLogoutConfirmationDialog()
+                    true
+                }
+                else -> false
+            }
+        }
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -57,5 +66,38 @@ class AdminActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_admin)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+
+    private fun showLogoutConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Đăng Xuất")
+        builder.setMessage("Bạn có chắc chắn muốn đăng xuất không?")
+        builder.setPositiveButton("Có") { dialog, which ->
+            // Handle the logout action
+            logout()
+        }
+        builder.setNegativeButton("Không") { dialog, which ->
+            // Dismiss the dialog
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun logout() {
+        // Xóa dữ liệu SharedPreferences
+        val sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            clear()
+            apply()
+        }
+
+        // Chuyển về trang đăng nhập
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
+
     }
 }

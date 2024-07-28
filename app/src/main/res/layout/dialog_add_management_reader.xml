@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="THÊM MỚI ĐỘC GIẢ"
+                android:gravity="center"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="24dp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Họ Tên"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="20dp"
+                android:layout_marginTop="16dp"/>
+
+            <EditText
+                android:id="@+id/edtNameReader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:inputType="text"
+                android:hint="Nhập họ tên"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Địa Chỉ"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="20dp"
+                android:layout_marginTop="16dp"/>
+
+            <EditText
+                android:id="@+id/edtAddressReader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:inputType="text"
+                android:hint="Nhập địa chỉ"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ngày Sinh"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="20dp"
+                android:layout_marginTop="16dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+                <Spinner
+                    android:id="@+id/spinnerDayBirthDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"/>
+
+                <Spinner
+                    android:id="@+id/spinnerMonthBirthDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"/>
+
+                <Spinner
+                    android:id="@+id/spinnerYearBirthDay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Điện Thoại"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="20dp"
+                android:layout_marginTop="16dp"/>
+
+            <EditText
+                android:id="@+id/edtPhoneReader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:inputType="text"
+                android:hint="Nhập điện thoại"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Giới Tính"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="20dp"
+                android:layout_marginTop="16dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

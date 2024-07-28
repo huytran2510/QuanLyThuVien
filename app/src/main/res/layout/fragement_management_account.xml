@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,21 +10,23 @@
         android:orientation="vertical">
 
         <SearchView
-            android:id="@+id/searchView"
+            android:id="@+id/searchAccount"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_margin="10dp"
             android:background="@drawable/edit_text_background"
-            android:queryHint="Nhập giá trị tìm kiếm" />
+            android:queryHint="Nhập giá trị tìm kiếm"
+            android:layout_margin="10dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewPhieuMuon"
+            android:id="@+id/recycleViewAccount"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabBorrowBook"
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

@@ -1,7 +1,9 @@
 package com.ufm.project
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -11,6 +13,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.ufm.project.activity.LoginActivity
 import com.ufm.project.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -41,6 +44,16 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_logout -> {
+                    showLogoutConfirmationDialog()
+                    true
+                }
+                else -> false
+            }
+        }
+
 
     }
 
@@ -53,5 +66,37 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun showLogoutConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Đăng Xuất")
+        builder.setMessage("Bạn có chắc chắn muốn đăng xuất không?")
+        builder.setPositiveButton("Có") { dialog, which ->
+            // Handle the logout action
+            logout()
+        }
+        builder.setNegativeButton("Không") { dialog, which ->
+            // Dismiss the dialog
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun logout() {
+        // Xóa dữ liệu SharedPreferences
+        val sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            clear()
+            apply()
+        }
+
+        // Chuyển về trang đăng nhập
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
+
     }
 }

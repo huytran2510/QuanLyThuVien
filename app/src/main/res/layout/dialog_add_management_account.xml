@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CẬP NHẬT TÀI KHOẢN"
+                android:gravity="center"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="24dp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tên đăng nhập"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="20dp"
+                android:layout_marginTop="16dp"/>
+
+            <EditText
+                android:id="@+id/edtUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:inputType="text"
+                android:hint="Nhập tên đăng nhập"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mật khẩu"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="20dp"
+                android:layout_marginTop="16dp"/>
+
+            <EditText
+                android:id="@+id/edtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:inputType="text"
+                android:hint="Nhập mật khẩu"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Loại tài khoản"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="20dp"
+                android:layout_marginTop="16dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerTypeAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
