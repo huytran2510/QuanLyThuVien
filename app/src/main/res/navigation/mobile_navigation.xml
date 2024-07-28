@@ -12,13 +12,6 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.ufm.project.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-
-
-    <fragment
         android:id="@+id/nav_profile"
         android:name="com.ufm.project.ui.home.ProfileFragment"
         android:label="@string/menu_profile"
@@ -27,12 +20,17 @@
     <fragment
         android:id="@+id/nav_trasach"
         android:name="com.ufm.project.ui.home.BookBackFragment"
-        android:label="@string/menu_profile"
+        android:label="Trang trả sách"
         tools:layout="@layout/fragment_traphieumuon" />
 
     <fragment
         android:id="@+id/nav_history"
         android:name="com.ufm.project.ui.home.HistoryBorrowBook"
-        android:label="@string/menu_profile"
-        tools:layout="@layout/fragment_borrow_book" />
+        android:label="Lịch sử mượn sách"
+        tools:layout="@layout/fragment_borrow_book" >
+        <action
+            android:id="@+id/action_historyBorrowBookFragment_to_bookBackFragment"
+            app:destination="@id/nav_trasach" />
+    </fragment>
+
 </navigation>

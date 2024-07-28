@@ -21,6 +21,21 @@
             android:icon="@drawable/logo_reader"
             android:title="Quản lý độc giả" />
 
+        <item android:id="@+id/nav_statistics_borrow_book"
+            android:icon="@drawable/logo_reader"
+            android:title="Thống kê phiếu mượn sách" />
+
+        <item android:id="@+id/nav_statistics_return_book"
+            android:icon="@drawable/logo_reader"
+            android:title="Thống kê phiếu trả sách" />
+
+        <item android:id="@+id/nav_statistics_of_book_return"
+            android:icon="@drawable/logo_reader"
+            android:title="Thống kê thông tin trả sách trả sách" />
+
+        <item android:id="@+id/nav_statistics_top_book"
+            android:icon="@drawable/logo_reader"
+            android:title="Top sách được mượn nhiều nhất" />
         <item android:id="@+id/nav_management_account"
             android:icon="@drawable/baseline_manage_accounts_24"
             android:title="Quản lý tài khoản" />

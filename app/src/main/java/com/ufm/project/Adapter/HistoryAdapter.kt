@@ -25,8 +25,11 @@ class HistoryAdapter(private var historyList: List<HistoryBorrowBook>, private v
         holder.textViewMaKhachHang.text = "Mã khách hàng : " + history.maKhachHang.toString()
         holder.textViewMaThu.text = "Mã thủ thư : " + history.maThu.toString()
         holder.textViewSoLuong.text = "Số lượng : " + history.soLuong.toString()
-        holder.textViewGhiChu.text = "Ghi chú : " + history.ghiChu
+        holder.textViewGhiChu.text = "Tình trạng : " + history.tinhtrang
 
+        if (history.tinhtrang == "Đã trả đủ sách") {
+            holder.buttonReturnBook.visibility = View.GONE
+        }
         // Thiết lập sự kiện cho nút trả sách
         holder.buttonReturnBook.setOnClickListener {
             onReturnBookClick(history)

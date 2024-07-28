@@ -8,17 +8,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.ufm.project.Adapter.Book
 import com.ufm.project.Adapter.BookAdapter
+import com.ufm.project.Adapter.CategoryBookAdapter
 import com.ufm.project.activity.AddBookActivity
+import com.ufm.project.activity.AddUpdateActivity
 import com.ufm.project.database.DatabaseHelper
-import com.ufm.project.databinding.FragmentManagementBookBinding
+import com.ufm.project.databinding.FragementManagementCategoryBookBinding
+import com.ufm.project.modal.CategoryBook
 
-class ManagementBookFragment : Fragment() {
+class ManagementCategoryBookFragment : Fragment() {
 
-    private var _binding: FragmentManagementBookBinding? = null
+    private var _binding: FragementManagementCategoryBookBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var bookAdapter: BookAdapter
-    private val books: MutableList<Book> = mutableListOf()
+    private lateinit var bookAdapter: CategoryBookAdapter
+    private val books: MutableList<CategoryBook> = mutableListOf()
     private lateinit var dbHelper: DatabaseHelper
 
     override fun onCreateView(
@@ -26,19 +29,19 @@ class ManagementBookFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentManagementBookBinding.inflate(inflater, container, false)
+        _binding = FragementManagementCategoryBookBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         // Initialize database helper
         dbHelper = DatabaseHelper(requireContext())
 
         // Initialize adapter
-        bookAdapter = BookAdapter(requireContext(), books)
-        binding.bookListView.adapter = bookAdapter
+        bookAdapter = CategoryBookAdapter(requireContext(), books)
+        binding.categoryBookListView.adapter = bookAdapter
         bookAdapter.updateBooks(books)
 
         binding.fab.setOnClickListener { view ->
-            val intent = Intent(requireContext(), AddBookActivity::class.java)
+            val intent = Intent(requireContext(), AddUpdateActivity::class.java)
             startActivity(intent)
         }
 
@@ -57,31 +60,26 @@ class ManagementBookFragment : Fragment() {
     private fun loadBooksFromDatabase() {
         val db = dbHelper.readableDatabase
         val cursor = db.query(
-            DatabaseHelper.TABLE_BOOK_NAME,  // Replace with your table name
+            DatabaseHelper.TABLE_TL_NAME,  // Replace with your table name
             null,     // All columns
             null,     // No WHERE clause
-            null,     // No WHERE arguments
-            null,     // No GROUP BY
-            null,     // No HAVING
-            null      // No ORDER BY
+            null,
+            null,
+            null,
+            null
         )
 
         books.clear()
         while (cursor.moveToNext()) {
-            val idBook = (cursor.getColumnIndex(DatabaseHelper.COLUMN_BOOK_MASACH))
-            val title = (cursor.getColumnIndex(DatabaseHelper.COLUMN_BOOK_TENSACH))
-            val author = (cursor.getColumnIndex(DatabaseHelper.COLUMN_BOOK_TACGIA))
-            val quantity = (cursor.getColumnIndex(DatabaseHelper.COLUMN_BOOK_SOLUONG))
-            if (title != -1 && author != -1) {
+            val title = (cursor.getColumnIndex(DatabaseHelper.COLUMN_TENLOAI))
+            val idBook = (cursor.getColumnIndex(DatabaseHelper.COLUMN_MALOAI))
+            if (title != -1 && idBook != -1) {
                 val bookId = cursor.getInt(idBook)
                 val bookTitle = cursor.getString(title)
-                val bookAuthor = cursor.getString(author)
-                val bookQuantity = cursor.getInt(quantity)
-                books.add(Book(bookId,bookTitle, bookAuthor, bookQuantity))
+                books.add(CategoryBook(bookId,bookTitle))
             }
         }
         cursor.close()
         bookAdapter.notifyDataSetChanged()
     }
-
 }

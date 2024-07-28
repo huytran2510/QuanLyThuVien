@@ -53,7 +53,6 @@ class AddBookActivity : AppCompatActivity() {
         etBookSubtitle = findViewById(R.id.etBookSubtitle)
         etBookDescription = findViewById(R.id.etBookDescription)
         etBookPublisher = findViewById(R.id.etBookPublisher)
-//        etBookDate = findViewById(R.id.etBookDate)
         etBookQuantity = findViewById(R.id.etBookQuantity)
         btnSave = findViewById(R.id.btnSave)
 
@@ -74,10 +73,6 @@ class AddBookActivity : AppCompatActivity() {
 
         loadSpinners()
         managerBookFragment = ManagementBookFragment()
-//        btnSave.setOnClickListener {
-//            saveBook()
-////            managerBookFragment.loadBooksFromDatabase()
-//        }
 
         val bookId = intent.getIntExtra("book_id", -1)
         if (bookId != -1) {
@@ -261,7 +256,7 @@ class AddBookActivity : AppCompatActivity() {
         return book
     }
 
-    private fun loadBookDetails(bookId: Int ) {
+    private fun loadBookDetails(bookId: Int) {
         val book = findBookById(bookId)
         book?.let {
             etBookTitle.setText(it.title)
@@ -270,15 +265,34 @@ class AddBookActivity : AppCompatActivity() {
             etBookDescription.setText(it.description)
             etBookPublisher.setText(it.publisher)
 
-            // Tách ngày thành các phần ngày, tháng, năm
+            // Kiểm tra và tách ngày thành các phần ngày, tháng, năm
             val dateParts = it.date.split("/")
-            spinnerDay.setSelection((spinnerDay.adapter as ArrayAdapter<String>).getPosition(dateParts[0]))
-            spinnerMonth.setSelection((spinnerMonth.adapter as ArrayAdapter<String>).getPosition(dateParts[1]))
-            spinnerYear.setSelection((spinnerYear.adapter as ArrayAdapter<String>).getPosition(dateParts[2]))
+            if (dateParts.size == 3) {
+                val day = dateParts[0]
+                val month = dateParts[1]
+                val year = dateParts[2]
+
+                // Đặt giá trị cho các Spinner
+                setSpinnerSelection(spinnerDay, day)
+                setSpinnerSelection(spinnerMonth, month)
+                setSpinnerSelection(spinnerYear, year)
+            } else {
+                // Xử lý trường hợp ngày không hợp lệ (nếu cần)
+                Toast.makeText(this, "Ngày không hợp lệ", Toast.LENGTH_SHORT).show()
+            }
 
             etBookQuantity.setText(it.quantity.toString())
             spinnerLoai.setSelection(it.maloai.toInt())
             spinnerNCC.setSelection(it.nccId.toInt())
+        }
+    }
+    private fun setSpinnerSelection(spinner: Spinner, value: String) {
+        val adapter = spinner.adapter as ArrayAdapter<String>
+        val position = adapter.getPosition(value)
+        if (position >= 0) {
+            spinner.setSelection(position)
+        } else {
+            Toast.makeText(this, "Giá trị không tồn tại trong Spinner: $value", Toast.LENGTH_SHORT).show()
         }
     }
 

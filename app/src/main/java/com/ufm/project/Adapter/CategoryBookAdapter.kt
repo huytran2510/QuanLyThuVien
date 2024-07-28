@@ -12,13 +12,15 @@ import android.widget.TextView
 import android.widget.Toast
 import com.ufm.project.R
 import com.ufm.project.activity.AddBookActivity
+import com.ufm.project.activity.AddUpdateActivity
 import com.ufm.project.dao.BookDao
+import com.ufm.project.modal.CategoryBook
 
-data class Book(val idBook : Int ,val title: String, val author: String, val quantity : Int)
-
-class BookAdapter(private val context: Context, private var books: MutableList<Book>) :
-    ArrayAdapter<Book>(context, 0, books) {
-
+class CategoryBookAdapter(
+    private val context: Context,
+    private var books: MutableList<CategoryBook>
+) :
+    ArrayAdapter<CategoryBook>(context, 0, books) {
     private lateinit var bookDao: BookDao
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -33,20 +35,20 @@ class BookAdapter(private val context: Context, private var books: MutableList<B
         val deleteButton = view.findViewById<ImageButton>(R.id.deleteButton)
         val editButton = view.findViewById<ImageButton>(R.id.editButton)
 
-        titleTextView.text = book.title
-        authorTextView.text = book.author
-        quantityTextView.text = "Số lượng còn : " + book.quantity
+        titleTextView.text = "Mã loại : " + book.idCategory
+        authorTextView.text = "Tên loại : " + book.categoryName
+        quantityTextView.visibility = View.GONE
         bookDao = BookDao(context)
 
         deleteButton.setOnClickListener {
             AlertDialog.Builder(context)
-                .setTitle("Xóa sách")
-                .setMessage("Bạn có chắc chắn muốn xóa sách này?")
+                .setTitle("Xóa loại sách")
+                .setMessage("Bạn có chắc chắn muốn xóa loại sách này?")
                 .setPositiveButton("Xóa") { dialog, _ ->
-                    bookDao.deleteBook(book.idBook)
+                    bookDao.deleteLoaiSach(book.idCategory)
                     books.removeAt(position)  // Xóa sách khỏi danh sách
                     notifyDataSetChanged()  // Cập nhật lại list view
-                    Toast.makeText(context, "Book deleted", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Loại sách đã được xóa", Toast.LENGTH_LONG).show()
                     dialog.dismiss()
                 }
                 .setNegativeButton("Hủy") { dialog, _ ->
@@ -57,8 +59,8 @@ class BookAdapter(private val context: Context, private var books: MutableList<B
 
         editButton.setOnClickListener {
             // Xử lý chỉnh sửa sách
-            val intent = Intent(context, AddBookActivity::class.java).apply {
-                putExtra("book_id", book.idBook)
+            val intent = Intent(context, AddUpdateActivity::class.java).apply {
+                putExtra("category_id", book.idCategory)
             }
             context.startActivity(intent)
         }
@@ -66,7 +68,7 @@ class BookAdapter(private val context: Context, private var books: MutableList<B
         return view
     }
 
-    fun updateBooks(newBooks: List<Book>) {
+    fun updateBooks(newBooks: List<CategoryBook>) {
         books.clear()
         books.addAll(newBooks)
         notifyDataSetChanged()
