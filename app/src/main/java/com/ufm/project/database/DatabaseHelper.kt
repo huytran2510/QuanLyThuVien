@@ -41,6 +41,7 @@ class DatabaseHelper(context: Context) :
         const val TABLE_DG_NAME = "docgia"
         const val COLUMN_DG_ID = "madocgia"
         const val COLUMN_DG_NAME = "hoten"
+        const val COLUMN_DG_EMAIL = "email"
         const val COLUMN_DG_ADDRESS = "diachi"
         const val COLUMN_DG_NGAYSINH = "ngaysinh"
         const val COLUMN_DG_GIOITINH = "gioitinh"
@@ -129,6 +130,7 @@ class DatabaseHelper(context: Context) :
                 "$COLUMN_DG_NAME VARCHAR," +
                 "$COLUMN_DG_ADDRESS VARCHAR," +
                 "$COLUMN_DG_NGAYSINH DATE," +
+                "$COLUMN_DG_EMAIL VARCHAR," +
                 "$COLUMN_DG_DIENTHOAI VARCHAR," +
                 "$COLUMN_DG_GIOITINH VARCHAR," +
                 "$COLUMN_TK_ID INTEGER ," +
@@ -228,18 +230,18 @@ class DatabaseHelper(context: Context) :
         db?.execSQL("INSERT INTO $TABLE_TK_NAME ($COLUMN_TK_USERNAME, $COLUMN_TK_PASSWORD, $COLUMN_TK_LOAITK) VALUES ('tranhoang', '123456789', 'khachhang');")
 
         val insertTableDG =
-            "INSERT INTO $TABLE_DG_NAME ($COLUMN_DG_NAME, $COLUMN_DG_ADDRESS, $COLUMN_DG_NGAYSINH, $COLUMN_DG_DIENTHOAI, $COLUMN_DG_GIOITINH, $COLUMN_TK_ID)\n" +
+            "INSERT INTO $TABLE_DG_NAME ($COLUMN_DG_NAME, $COLUMN_DG_ADDRESS, $COLUMN_DG_NGAYSINH, $COLUMN_DG_DIENTHOAI, $COLUMN_DG_GIOITINH, $COLUMN_TK_ID, $COLUMN_DG_EMAIL)\n" +
                     "VALUES\n" +
-                    "('Nguyễn Văn An', '123 Đường Trần Hưng Đạo, Quận 1, TP.HCM', '1990-01-01', '0901234567', 'Nam', 1),\n" +
-                    "('Trần Thị Hoa', '456 Đường Nguyễn Huệ, Quận 2, TP.HCM', '1992-02-14', '0902345678', 'Nữ', 2),\n" +
-                    "('Lê Văn CHí', '789 Đường Võ Văn Tần, Quận 3, TP.HCM', '1988-03-21', '0903456789', 'Nam', 3),\n" +
-                    "('Hoàng Thị Dung', '101 Đường Bạch Đằng, Quận 4, TP.HCM', '1995-04-30', '0904567890', 'Nữ', 4),\n" +
-                    "('Vũ Văn Nam', '202 Đường Nguyễn Chí Thanh, Quận 5, TP.HCM', '1989-05-15', '0905678901', 'Nam', 5),\n" +
-                    "('Phan Thị Phương', '303 Đường Phan Văn Chí, Quận 6, TP.HCM', '1993-06-10', '0906789012', 'Nữ', 6),\n" +
-                    "('Đăng Minh Giang', '404 Đường Nguyễn Công Trư, Quận 7, TP.HCM', '1991-07-25', '0907890123', 'Nam', 7),\n" +
-                    "('Nguyễn Thị Hai', '505 Đường Võ Văn Công, Quận 8, TP.HCM', '1994-08-18', '0908901234', 'Nữ', 8),\n" +
-                    "('Mai Văn Hải', '606 Đường Lê Văn Việt, Quận 9, TP.HCM', '1987-09-12', '0909012345', 'Nam', 9),\n" +
-                    "('Lê Kim Hiền', '707 Đường 385, Quận 10, TP.HCM', '1996-10-05', '0900123456', 'Nữ', 10);"
+                    "('Nguyễn Văn An', '123 Đường Trần Hưng Đạo, Quận 1, TP.HCM', '1990-01-01', '0901234567', 'Nam', 1, 'an123@gmail.com'),\n" +
+                    "('Trần Thị Hoa', '456 Đường Nguyễn Huệ, Quận 2, TP.HCM', '1992-02-14', '0902345678', 'Nữ', 2, 'hoatran@gmail.com'),\n" +
+                    "('Lê Văn CHí', '789 Đường Võ Văn Tần, Quận 3, TP.HCM', '1988-03-21', '0903456789', 'Nam', 3,'levanchi@gmail.com'),\n" +
+                    "('Hoàng Thị Dung', '101 Đường Bạch Đằng, Quận 4, TP.HCM', '1995-04-30', '0904567890', 'Nữ', 4, 'dunghoang123@gmail.com'),\n" +
+                    "('Vũ Văn Nam', '202 Đường Nguyễn Chí Thanh, Quận 5, TP.HCM', '1989-05-15', '0905678901', 'Nam', 5, 'vannam@gmail.com'),\n" +
+                    "('Phan Thị Phương', '303 Đường Phan Văn Chí, Quận 6, TP.HCM', '1993-06-10', '0906789012', 'Nữ', 6, 'phuongphan@gmail.com'),\n" +
+                    "('Đăng Minh Giang', '404 Đường Nguyễn Công Trư, Quận 7, TP.HCM', '1991-07-25', '0907890123', 'Nam', 7, 'giang232@gmail.com'),\n" +
+                    "('Nguyễn Thị Hai', '505 Đường Võ Văn Công, Quận 8, TP.HCM', '1994-08-18', '0908901234', 'Nữ', 8, 'thihai@gmail.com'),\n" +
+                    "('Mai Văn Hải', '606 Đường Lê Văn Việt, Quận 9, TP.HCM', '1987-09-12', '0909012345', 'Nam', 9,'vanhai2@gmail.com'),\n" +
+                    "('Lê Kim Hiền', '707 Đường 385, Quận 10, TP.HCM', '1996-10-05', '0900123456', 'Nữ', 10, 'kimhien@gmail.com');"
 
         val insertTableNCC = "INSERT INTO $TABLE_NCC_NAME (mancc, tenncc, diachi, dienthoai)\n" +
                 "VALUES\n" +

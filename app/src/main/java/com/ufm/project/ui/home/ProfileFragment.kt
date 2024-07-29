@@ -25,6 +25,7 @@ class ProfileFragment : Fragment() {
     private lateinit var edtPhone: TextView
     private lateinit var edtGender: TextView
     private lateinit var edtDob: TextView
+    private lateinit var edtEmail: TextView
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -52,6 +53,7 @@ class ProfileFragment : Fragment() {
         edtPhone = binding.edtPhone
         edtGender = binding.edtGender
         edtDob = binding.edtDob
+        edtEmail = binding.edtEmail
 
         Toast.makeText(requireContext(), "Load thành công", Toast.LENGTH_SHORT).show()
         val (isLoggedIn, userId) = checkLoginState()
@@ -66,6 +68,7 @@ class ProfileFragment : Fragment() {
                 val phoneIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_DG_DIENTHOAI)
                 val genderIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_DG_GIOITINH)
                 val usernameIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_TK_USERNAME)
+                val emailIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_DG_EMAIL)
 
                 if (nameIndex != -1 && addressIndex != -1 && dobIndex != -1 && phoneIndex != -1 && genderIndex != -1) {
                     val name = cursor.getString(nameIndex)
@@ -74,7 +77,7 @@ class ProfileFragment : Fragment() {
                     val phone = cursor.getString(phoneIndex)
                     val gender = cursor.getString(genderIndex)
                     val username = cursor.getString(usernameIndex)
-
+                    val email = cursor.getString(emailIndex)
                     // Update UI components with data
                     edtName.text = name
                     edtAddress.text = address
@@ -82,6 +85,7 @@ class ProfileFragment : Fragment() {
                     edtPhone.text = phone
                     edtGender.text = gender
                     edtUsername.text = username
+                    edtEmail.text = email
                 } else {
                     // Handle the case where column indices are invalid
                     Toast.makeText(requireContext(), "Không có thông tin", Toast.LENGTH_SHORT).show()

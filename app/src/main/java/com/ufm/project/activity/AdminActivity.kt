@@ -63,8 +63,6 @@ class AdminActivity : AppCompatActivity() {
                 }
             }
         }
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
