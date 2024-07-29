@@ -250,66 +250,70 @@ class DatabaseHelper(context: Context) :
                 "  (5, 'Nhà sách Phương Nam', '281 - 283 Nguyễn Đình Chiểu, Quận 3, TP.HCM', '(028) 3822 8181');\n"
         db?.execSQL(insertTableNCC)
         db?.execSQL(insertTableDG)
-        val insertTableBook = "INSERT INTO $TABLE_BOOK_NAME ($COLUMN_BOOK_TENSACH, $COLUMN_BOOK_PHUDE, $COLUMN_BOOK_MOTA, $COLUMN_BOOK_TACGIA, $COLUMN_BOOK_NXB, $COLUMN_BOOK_NGAYNHAP, $COLUMN_BOOK_SOLUONG, $COLUMN_BOOK_ANH, $COLUMN_MALOAI, $COLUMN_NCC_ID )\n VALUES \n "  +
-                "('Dế Mèn Phiêu Lưu Ký', 'Cuộc phiêu lưu kỳ thú của Dế Mèn trên cánh đồng xanh', 'Một câu chuyện đầy màu sắc và trí tưởng tượng của Dế Mèn, từ việc khám phá thế giới xung quanh đến những thử thách bất ngờ. Cuốn sách mở ra một thế giới tuổi thơ tươi đẹp với các bài học sâu sắc.', 'Tô Hoài', 'NXB Kim Đồng', '2023-01-15', 15, 'https://static.8cache.com/cover/o/eJzLyTDW1_VIzDROLfM3Noh31A8LM8zQLQlx8Uj11HeEgrw8V_0o5-Ck1IDyQEf3bP1iAwDLihCU/de-men-phieu-luu-ky.jpg',1, 1 ), \n" +
-                "('Harry Potter và Hòn Đá Phù Thủy', 'Cuộc phiêu lưu ma thuật tại trường Hogwarts','Cuốn sách đưa bạn vào thế giới kỳ diệu của Harry Potter với những bí ẩn chưa được giải đáp và những cuộc chiến đấu ngoạn mục chống lại các thế lực đen tối. Một hành trình đầy ma thuật và phiêu lưu ở trường Hogwarts.', 'J.K. Rowling','NXB Thế Giới', '2023-02-20', 20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaFrm74pTLUb7H9tmrDEpEkenXX9_--_Hcyw&s', 3, 2 ), \n " +
-                "('Đắc Nhân Tâm','Quyển sách của mọi thời đại và một hiện tượng đáng kinh ngạc', 'Cuốn sách cung cấp những chiến lược hiệu quả để cải thiện kỹ năng giao tiếp và xây dựng mối quan hệ tích cực. Đây là một cẩm nang hữu ích cho việc tạo dựng các kết nối cá nhân và nghề nghiệp bền vững.', 'Dale Carnegie',  'NXB Thế Giới', '2023-03-05', 25, 'https://nxbhcm.com.vn/Image/Biasach/dacnhantam86.jpg', 3, 3 ), \n" +
-                "('Bí Quyết Phát Triển Bản Thân', 'Những chiến lược để trở thành phiên bản tốt nhất của chính bạn', 'Cuốn sách này chia sẻ những phương pháp và chiến lược cụ thể để phát triển bản thân, từ việc xác định mục tiêu cá nhân đến cách duy trì động lực và đạt được thành công trong cuộc sống.', 'Stephen R. Covey', 'NXB Trẻ', '2023-04-10', 18,  'https://salt.tikicdn.com/cache/w300/ts/product/f3/3d/17/2911a6f69519986428ec4127043c6f41.jpg', 7, 4 ),\n" +
-                "('Cuộc Đời Của Pi','Cuộc phiêu lưu kỳ diệu trên đại dương', 'Một câu chuyện sâu sắc về hành trình sống còn của Pi Patel, một cậu bé 16 tuổi cùng với con hổ Bengal Richard Parker trên một chiếc thuyền cứu sinh giữa đại dương. Cuốn sách là một cuộc phiêu lưu không thể quên.', 'Yann Martel',  'NXB Văn Học',  '2023-05-25', 12, 'https://upload.wikimedia.org/wikipedia/vi/9/96/Cuoc_doi_cua_Pi.jpg', 6, 5 ),\n" +
-                "('Sapiens: Lược Sử Loài Người', 'Khám phá lịch sử phát triển của loài người từ thuở sơ khai đến hiện đại', 'Cuốn sách cung cấp một cái nhìn sâu sắc về sự phát triển của loài người từ thời kỳ săn bắn hái lượm cho đến nền văn minh hiện đại, khám phá những sự kiện và xu hướng chính đã hình thành xã hội hiện tại.', 'Yuval Noah Harari', 'NXB Lao Động', '2023-06-30',  10,  'https://bizweb.dktcdn.net/100/197/269/products/sapiens-luoc-su-ve-loai-nguoi-outline-5-7-2017-02.jpg?v=1520935327270',  3, 2 ), \n" +
-                "('Làm Giàu Không Khó', 'Những phương pháp và chiến lược đơn giản để làm giàu','\"Thói quen giàu có - Thói quen thành công hàng ngày của người giàu\" của Bobby K. Munoz. Nó vạch ra những chiến lược và thói quen thực tế mà bất cứ ai cũng có thể áp dụng để đạt được thành công về mặt tài chính. Cuốn sách nhấn mạnh tầm quan trọng của tư duy, kỷ luật và hành động để xây dựng sự giàu có theo thời gian.' , 'Bobby K. Munoz', 'NXB Trẻ',  '2023-07-15',  22,  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREzvc-QYekjU-_G4QDZysk-FtqRzD4fj-I4g&s',  7,  4 ), \n" +
-                "('Những Điều Kỳ Diệu Trong Cuộc Sống', 'Khám phá những điều tuyệt vời và ý nghĩa trong cuộc sống hàng ngày','Điều Kỳ Diệu Của Cuộc Sống Như những khoảng lặng cần thiết trong tiết tấu của cuộc sống, những câu chuyện trong cuốn sách này sẽ mang đến cho bạn cơ hội để suy ngẫm và rung động về những chuyện có thực, về những điều có thể nhỏ nhặt nhưng ý nghĩa với mỗi chúng ta. Những câu chuyện trong Tủ sách Sống đẹp là tình cảm, nỗi niềm tâm sự sẻ chia của đông đảo bạn bè trên thế giới, họ ở mọi tầng lớp trong xã hội nhưng có chung một mong muốn là đánh thức trái tim nhân hậu và tình yêu thương trong mỗi con người.', 'Osho',  'NXB Thế Giới',  '2023-08-20',  16, 'https://salt.tikicdn.com/cache/280x280/media/catalog/product/d/i/dieu-ky-dieu-cua-cuoc-song.jpg', 8,  3 ),\n" +
-                "('Người Lạ Trong Gương','Khám phá bí ẩn và sự thật về người lạ trong gương', 'Người đàn ông cô độc. Toby Temple vừa là một siêu sao vừa là kẻ tàn nhẫn, vừa được tôn sùng như một vị thánh lại vừa bị quấy rầy bởi bao sự nghi vấn, ngờ vực. Người phụ nữ vỡ mộng. Jill Castle đến Hollywood để làm một ngôi sao- và phát hiện ra rằng nàng chỉ có thể có được nó bằng chính thân xác mình. Một thế giới của những kẻ lợi dụng lẫn nhau. Tất cả đều được tái hiện chân thực trong cuốn tiểu thuyết Người lạ trong gương. ', 'Gillian Flynn', 'NXB Văn Học',  '2023-09-10',  14, 'https://salt.tikicdn.com/cache/w1200/media/catalog/product/1/-/1-8.u2487.d20161229.t134124.815649.jpg', 9,  2 ),\n" +
-                "('Dạy Con Làm Giàu', 'Hướng dẫn giáo dục tài chính cho trẻ em','Bộ sưu tập sách nói Dạy Con Làm Giàu bao gồm 13 cuốn sách về quản lý tài chính cá nhân của Robert T.Kiyosaki. Đây là bộ sách kinh điển về cách nhìn nhận đồng tiền, kiếm tiền và giúp chúng ta nâng cao năng lực tài chính. Với tầm ảnh hưởng rộng khắp, Dạy Con Làm Giàu xứng đáng là “giáo trình làm giàu” mà ai cũng nên đọc trong đời.',  'Robert T. Kiyosaki',  'NXB Trẻ',  '2023-10-01',  30, 'https://www.nxbtre.com.vn/Images/Book/copy_16_nxbtre_full_15412017_094159.jpg',10,  1 ), \n  " +
-                "('Lập Trình C++', 'Học C++ cơ bản đến nâng cao', 'Sách hướng dẫn lập trình C++ từ cơ bản đến nâng cao', 'Trần Thông Quế', 'NXB Thông Tin Và Truyền Thông', '2023-02-02', 15, 'https://down-vn.img.susercontent.com/file/vn-11134201-7qukw-lfjgojqnj8g46d', 2, 2), \n" +
-                "('Dune', 'Cuộc chiến sa mạc', 'Một câu chuyện khoa học viễn tưởng về hành tinh sa mạc', 'Frank Herbert', 'NXB Hội Nhà Văn', '2023-03-03', 8, 'https://vnmedia.vn/file/8a10a0d36ccebc89016ce0c6fa3e1b83/022024/2_20240229154447.jpg', 3, 3), \n" +
-                "('Pride and Prejudice', 'Kiêu hãnh và định kiến', 'Một tiểu thuyết lãng mạn nổi tiếng của Jane Austen', 'Jane Austen', 'NXB Văn Học', '2023-04-04', 20, 'https://m.media-amazon.com/images/M/MV5BMTA1NDQ3NTcyOTNeQTJeQWpwZ15BbWU3MDA0MzA4MzE@._V1_.jpg', 4, 4), \n" +
-                "('Sherlock Holmes', 'Thám tử lừng danh', 'Bộ truyện trinh thám kinh điển về thám tử Sherlock Holmes', 'Arthur Conan Doyle', 'NXB Kim Đồng', '2023-05-05', 12, 'https://product.hstatic.net/200000343865/product/sherlock-holmes---nhung-cuoc-phieu-luu-cua-sherlock-holmes_2af2e17154b54ce0be4875e51dec52d8_master.jpg', 5, 5), \n" +
-                " ('Truyện cổ Grimm', 'Những câu chuyện cổ tích kinh điển', 'Tập hợp những câu chuyện cổ tích kinh điển của anh em Grimm', 'Anh em Grimm', 'NXB Văn Học', '2023-06-06', 10, 'https://cdn0.fahasa.com/media/catalog/product/8/9/8935236425872.jpg', 6, 5);"
+        val insertTableBook =
+            "INSERT INTO $TABLE_BOOK_NAME ($COLUMN_BOOK_TENSACH, $COLUMN_BOOK_PHUDE, $COLUMN_BOOK_MOTA, $COLUMN_BOOK_TACGIA, $COLUMN_BOOK_NXB, $COLUMN_BOOK_NGAYNHAP, $COLUMN_BOOK_SOLUONG, $COLUMN_BOOK_ANH, $COLUMN_MALOAI, $COLUMN_NCC_ID )\n VALUES \n " +
+                    "('Dế Mèn Phiêu Lưu Ký', 'Cuộc phiêu lưu kỳ thú của Dế Mèn trên cánh đồng xanh', 'Một câu chuyện đầy màu sắc và trí tưởng tượng của Dế Mèn, từ việc khám phá thế giới xung quanh đến những thử thách bất ngờ. Cuốn sách mở ra một thế giới tuổi thơ tươi đẹp với các bài học sâu sắc.', 'Tô Hoài', 'NXB Kim Đồng', '2023-01-15', 15, 'https://static.8cache.com/cover/o/eJzLyTDW1_VIzDROLfM3Noh31A8LM8zQLQlx8Uj11HeEgrw8V_0o5-Ck1IDyQEf3bP1iAwDLihCU/de-men-phieu-luu-ky.jpg',1, 1 ), \n" +
+                    "('Harry Potter và Hòn Đá Phù Thủy', 'Cuộc phiêu lưu ma thuật tại trường Hogwarts','Cuốn sách đưa bạn vào thế giới kỳ diệu của Harry Potter với những bí ẩn chưa được giải đáp và những cuộc chiến đấu ngoạn mục chống lại các thế lực đen tối. Một hành trình đầy ma thuật và phiêu lưu ở trường Hogwarts.', 'J.K. Rowling','NXB Thế Giới', '2023-02-20', 20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaFrm74pTLUb7H9tmrDEpEkenXX9_--_Hcyw&s', 3, 2 ), \n " +
+                    "('Đắc Nhân Tâm','Quyển sách của mọi thời đại và một hiện tượng đáng kinh ngạc', 'Cuốn sách cung cấp những chiến lược hiệu quả để cải thiện kỹ năng giao tiếp và xây dựng mối quan hệ tích cực. Đây là một cẩm nang hữu ích cho việc tạo dựng các kết nối cá nhân và nghề nghiệp bền vững.', 'Dale Carnegie',  'NXB Thế Giới', '2023-03-05', 25, 'https://nxbhcm.com.vn/Image/Biasach/dacnhantam86.jpg', 3, 3 ), \n" +
+                    "('Bí Quyết Phát Triển Bản Thân', 'Những chiến lược để trở thành phiên bản tốt nhất của chính bạn', 'Cuốn sách này chia sẻ những phương pháp và chiến lược cụ thể để phát triển bản thân, từ việc xác định mục tiêu cá nhân đến cách duy trì động lực và đạt được thành công trong cuộc sống.', 'Stephen R. Covey', 'NXB Trẻ', '2023-04-10', 18,  'https://salt.tikicdn.com/cache/w300/ts/product/f3/3d/17/2911a6f69519986428ec4127043c6f41.jpg', 7, 4 ),\n" +
+                    "('Cuộc Đời Của Pi','Cuộc phiêu lưu kỳ diệu trên đại dương', 'Một câu chuyện sâu sắc về hành trình sống còn của Pi Patel, một cậu bé 16 tuổi cùng với con hổ Bengal Richard Parker trên một chiếc thuyền cứu sinh giữa đại dương. Cuốn sách là một cuộc phiêu lưu không thể quên.', 'Yann Martel',  'NXB Văn Học',  '2023-05-25', 12, 'https://upload.wikimedia.org/wikipedia/vi/9/96/Cuoc_doi_cua_Pi.jpg', 6, 5 ),\n" +
+                    "('Sapiens: Lược Sử Loài Người', 'Khám phá lịch sử phát triển của loài người từ thuở sơ khai đến hiện đại', 'Cuốn sách cung cấp một cái nhìn sâu sắc về sự phát triển của loài người từ thời kỳ săn bắn hái lượm cho đến nền văn minh hiện đại, khám phá những sự kiện và xu hướng chính đã hình thành xã hội hiện tại.', 'Yuval Noah Harari', 'NXB Lao Động', '2023-06-30',  10,  'https://bizweb.dktcdn.net/100/197/269/products/sapiens-luoc-su-ve-loai-nguoi-outline-5-7-2017-02.jpg?v=1520935327270',  3, 2 ), \n" +
+                    "('Làm Giàu Không Khó', 'Những phương pháp và chiến lược đơn giản để làm giàu','\"Thói quen giàu có - Thói quen thành công hàng ngày của người giàu\" của Bobby K. Munoz. Nó vạch ra những chiến lược và thói quen thực tế mà bất cứ ai cũng có thể áp dụng để đạt được thành công về mặt tài chính. Cuốn sách nhấn mạnh tầm quan trọng của tư duy, kỷ luật và hành động để xây dựng sự giàu có theo thời gian.' , 'Bobby K. Munoz', 'NXB Trẻ',  '2023-07-15',  22,  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREzvc-QYekjU-_G4QDZysk-FtqRzD4fj-I4g&s',  7,  4 ), \n" +
+                    "('Những Điều Kỳ Diệu Trong Cuộc Sống', 'Khám phá những điều tuyệt vời và ý nghĩa trong cuộc sống hàng ngày','Điều Kỳ Diệu Của Cuộc Sống Như những khoảng lặng cần thiết trong tiết tấu của cuộc sống, những câu chuyện trong cuốn sách này sẽ mang đến cho bạn cơ hội để suy ngẫm và rung động về những chuyện có thực, về những điều có thể nhỏ nhặt nhưng ý nghĩa với mỗi chúng ta. Những câu chuyện trong Tủ sách Sống đẹp là tình cảm, nỗi niềm tâm sự sẻ chia của đông đảo bạn bè trên thế giới, họ ở mọi tầng lớp trong xã hội nhưng có chung một mong muốn là đánh thức trái tim nhân hậu và tình yêu thương trong mỗi con người.', 'Osho',  'NXB Thế Giới',  '2023-08-20',  16, 'https://salt.tikicdn.com/cache/280x280/media/catalog/product/d/i/dieu-ky-dieu-cua-cuoc-song.jpg', 8,  3 ),\n" +
+                    "('Người Lạ Trong Gương','Khám phá bí ẩn và sự thật về người lạ trong gương', 'Người đàn ông cô độc. Toby Temple vừa là một siêu sao vừa là kẻ tàn nhẫn, vừa được tôn sùng như một vị thánh lại vừa bị quấy rầy bởi bao sự nghi vấn, ngờ vực. Người phụ nữ vỡ mộng. Jill Castle đến Hollywood để làm một ngôi sao- và phát hiện ra rằng nàng chỉ có thể có được nó bằng chính thân xác mình. Một thế giới của những kẻ lợi dụng lẫn nhau. Tất cả đều được tái hiện chân thực trong cuốn tiểu thuyết Người lạ trong gương. ', 'Gillian Flynn', 'NXB Văn Học',  '2023-09-10',  14, 'https://salt.tikicdn.com/cache/w1200/media/catalog/product/1/-/1-8.u2487.d20161229.t134124.815649.jpg', 9,  2 ),\n" +
+                    "('Dạy Con Làm Giàu', 'Hướng dẫn giáo dục tài chính cho trẻ em','Bộ sưu tập sách nói Dạy Con Làm Giàu bao gồm 13 cuốn sách về quản lý tài chính cá nhân của Robert T.Kiyosaki. Đây là bộ sách kinh điển về cách nhìn nhận đồng tiền, kiếm tiền và giúp chúng ta nâng cao năng lực tài chính. Với tầm ảnh hưởng rộng khắp, Dạy Con Làm Giàu xứng đáng là “giáo trình làm giàu” mà ai cũng nên đọc trong đời.',  'Robert T. Kiyosaki',  'NXB Trẻ',  '2023-10-01',  30, 'https://www.nxbtre.com.vn/Images/Book/copy_16_nxbtre_full_15412017_094159.jpg',10,  1 ), \n  " +
+                    "('Lập Trình C++', 'Học C++ cơ bản đến nâng cao', 'Sách hướng dẫn lập trình C++ từ cơ bản đến nâng cao', 'Trần Thông Quế', 'NXB Thông Tin Và Truyền Thông', '2023-02-02', 15, 'https://down-vn.img.susercontent.com/file/vn-11134201-7qukw-lfjgojqnj8g46d', 2, 2), \n" +
+                    "('Dune', 'Cuộc chiến sa mạc', 'Một câu chuyện khoa học viễn tưởng về hành tinh sa mạc', 'Frank Herbert', 'NXB Hội Nhà Văn', '2023-03-03', 8, 'https://vnmedia.vn/file/8a10a0d36ccebc89016ce0c6fa3e1b83/022024/2_20240229154447.jpg', 3, 3), \n" +
+                    "('Pride and Prejudice', 'Kiêu hãnh và định kiến', 'Một tiểu thuyết lãng mạn nổi tiếng của Jane Austen', 'Jane Austen', 'NXB Văn Học', '2023-04-04', 20, 'https://m.media-amazon.com/images/M/MV5BMTA1NDQ3NTcyOTNeQTJeQWpwZ15BbWU3MDA0MzA4MzE@._V1_.jpg', 4, 4), \n" +
+                    "('Sherlock Holmes', 'Thám tử lừng danh', 'Bộ truyện trinh thám kinh điển về thám tử Sherlock Holmes', 'Arthur Conan Doyle', 'NXB Kim Đồng', '2023-05-05', 12, 'https://product.hstatic.net/200000343865/product/sherlock-holmes---nhung-cuoc-phieu-luu-cua-sherlock-holmes_2af2e17154b54ce0be4875e51dec52d8_master.jpg', 5, 5), \n" +
+                    " ('Truyện cổ Grimm', 'Những câu chuyện cổ tích kinh điển', 'Tập hợp những câu chuyện cổ tích kinh điển của anh em Grimm', 'Anh em Grimm', 'NXB Văn Học', '2023-06-06', 10, 'https://cdn0.fahasa.com/media/catalog/product/8/9/8935236425872.jpg', 6, 5);"
         db?.execSQL(insertTableBook)
         //INSERT PHIEU MUON
         val insertPM = """
-            INSERT INTO $TABLE_PM_NAME (
-                $COLUMN_PM_ID,
-                $COLUMN_PM_NGAYMUON,
-                $COLUMN_PM_NGAYTRA,
-                $COLUMN_DG_ID,
-                $COLUMN_PM_MATHU,
-                $COLUMN_PM_SOLUONG,
-                $COLUMN_PM_GHICHU
-            ) VALUES 
-            ('PM20240701', '2024-07-01', '2024-07-15', 1, 1, 3, 'First borrow'),
-            ('PM20240705', '2024-07-05', '2024-07-20', 2, 2, 2, 'Second borrow'),
-            ('PM20240710', '2024-07-10', '2024-07-25', 3, 3, 4, 'Third borrow'),
-            ('PM20240715', '2024-07-15', '2024-07-30', 4, 4, 1, 'Fourth borrow'),
-            ('PM20240720', '2024-07-20', '2024-08-05', 5, 5, 5, 'Fifth borrow'),
-            ('PM20240725', '2024-07-25', '2024-08-10', 6, 6, 3, 'Sixth borrow'),
-            ('PM20240730', '2024-07-30', '2024-08-15', 7, 7, 2, 'Seventh borrow'),
-            ('PM20240801', '2024-08-01', '2024-08-16', 8, 8, 4, 'Eighth borrow'),
-            ('PM20240805', '2024-08-05', '2024-08-20', 9, 9, 1, 'Ninth borrow'),
-            ('PM20240810', '2024-08-10', '2024-08-25', 10, 10, 5, 'Tenth borrow'),
-            ('PM20240815', '2024-08-15', '2024-08-30', 1, 2, 3, 'Eleventh borrow'),
-            ('PM20240820', '2024-08-20', '2024-09-05', 2, 3, 2, 'Twelfth borrow'),
-            ('PM20240825', '2024-08-25', '2024-09-10', 3, 4, 4, 'Thirteenth borrow'),
-            ('PM20240830', '2024-08-30', '2024-09-15', 4, 5, 1, 'Fourteenth borrow'),
-            ('PM20240901', '2024-09-01', '2024-09-16', 5, 6, 5, 'Fifteenth borrow');
-        """
+    INSERT INTO $TABLE_PM_NAME (
+        $COLUMN_PM_ID,
+        $COLUMN_PM_NGAYMUON,
+        $COLUMN_PM_NGAYTRA,
+        $COLUMN_DG_ID,
+        $COLUMN_PM_MATHU,
+        $COLUMN_PM_SOLUONG,
+        $COLUMN_PM_GHICHU
+    ) VALUES 
+    ('PM20240701', '2024-07-01', '2024-07-15', 1, 1, 3, 'First borrow'),
+    ('PM20240705', '2024-07-05', '2024-07-20', 2, 2, 2, 'Second borrow'),
+    ('PM20240710', '2024-07-10', '2024-07-25', 3, 3, 4, 'Third borrow'),
+    ('PM20240715', '2024-07-15', '2024-07-30', 4, 4, 1, 'Fourth borrow'),
+    ('PM20240720', '2024-07-20', '2024-08-05', 5, 5, 5, 'Fifth borrow'),
+    ('PM20240725', '2024-07-25', '2024-08-10', 6, 6, 3, 'Sixth borrow'),
+    ('PM20240730', '2024-07-30', '2024-08-15', 7, 7, 2, 'Seventh borrow'),
+    ('PM20240801', '2024-08-01', '2024-08-16', 8, 8, 4, 'Eighth borrow'),
+    ('PM20240805', '2024-08-05', '2024-08-20', 9, 9, 1, 'Ninth borrow'),
+    ('PM20240810', '2024-08-10', '2024-08-25', 10, 10, 5, 'Tenth borrow'),
+    ('PM20240815', '2024-08-15', '2024-08-30', 11, 11, 2, 'Eleventh borrow'),
+    ('PM20240820', '2024-08-20', '2024-09-05', 12, 12, 4, 'Twelfth borrow'),
+    ('PM20240825', '2024-08-25', '2024-09-10', 13, 13, 3, 'Thirteenth borrow'),
+    ('PM20240830', '2024-08-30', '2024-09-15', 14, 14, 1, 'Fourteenth borrow'),
+    ('PM20240901', '2024-09-01', '2024-09-16', 15, 15, 5, 'Fifteenth borrow'),
+    ('PM20240905', '2024-09-05', '2024-09-20', 1, 1, 2, 'Sixteenth borrow'),
+    ('PM20240910', '2024-09-10', '2024-09-25', 2, 2, 3, 'Seventeenth borrow'),
+    ('PM20240915', '2024-09-15', '2024-09-30', 3, 3, 4, 'Eighteenth borrow'),
+    ('PM20240920', '2024-09-20', '2024-10-05', 4, 4, 1, 'Nineteenth borrow'),
+    ('PM20240925', '2024-09-25', '2024-10-10', 5, 5, 2, 'Twentieth borrow'),
+    ('PM20240930', '2024-09-30', '2024-10-15', 6, 6, 3, 'Twenty-first borrow'),
+    ('PM20241005', '2024-10-05', '2024-10-20', 7, 7, 4, 'Twenty-second borrow');
+"""
 
         // Insert data into CHITIETPHIEUMUON table
-        val insertCTPM = "INSERT INTO $TABLE_CTPM_NAME ($COLUMN_CTPM_MASACH, $COLUMN_CTPM_MAPM) VALUES " +
-                "(1, 'PM20240701'), ('3', 'PM20240705')," +
-                "(2, 'PM20240701'), (4, 'PM20240705')," +
-                "(3, 'PM20240701'), (5, 'PM20240705')," +
-                "(4, 'PM20240701'), (6, 'PM20240705')," +
-                "(5, 'PM20240701'), (7, 'PM20240705')," +
-                "(6, 'PM20240701'), (8, 'PM20240705')," +
-                "(7, 'PM20240701'), (9, 'PM20240705')," +
-                "(8, 'PM20240701'), (10, 'PM20240705')," +
-                "(9, 'PM20240701'), (11, 'PM20240705')," +
-                "(10, 'PM20240701'), (12, 'PM20240705')," +
-                "(11, 'PM20240701'), (13, 'PM20240705')," +
-                "(12, 'PM20240701'), (14, 'PM20240705')," +
-                "(13, 'PM20240701'), (15, 'PM20240705');"
+        val insertCTPM = """
+    INSERT INTO $TABLE_CTPM_NAME ($COLUMN_CTPM_MASACH, $COLUMN_CTPM_MAPM) VALUES 
+    (1, 'PM20240701'), (2, 'PM20240701'), (3, 'PM20240701'),
+    (4, 'PM20240705'), (5, 'PM20240705'), (6, 'PM20240705'),
+    (7, 'PM20240710'), (8, 'PM20240710'), (9, 'PM20240710'),
+    (10, 'PM20240715'), (11, 'PM20240715'), (12, 'PM20240715'),
+    (13, 'PM20240720'), (14, 'PM20240720'), (15, 'PM20240720'),
+    (1, 'PM20240725'), (2, 'PM20240725'), (3, 'PM20240725'),
+    (4, 'PM20240801'), (5, 'PM20240801'), (6, 'PM20240801');
+"""
 
         // Insert data into PHIEUTRA table
         val insertPT = """
@@ -339,22 +343,23 @@ class DatabaseHelper(context: Context) :
         """
 
         // Insert data into CHITIETPHIEUTRA table
-        val insertCTPT = "INSERT INTO $TABLE_CTPT_NAME ($COLUMN_CTPT_MASACH, $COLUMN_CTPT_MAPT) VALUES " +
-                "(1, 'PT20240701'), (2, 'PT20240705')," +
-                "(2, 'PT20240702'), (3, 'PT20240706')," +
-                "(3, 'PT20240703'), (4, 'PT20240707')," +
-                "(4, 'PT20240704'), (5, 'PT20240708')," +
-                "(5, 'PT20240709'), (6, 'PT20240710')," +
-                "(6, 'PT20240711'), (7, 'PT20240712')," +
-                "(7, 'PT20240713'), (8, 'PT20240714')," +
-                "(8, 'PT20240715'), (9, 'PT20240701')," +
-                "(9, 'PT20240705'), (10, 'PT20240702')," +
-                "(10, 'PT20240706'), (11, 'PT20240703')," +
-                "(11, 'PT20240707'), (12, 'PT20240704')," +
-                "(12, 'PT20240708'), (13, 'PT20240709')," +
-                "(13, 'PT20240710'), (14, 'PT20240711')," +
-                "(14, 'PT20240712'), (15, 'PT20240713')," +
-                "(15, 'PT20240714'), (1, 'PT20240715');"
+        val insertCTPT =
+            "INSERT INTO $TABLE_CTPT_NAME ($COLUMN_CTPT_MASACH, $COLUMN_CTPT_MAPT) VALUES " +
+                    "(1, 'PT20240701'), (2, 'PT20240705')," +
+                    "(2, 'PT20240702'), (3, 'PT20240706')," +
+                    "(3, 'PT20240703'), (4, 'PT20240707')," +
+                    "(4, 'PT20240704'), (5, 'PT20240708')," +
+                    "(5, 'PT20240709'), (6, 'PT20240710')," +
+                    "(6, 'PT20240711'), (7, 'PT20240712')," +
+                    "(7, 'PT20240713'), (8, 'PT20240714')," +
+                    "(8, 'PT20240715'), (9, 'PT20240701')," +
+                    "(9, 'PT20240705'), (10, 'PT20240702')," +
+                    "(10, 'PT20240706'), (11, 'PT20240703')," +
+                    "(11, 'PT20240707'), (12, 'PT20240704')," +
+                    "(12, 'PT20240708'), (13, 'PT20240709')," +
+                    "(13, 'PT20240710'), (14, 'PT20240711')," +
+                    "(14, 'PT20240712'), (15, 'PT20240713')," +
+                    "(15, 'PT20240714'), (1, 'PT20240715');"
         db?.execSQL(insertPM)
         db?.execSQL(insertCTPM)
         db?.execSQL(insertPT)

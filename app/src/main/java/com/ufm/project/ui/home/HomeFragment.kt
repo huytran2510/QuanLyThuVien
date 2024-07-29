@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -26,7 +27,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var booksList: ArrayList<BookRVModal>
     private lateinit var loadingPB: ProgressBar
-    private lateinit var searchEdt: EditText
+    private lateinit var searchEdt: SearchView
     private lateinit var searchBtn: ImageButton
     private lateinit var parent: LinearLayout
     private var selectedItem: TextView? = null
@@ -45,7 +46,6 @@ class HomeFragment : Fragment() {
         // Khởi tạo các view
         loadingPB = binding.idLoadingPB
         searchEdt = binding.idEdtSearchBooks
-        searchBtn = binding.idBtnSearch
         parent = binding.idLLsearch
 
         // Xóa và populate lại cơ sở dữ liệu
@@ -53,23 +53,26 @@ class HomeFragment : Fragment() {
 //        populateDatabase()
 
         // Đặt background cho view
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.activity_home, parent, false)
-        val backgroundDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.item_background_selector)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.activity_home, parent, false)
+        val backgroundDrawable =
+            ContextCompat.getDrawable(requireContext(), R.drawable.item_background_selector)
         itemView.background = backgroundDrawable
 
         // Thiết lập sự kiện cho nút tìm kiếm
-        searchBtn.setOnClickListener {
-            if (searchEdt.text.toString().isEmpty()) {
-                searchEdt.error = "Please enter search query"
-                loadingPB.visibility = View.GONE
-                return@setOnClickListener
-            } else {
-                loadingPB.visibility = View.VISIBLE
-                getBooksData2(searchEdt.text.toString())
-                loadingPB.visibility = View.GONE
-                Toast.makeText(context,"Search", Toast.LENGTH_SHORT).show()
+        searchEdt.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
             }
-        }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                // Handle text change if needed
+                loadingPB.visibility = View.VISIBLE
+                getBooksData2(newText)
+                loadingPB.visibility = View.GONE
+                return false
+            }
+        })
 
         // Load dữ liệu mặc định
         getBooksData2("")
@@ -107,15 +110,15 @@ class HomeFragment : Fragment() {
 
         with(cursor) {
             while (moveToNext()) {
-                val masach = getInt(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_MASACH))
-                val tensach = getString(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_TENSACH))
-                val phude = getString(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_PHUDE))
-                val mota = getString(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_MOTA))
-                val tacgia = getString(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_TACGIA))
-                val nxb = getString(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_NXB))
-                val ngaynhap = getString(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_NGAYNHAP))
-                val soluong = getInt(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_SOLUONG))
-                val anh = getString(getColumnIndexOrThrow( DatabaseHelper.COLUMN_BOOK_ANH))
+                val masach = getInt(getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_MASACH))
+                val tensach = getString(getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_TENSACH))
+                val phude = getString(getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_PHUDE))
+                val mota = getString(getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_MOTA))
+                val tacgia = getString(getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_TACGIA))
+                val nxb = getString(getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_NXB))
+                val ngaynhap = getString(getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_NGAYNHAP))
+                val soluong = getInt(getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_SOLUONG))
+                val anh = getString(getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_ANH))
 
                 val authorsArrayList = ArrayList(tacgia.split(", "))
 
