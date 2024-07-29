@@ -48,10 +48,6 @@ class HomeFragment : Fragment() {
         searchEdt = binding.idEdtSearchBooks
         parent = binding.idLLsearch
 
-        // Xóa và populate lại cơ sở dữ liệu
-//        context?.deleteDatabase(DatabaseHelper.DATABASE_NAME)
-//        populateDatabase()
-
         // Đặt background cho view
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.activity_home, parent, false)
@@ -146,6 +142,7 @@ class HomeFragment : Fragment() {
         val mRecyclerView = binding.idRVBooks
         mRecyclerView.layoutManager = layoutManager
         mRecyclerView.adapter = adapter
+        adapter.notifyDataSetChanged()
     }
 
 

@@ -4,46 +4,60 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_admin"
+    <!-- Nhóm Quản lý -->
+    <group android:checkableBehavior="single" android:title="Quản lý">
+        <item
+            android:id="@+id/nav_admin"
             android:icon="@drawable/baseline_menu_book_24"
             android:title="Quản lý sách"/>
 
-        <item android:id="@+id/nav_management_type_book"
-            android:icon="@drawable/baseline_insert_drive_file_24"
+        <item
+            android:id="@+id/nav_management_type_book"
+            android:icon="@drawable/type_book"
             android:title="Quản lý loại sách"/>
 
-        <item android:id="@+id/nav_management_borrow_book"
-            android:icon="@drawable/baseline_library_books_24"
+        <item
+            android:id="@+id/nav_management_borrow_book"
+            android:icon="@drawable/borrow_book"
             android:title="Quản lý phiếu mượn"/>
 
-        <item android:id="@+id/nav_management_reader"
+        <item
+            android:id="@+id/nav_management_reader"
             android:icon="@drawable/logo_reader"
-            android:title="Quản lý độc giả" />
-
-        <item android:id="@+id/nav_statistics_borrow_book"
-            android:icon="@drawable/logo_reader"
-            android:title="Thống kê phiếu mượn sách" />
-
-        <item android:id="@+id/nav_statistics_return_book"
-            android:icon="@drawable/logo_reader"
-            android:title="Thống kê phiếu trả sách" />
-
-        <item android:id="@+id/nav_statistics_of_book_return"
-            android:icon="@drawable/logo_reader"
-            android:title="Thống kê thông tin trả sách trả sách" />
-
-        <item android:id="@+id/nav_statistics_top_book"
-            android:icon="@drawable/logo_reader"
-            android:title="Top sách được mượn nhiều nhất" />
-        <item android:id="@+id/nav_management_account"
-            android:icon="@drawable/baseline_manage_accounts_24"
-            android:title="Quản lý tài khoản" />
+            android:title="Quản lý độc giả"/>
 
         <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/baseline_logout_24"
-            android:title="Đăng Xuất" />
-
+            android:id="@+id/nav_management_account"
+            android:icon="@drawable/baseline_manage_accounts_24"
+            android:title="Quản lý tài khoản"/>
     </group>
+
+    <!-- Nhóm Thống kê -->
+    <group android:checkableBehavior="single" android:title="Thống kê">
+        <item
+            android:id="@+id/nav_statistics_borrow_book"
+            android:icon="@drawable/statistic_book"
+            android:title="Thống kê phiếu mượn sách"/>
+
+        <item
+            android:id="@+id/nav_statistics_return_book"
+            android:icon="@drawable/return_book"
+            android:title="Thống kê phiếu trả sách"/>
+
+        <item
+            android:id="@+id/nav_statistics_of_book_return"
+            android:icon="@drawable/seo_report"
+            android:title="Thống kê tình trạng trả sách"/>
+
+        <item
+            android:id="@+id/nav_statistics_top_book"
+            android:icon="@drawable/top_borrow_book"
+            android:title="Top sách được mượn nhiều nhất"/>
+    </group>
+
+    <!-- Mục Đăng Xuất -->
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/baseline_logout_24"
+        android:title="Đăng Xuất"/>
 </menu>

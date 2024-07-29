@@ -28,7 +28,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class BookDetailsActivity: AppCompatActivity() {
+class BookDetailsActivity : AppCompatActivity() {
     lateinit var titleTV: TextView
     lateinit var subtitleTV: TextView
     lateinit var publisherTV: TextView
@@ -57,7 +57,6 @@ class BookDetailsActivity: AppCompatActivity() {
         bookIV = findViewById(R.id.idIVbook)
 
 
-
         // getting the data which we have passed from our adapter class.
         val title = getIntent().getStringExtra("title")
         val subtitle = getIntent().getStringExtra("subtitle")
@@ -70,7 +69,7 @@ class BookDetailsActivity: AppCompatActivity() {
         val previewLink = getIntent().getStringExtra("previewLink")
         val infoLink = getIntent().getStringExtra("infoLink")
         val buyLink = getIntent().getStringExtra("buyLink")
-        val idBook = getIntent().getIntExtra("idBook", 0 )
+        val idBook = getIntent().getIntExtra("idBook", 0)
 
 
         // after getting the data we are setting
@@ -100,8 +99,8 @@ class BookDetailsActivity: AppCompatActivity() {
 
             // Show the dialog
             val alertDialog = dialogBuilder.show()
-            val returnDateEditText : EditText = dialogView.findViewById(R.id.returnDateEditText)
-            val borrowDateEditText : EditText = dialogView.findViewById(R.id.borrowDateEditText)
+            val returnDateEditText: EditText = dialogView.findViewById(R.id.returnDateEditText)
+            val borrowDateEditText: EditText = dialogView.findViewById(R.id.borrowDateEditText)
             // Get the dialog's UI elements
             val quantityEditText: EditText = dialogView.findViewById(R.id.quantityEditText)
             val ghichuEditText: EditText = dialogView.findViewById(R.id.ghichuEditText)
@@ -137,24 +136,46 @@ class BookDetailsActivity: AppCompatActivity() {
                     val dbHelper = DatabaseHelper(this)
                     val db = dbHelper.writableDatabase
                     val accountDao = AccountDao()
-                    val email = accountDao.getEmailKHFromIdTK(userId,db)
-                    borrowBookDao.borrowBook(borrowDate,returnDate,quantity,ghichu, userId, idBook, db)
-                    Toast.makeText(this, "Mượn thành công", Toast.LENGTH_SHORT).show()
-                    val subject = "Thông báo mượn sách thành công"
-                    val messageBody = "Bạn đã mượn thành công sách với các thông tin sau:\n" +
-                            "Ngày mượn: $borrowDate\n" +
-                            "Ngày trả: $returnDate\n" +
-                            "Số lượng: $quantity\n" +
-                            "Ghi chú: $ghichu"
-                    EmailSender(email, subject, messageBody).execute()
-                    alertDialog.dismiss()
+                    val email = accountDao.getEmailKHFromIdTK(userId, db)
+
+                    try {
+                        borrowBookDao.borrowBook(
+                            borrowDate,
+                            returnDate,
+                            quantity,
+                            ghichu,
+                            userId,
+                            idBook,
+                            db
+                        )
+                        Toast.makeText(this, "Mượn thành công", Toast.LENGTH_SHORT).show()
+
+                        val subject = "Thông báo mượn sách thành công"
+                        val messageBody = """
+                                Bạn đã mượn thành công sách với các thông tin sau:
+                                Ngày mượn: $borrowDate
+                                Ngày trả: $returnDate
+                                Số lượng: $quantity
+                                Ghi chú: $ghichu
+                            """.trimIndent()
+                        EmailSender(email, subject, messageBody).execute()
+                        alertDialog.dismiss()
+                    } catch (e: Exception) {
+                        // Hiển thị thông báo lỗi
+                        Toast.makeText(this, "Có lỗi xảy ra: ${e.message}", Toast.LENGTH_LONG)
+                            .show()
+                        e.printStackTrace() // Log lỗi để dễ dàng debug nếu cần
+                    } finally {
+                        db.close() // Đảm bảo đóng database
+                    }
                 } else {
-                    // Show an error message
+                    // Hiển thị thông báo lỗi khi số lượng null
                     Toast.makeText(this, "Vui lòng nhập số lượng", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
+
     private fun showDatePickerDialog(editText: EditText) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -180,7 +201,6 @@ class BookDetailsActivity: AppCompatActivity() {
         val userId = if (isLoggedIn) sharedPreferences.getInt("userId", -1) else -1
         return Pair(isLoggedIn, userId)
     }
-
 
 
 }

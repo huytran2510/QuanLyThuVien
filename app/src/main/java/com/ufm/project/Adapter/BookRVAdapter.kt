@@ -32,7 +32,7 @@ class BookRVAdapter(
         // below line is use to set image from URL in our image view.
         Picasso.get().load(bookInfo.thumbnail).into(holder.bookIV);
         holder.bookTitleTV.text = bookInfo.title
-        holder.bookPagesTV.text = "Pages : " + bookInfo.pageCount
+        holder.bookPagesTV.text = "Có sẵn : " + bookInfo.pageCount
 
         // below line is use to add on click listener for our item of recycler view.
         holder.itemView.setOnClickListener {

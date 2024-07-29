@@ -232,8 +232,8 @@ class DatabaseHelper(context: Context) :
         val insertTableDG =
             "INSERT INTO $TABLE_DG_NAME ($COLUMN_DG_NAME, $COLUMN_DG_ADDRESS, $COLUMN_DG_NGAYSINH, $COLUMN_DG_DIENTHOAI, $COLUMN_DG_GIOITINH, $COLUMN_TK_ID, $COLUMN_DG_EMAIL)\n" +
                     "VALUES\n" +
-                    "('Nguyễn Văn An', '123 Đường Trần Hưng Đạo, Quận 1, TP.HCM', '1990-01-01', '0901234567', 'Nam', 1, 'an123@gmail.com'),\n" +
-                    "('Trần Thị Hoa', '456 Đường Nguyễn Huệ, Quận 2, TP.HCM', '1992-02-14', '0902345678', 'Nữ', 2, 'hoatran@gmail.com'),\n" +
+                    "('Nguyễn Văn An', '123 Đường Trần Hưng Đạo, Quận 1, TP.HCM', '1990-01-01', '0901234567', 'Nam', 1, 'huy251003@gmail.com'),\n" +
+                    "('Trần Thị Hoa', '456 Đường Nguyễn Huệ, Quận 2, TP.HCM', '1992-02-14', '0902345678', 'Nữ', 2, 'huy251003@gmail.com'),\n" +
                     "('Lê Văn CHí', '789 Đường Võ Văn Tần, Quận 3, TP.HCM', '1988-03-21', '0903456789', 'Nam', 3,'levanchi@gmail.com'),\n" +
                     "('Hoàng Thị Dung', '101 Đường Bạch Đằng, Quận 4, TP.HCM', '1995-04-30', '0904567890', 'Nữ', 4, 'dunghoang123@gmail.com'),\n" +
                     "('Vũ Văn Nam', '202 Đường Nguyễn Chí Thanh, Quận 5, TP.HCM', '1989-05-15', '0905678901', 'Nam', 5, 'vannam@gmail.com'),\n" +
@@ -308,13 +308,13 @@ class DatabaseHelper(context: Context) :
         // Insert data into CHITIETPHIEUMUON table
         val insertCTPM = """
     INSERT INTO $TABLE_CTPM_NAME ($COLUMN_CTPM_MASACH, $COLUMN_CTPM_MAPM) VALUES 
-    (1, 'PM20240701'), (2, 'PM20240701'), (3, 'PM20240701'),
-    (4, 'PM20240705'), (5, 'PM20240705'), (6, 'PM20240705'),
-    (7, 'PM20240710'), (8, 'PM20240710'), (9, 'PM20240710'),
-    (10, 'PM20240715'), (11, 'PM20240715'), (12, 'PM20240715'),
-    (13, 'PM20240720'), (14, 'PM20240720'), (15, 'PM20240720'),
-    (1, 'PM20240725'), (2, 'PM20240725'), (3, 'PM20240725'),
-    (4, 'PM20240801'), (5, 'PM20240801'), (6, 'PM20240801');
+    (1, 'PM20240701'), (2, 'PM20240705'), (3, 'PM20240710'),
+    (4, 'PM20240715'), (5, 'PM20240720'), (6, 'PM20240725'),
+    (7, 'PM20240730'), (8, 'PM20240801'), (9, 'PM20240805'),
+    (10, 'PM20240810'), (11, 'PM20240815'), (12, 'PM20240820'),
+    (13, 'PM20240825'), (14, 'PM20240830'), (15, 'PM20240901'),
+    (1, 'PM20240905'), (2, 'PM20240910'), (3, 'PM20240915'),
+    (4, 'PM20240920'), (5, 'PM20240925'), (6, 'PM20240930');
 """
 
         // Insert data into PHIEUTRA table
