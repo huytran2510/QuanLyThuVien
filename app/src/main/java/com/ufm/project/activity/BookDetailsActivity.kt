@@ -1,5 +1,6 @@
 package com.ufm.project.activity
 
+import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.squareup.picasso.Picasso
 import com.ufm.project.MainActivity
 import com.ufm.project.R
+import com.ufm.project.dao.AccountDao
 import com.ufm.project.dao.BorrowBookDao
 import com.ufm.project.database.DatabaseHelper
 import com.ufm.project.service.EmailSender
@@ -37,7 +39,6 @@ class BookDetailsActivity: AppCompatActivity() {
     lateinit var buyBtn: Button
     lateinit var bookIV: ImageView
     private lateinit var borrowBookDao: BorrowBookDao
-    private lateinit var emailSender: EmailSender
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +55,8 @@ class BookDetailsActivity: AppCompatActivity() {
         previewBtn = findViewById(R.id.idBtnPreview)
         buyBtn = findViewById(R.id.idBtnBuy)
         bookIV = findViewById(R.id.idIVbook)
+
+
 
         // getting the data which we have passed from our adapter class.
         val title = getIntent().getStringExtra("title")
@@ -94,61 +97,56 @@ class BookDetailsActivity: AppCompatActivity() {
             // Create an AlertDialog builder and set the layout
             val dialogBuilder = AlertDialog.Builder(this)
                 .setView(dialogView)
-                .setTitle("Borrow Book")
 
             // Show the dialog
             val alertDialog = dialogBuilder.show()
-
+            val returnDateEditText : EditText = dialogView.findViewById(R.id.returnDateEditText)
+            val borrowDateEditText : EditText = dialogView.findViewById(R.id.borrowDateEditText)
             // Get the dialog's UI elements
-            val borrowDateSpinner: Spinner = dialogView.findViewById(R.id.borrowDateSpinner)
-            val returnDateSpinner: Spinner = dialogView.findViewById(R.id.returnDateSpinner)
             val quantityEditText: EditText = dialogView.findViewById(R.id.quantityEditText)
             val ghichuEditText: EditText = dialogView.findViewById(R.id.ghichuEditText)
             val confirmButton: Button = dialogView.findViewById(R.id.confirmButton)
 
-            // Create a list of dates for the Spinner
-            val dateList = mutableListOf<String>()
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val calendar = Calendar.getInstance()
 
-            for (i in 0..30) {
-                dateList.add(dateFormat.format(calendar.time))
-                calendar.add(Calendar.DAY_OF_MONTH, 1)
+            returnDateEditText.setOnClickListener {
+                showDatePickerDialog(returnDateEditText)
             }
+
+            borrowDateEditText.setOnClickListener {
+                showDatePickerDialog(borrowDateEditText)
+            }
+
+
             val (isLoggedIn, userId) = checkLoginState()
 
-            // Set up the Spinner with the date list
-            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, dateList)
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            borrowDateSpinner.adapter = adapter
-            returnDateSpinner.adapter = adapter
 
             // Set the confirm button click listener
             confirmButton.setOnClickListener {
                 // Get the selected dates and quantity
-                val borrowDate = borrowDateSpinner.selectedItem.toString()
-                val returnDate = returnDateSpinner.selectedItem.toString()
                 val quantity = quantityEditText.text.toString().toIntOrNull()
                 val ghichu = ghichuEditText.text.toString()
+                val borrowDate = borrowDateEditText.text.toString()
+                val returnDate = returnDateEditText.text.toString()
                 borrowBookDao = BorrowBookDao()
+                // write function get email by user id
+                // no i want write function get email by user id
+
+
                 // Validate the input
-                emailSender = EmailSender(this)
                 if (quantity != null) {
-                    // Handle the borrow book logic here
-                    // For example, insert the data into the database
                     val dbHelper = DatabaseHelper(this)
                     val db = dbHelper.writableDatabase
-
+                    val accountDao = AccountDao()
+                    val email = accountDao.getEmailKHFromIdTK(userId,db)
                     borrowBookDao.borrowBook(borrowDate,returnDate,quantity,ghichu, userId, idBook, db)
                     Toast.makeText(this, "Mượn thành công", Toast.LENGTH_SHORT).show()
-                    val toEmail = "huy251003@gmail.com" // Thay đổi email người nhận
                     val subject = "Thông báo mượn sách thành công"
                     val messageBody = "Bạn đã mượn thành công sách với các thông tin sau:\n" +
                             "Ngày mượn: $borrowDate\n" +
                             "Ngày trả: $returnDate\n" +
                             "Số lượng: $quantity\n" +
                             "Ghi chú: $ghichu"
-                    emailSender.sendEmail(toEmail, subject, messageBody)                    // Close the dialog
+                    EmailSender(email, subject, messageBody).execute()
                     alertDialog.dismiss()
                 } else {
                     // Show an error message
@@ -157,6 +155,23 @@ class BookDetailsActivity: AppCompatActivity() {
             }
         }
     }
+    private fun showDatePickerDialog(editText: EditText) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val selectedDate = "$selectedDay/${selectedMonth + 1}/$selectedYear"
+                editText.setText(selectedDate)
+            },
+            year, month, day
+        )
+        datePickerDialog.show()
+    }
+
 
     private fun checkLoginState(): Pair<Boolean, Int> {
         val sharedPreferences =
@@ -165,4 +180,7 @@ class BookDetailsActivity: AppCompatActivity() {
         val userId = if (isLoggedIn) sharedPreferences.getInt("userId", -1) else -1
         return Pair(isLoggedIn, userId)
     }
+
+
+
 }

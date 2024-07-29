@@ -117,4 +117,20 @@ class AccountDao () {
         db.delete(DatabaseHelper.TABLE_TK_NAME, "${DatabaseHelper.COLUMN_TK_ID} = ?", arrayOf(idAccount.toString()))
     }
 
+
+    fun getEmailKHFromIdTK(idTK: Int, db: SQLiteDatabase): String {
+        var email: String = ""
+
+        val cursor: Cursor = db.rawQuery(
+            "SELECT ${DatabaseHelper.COLUMN_DG_EMAIL} FROM ${DatabaseHelper.TABLE_DG_NAME} WHERE ${DatabaseHelper.COLUMN_TK_ID} = ?",
+            arrayOf(idTK.toString())
+        )
+
+        if (cursor.moveToFirst()) {
+            email = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DG_EMAIL))
+        }
+        cursor.close()
+        return email
+    }
+
 }
