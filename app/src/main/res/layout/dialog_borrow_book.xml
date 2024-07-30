@@ -18,29 +18,42 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="18dp"
         android:fontFamily="@font/poppins_bold"
-        android:text="Chọn ngày mượn" />
+        android:text="Ngày mượn" />
 
-    <Spinner
-        android:id="@+id/borrowDateSpinner"
+
+    <EditText
+        android:id="@+id/borrowDateEditText"
+        android:background="@drawable/edit_text_background"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:clickable="true"
+        android:hint="Chọn ngày mượn" />
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_bold"
-        android:text="Chọn ngày trả" />
+        android:textSize="18dp"
+        android:text="Ngày trả" />
 
-    <Spinner
-        android:id="@+id/returnDateSpinner"
+    <EditText
+        android:id="@+id/returnDateEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:background="@drawable/edit_text_background"
+        android:clickable="true"
+        android:hint="Chọn ngày trả" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_bold"
+        android:textSize="18dp"
         android:text="Nhập số lượng mượn" />
 
     <EditText
@@ -54,6 +67,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="18dp"
         android:fontFamily="@font/poppins_bold"
         android:text="Ghi chú" />
 
@@ -66,11 +80,15 @@
         android:inputType="text" />
 
     <Button
+        android:layout_margin="10dp"
         android:id="@+id/confirmButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@color/teal_700"
+        android:textColor="@color/white"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="20dp"
         android:text="Xác nhận" />
 
 

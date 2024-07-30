@@ -5,29 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".ui.admin.StatisticsOfBookReturnFragment">
 
-    <Spinner
-        android:id="@+id/spinnerMonth"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/months" />
+        android:gravity="center"
+        android:orientation="horizontal" >
+        <Spinner
+            android:id="@+id/spinnerMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/months" />
 
-    <Spinner
-        android:id="@+id/spinnerYear"
+        <Spinner
+            android:id="@+id/spinnerYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/years" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/years" />
+        android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/textViewBorrowingStats"
+            android:layout_width="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="16dp"
+            android:layout_height="wrap_content"
+            android:text="Số phiếu mượn: " />
+    </LinearLayout>
+
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lineChart"
         android:layout_width="match_parent"
         android:layout_height="300dp" />
 
-    <TextView
-        android:id="@+id/textViewBorrowingStats"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Số phiếu mượn: " />
+
 
 </LinearLayout>

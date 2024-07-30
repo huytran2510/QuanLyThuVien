@@ -57,7 +57,7 @@
     <fragment
         android:id="@+id/nav_statistics_of_book_return"
         android:name="com.ufm.project.ui.admin.StatisticsOfBookReturnFragment"
-        android:label="Thống kê thông tin trả sách"
+        android:label="Thống kê tình trạng trả sách"
         tools:layout="@layout/fragment_statistics_of_book_returns" />
 
     <fragment

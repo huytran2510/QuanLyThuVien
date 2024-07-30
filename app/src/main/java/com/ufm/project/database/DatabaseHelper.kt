@@ -41,6 +41,7 @@ class DatabaseHelper(context: Context) :
         const val TABLE_DG_NAME = "docgia"
         const val COLUMN_DG_ID = "madocgia"
         const val COLUMN_DG_NAME = "hoten"
+        const val COLUMN_DG_EMAIL = "email"
         const val COLUMN_DG_ADDRESS = "diachi"
         const val COLUMN_DG_NGAYSINH = "ngaysinh"
         const val COLUMN_DG_GIOITINH = "gioitinh"
@@ -216,6 +217,7 @@ class DatabaseHelper(context: Context) :
                 "('Kinh tế - Quản trị'),\n" +
                 "('Sách giáo khoa'),\n" +
                 "('Sách thiếu nhi');"
+        db?.execSQL(insertTableTL)
 
         //INSERT TAI KHOAN
         db?.execSQL("INSERT INTO $TABLE_TK_NAME ($COLUMN_TK_USERNAME, $COLUMN_TK_PASSWORD, $COLUMN_TK_LOAITK) VALUES ('admin', '123456789', 'admin')")
@@ -242,18 +244,18 @@ class DatabaseHelper(context: Context) :
 
         //INSERT DOC GIA
         val insertTableDG =
-            "INSERT INTO $TABLE_DG_NAME ($COLUMN_DG_NAME, $COLUMN_DG_ADDRESS, $COLUMN_DG_NGAYSINH, $COLUMN_DG_DIENTHOAI, $COLUMN_DG_GIOITINH, $COLUMN_TK_ID)\n" +
+            "INSERT INTO $TABLE_DG_NAME ($COLUMN_DG_NAME, $COLUMN_DG_ADDRESS, $COLUMN_DG_NGAYSINH, $COLUMN_DG_DIENTHOAI, $COLUMN_DG_GIOITINH, $COLUMN_TK_ID, $COLUMN_DG_EMAIL)\n" +
                     "VALUES\n" +
-                    "('Nguyễn Văn An', '123 Đường Trần Hưng Đạo, Quận 1, TP.HCM', '1990-01-01', '0901234567', 'Nam', 1),\n" +
-                    "('Trần Thị Hoa', '456 Đường Nguyễn Huệ, Quận 2, TP.HCM', '1992-02-14', '0902345678', 'Nữ', 2),\n" +
-                    "('Lê Văn CHí', '789 Đường Võ Văn Tần, Quận 3, TP.HCM', '1988-03-21', '0903456789', 'Nam', 3),\n" +
-                    "('Hoàng Thị Dung', '101 Đường Bạch Đằng, Quận 4, TP.HCM', '1995-04-30', '0904567890', 'Nữ', 4),\n" +
-                    "('Vũ Văn Nam', '202 Đường Nguyễn Chí Thanh, Quận 5, TP.HCM', '1989-05-15', '0905678901', 'Nam', 5),\n" +
-                    "('Phan Thị Phương', '303 Đường Phan Văn Chí, Quận 6, TP.HCM', '1993-06-10', '0906789012', 'Nữ', 6),\n" +
-                    "('Đăng Minh Giang', '404 Đường Nguyễn Công Trư, Quận 7, TP.HCM', '1991-07-25', '0907890123', 'Nam', 7),\n" +
-                    "('Nguyễn Thị Hai', '505 Đường Võ Văn Công, Quận 8, TP.HCM', '1994-08-18', '0908901234', 'Nữ', 8),\n" +
-                    "('Mai Văn Hải', '606 Đường Lê Văn Việt, Quận 9, TP.HCM', '1987-09-12', '0909012345', 'Nam', 9),\n" +
-                    "('Lê Kim Hiền', '707 Đường 385, Quận 10, TP.HCM', '1996-10-05', '0900123456', 'Nữ', 10);"
+                    "('Nguyễn Văn An', '123 Đường Trần Hưng Đạo, Quận 1, TP.HCM', '1990-01-01', '0901234567', 'Nam', 1, 'huy251003@gmail.com'),\n" +
+                    "('Trần Thị Hoa', '456 Đường Nguyễn Huệ, Quận 2, TP.HCM', '1992-02-14', '0902345678', 'Nữ', 2, 'huy251003@gmail.com'),\n" +
+                    "('Lê Văn CHí', '789 Đường Võ Văn Tần, Quận 3, TP.HCM', '1988-03-21', '0903456789', 'Nam', 3,'levanchi@gmail.com'),\n" +
+                    "('Hoàng Thị Dung', '101 Đường Bạch Đằng, Quận 4, TP.HCM', '1995-04-30', '0904567890', 'Nữ', 4, 'dunghoang123@gmail.com'),\n" +
+                    "('Vũ Văn Nam', '202 Đường Nguyễn Chí Thanh, Quận 5, TP.HCM', '1989-05-15', '0905678901', 'Nam', 5, 'vannam@gmail.com'),\n" +
+                    "('Phan Thị Phương', '303 Đường Phan Văn Chí, Quận 6, TP.HCM', '1993-06-10', '0906789012', 'Nữ', 6, 'phuongphan@gmail.com'),\n" +
+                    "('Đăng Minh Giang', '404 Đường Nguyễn Công Trư, Quận 7, TP.HCM', '1991-07-25', '0907890123', 'Nam', 7, 'giang232@gmail.com'),\n" +
+                    "('Nguyễn Thị Hai', '505 Đường Võ Văn Công, Quận 8, TP.HCM', '1994-08-18', '0908901234', 'Nữ', 8, 'thihai@gmail.com'),\n" +
+                    "('Mai Văn Hải', '606 Đường Lê Văn Việt, Quận 9, TP.HCM', '1987-09-12', '0909012345', 'Nam', 9,'vanhai2@gmail.com'),\n" +
+                    "('Lê Kim Hiền', '707 Đường 385, Quận 10, TP.HCM', '1996-10-05', '0900123456', 'Nữ', 10, 'kimhien@gmail.com');"
 
         //INSERT NHA CUNG CAP
         val insertTableNCC = "INSERT INTO $TABLE_NCC_NAME (mancc, tenncc, diachi, dienthoai)\n" +
@@ -283,47 +285,50 @@ class DatabaseHelper(context: Context) :
 
         //INSERT PHIEU MUON
         val insertPM = """
-            INSERT INTO $TABLE_PM_NAME (
-                $COLUMN_PM_ID,
-                $COLUMN_PM_NGAYMUON,
-                $COLUMN_PM_NGAYTRA,
-                $COLUMN_DG_ID,
-                $COLUMN_PM_MATHU,
-                $COLUMN_PM_SOLUONG,
-                $COLUMN_PM_GHICHU
-            ) VALUES 
-            ('PM20240701', '2024-07-01', '2024-07-15', 8, 1, 3, 'First borrow'),
-            ('PM20240705', '2024-07-05', '2024-07-20', 2, 1, 2, 'Second borrow'),
-            ('PM20240710', '2024-07-10', '2024-07-25', 3, 1, 4, 'Third borrow'),
-            ('PM20240715', '2024-07-15', '2024-07-30', 4, 1, 1, 'Fourth borrow'),
-            ('PM20240720', '2024-07-20', '2024-08-05', 5, 1, 5, 'Fifth borrow'),
-            ('PM20240725', '2024-07-25', '2024-08-10', 6, 1, 3, 'Sixth borrow'),
-            ('PM20240730', '2024-07-30', '2024-08-15', 7, 1, 2, 'Seventh borrow'),
-            ('PM20240801', '2024-08-01', '2024-08-16', 8, 1, 4, 'Eighth borrow'),
-            ('PM20240805', '2024-08-05', '2024-08-20', 9, 1, 1, 'Ninth borrow'),
-            ('PM20240810', '2024-08-10', '2024-08-25', 10, 1, 5, 'Tenth borrow'),
-            ('PM20240815', '2024-08-15', '2024-08-30', 1, 1, 3, 'Eleventh borrow'),
-            ('PM20240820', '2024-08-20', '2024-09-05', 2, 1, 2, 'Twelfth borrow'),
-            ('PM20240825', '2024-08-25', '2024-09-10', 3, 1, 4, 'Thirteenth borrow'),
-            ('PM20240830', '2024-08-30', '2024-09-15', 4, 1, 1, 'Fourteenth borrow'),
-            ('PM20240901', '2024-09-01', '2024-09-16', 5, 1, 5, 'Fifteenth borrow');
-        """
+    INSERT INTO $TABLE_PM_NAME (
+        $COLUMN_PM_ID,
+        $COLUMN_PM_NGAYMUON,
+        $COLUMN_PM_NGAYTRA,
+        $COLUMN_DG_ID,
+        $COLUMN_PM_MATHU,
+        $COLUMN_PM_SOLUONG,
+        $COLUMN_PM_GHICHU
+    ) VALUES 
+    ('PM20240701', '2024-07-01', '2024-07-15', 1, 1, 3, 'First borrow'),
+    ('PM20240705', '2024-07-05', '2024-07-20', 2, 2, 2, 'Second borrow'),
+    ('PM20240710', '2024-07-10', '2024-07-25', 3, 3, 4, 'Third borrow'),
+    ('PM20240715', '2024-07-15', '2024-07-30', 4, 4, 1, 'Fourth borrow'),
+    ('PM20240720', '2024-07-20', '2024-08-05', 5, 5, 5, 'Fifth borrow'),
+    ('PM20240725', '2024-07-25', '2024-08-10', 6, 6, 3, 'Sixth borrow'),
+    ('PM20240730', '2024-07-30', '2024-08-15', 7, 7, 2, 'Seventh borrow'),
+    ('PM20240801', '2024-08-01', '2024-08-16', 8, 8, 4, 'Eighth borrow'),
+    ('PM20240805', '2024-08-05', '2024-08-20', 9, 9, 1, 'Ninth borrow'),
+    ('PM20240810', '2024-08-10', '2024-08-25', 10, 10, 5, 'Tenth borrow'),
+    ('PM20240815', '2024-08-15', '2024-08-30', 11, 11, 2, 'Eleventh borrow'),
+    ('PM20240820', '2024-08-20', '2024-09-05', 12, 12, 4, 'Twelfth borrow'),
+    ('PM20240825', '2024-08-25', '2024-09-10', 13, 13, 3, 'Thirteenth borrow'),
+    ('PM20240830', '2024-08-30', '2024-09-15', 14, 14, 1, 'Fourteenth borrow'),
+    ('PM20240901', '2024-09-01', '2024-09-16', 15, 15, 5, 'Fifteenth borrow'),
+    ('PM20240905', '2024-09-05', '2024-09-20', 1, 1, 2, 'Sixteenth borrow'),
+    ('PM20240910', '2024-09-10', '2024-09-25', 2, 2, 3, 'Seventeenth borrow'),
+    ('PM20240915', '2024-09-15', '2024-09-30', 3, 3, 4, 'Eighteenth borrow'),
+    ('PM20240920', '2024-09-20', '2024-10-05', 4, 4, 1, 'Nineteenth borrow'),
+    ('PM20240925', '2024-09-25', '2024-10-10', 5, 5, 2, 'Twentieth borrow'),
+    ('PM20240930', '2024-09-30', '2024-10-15', 6, 6, 3, 'Twenty-first borrow'),
+    ('PM20241005', '2024-10-05', '2024-10-20', 7, 7, 4, 'Twenty-second borrow');
+"""
 
         // Insert data into CHITIETPHIEUMUON table
-        val insertCTPM = "INSERT INTO $TABLE_CTPM_NAME ($COLUMN_CTPM_MASACH, $COLUMN_CTPM_MAPM) VALUES " +
-                "(1, 'PM20240701'), (3, 'PM20240705')," +
-                "(2, 'PM20240701'), (4, 'PM20240705')," +
-                "(3, 'PM20240701'), (5, 'PM20240705')," +
-                "(4, 'PM20240701'), (6, 'PM20240705')," +
-                "(5, 'PM20240701'), (7, 'PM20240705')," +
-                "(6, 'PM20240701'), (8, 'PM20240705')," +
-                "(7, 'PM20240701'), (9, 'PM20240705')," +
-                "(8, 'PM20240701'), (10, 'PM20240705')," +
-                "(9, 'PM20240701'), (11, 'PM20240705')," +
-                "(10, 'PM20240701'), (12, 'PM20240705')," +
-                "(11, 'PM20240701'), (13, 'PM20240705')," +
-                "(12, 'PM20240701'), (14, 'PM20240705')," +
-                "(13, 'PM20240701'), (15, 'PM20240705');"
+        val insertCTPM = """
+    INSERT INTO $TABLE_CTPM_NAME ($COLUMN_CTPM_MASACH, $COLUMN_CTPM_MAPM) VALUES 
+    (1, 'PM20240701'), (2, 'PM20240705'), (3, 'PM20240710'),
+    (4, 'PM20240715'), (5, 'PM20240720'), (6, 'PM20240725'),
+    (7, 'PM20240730'), (8, 'PM20240801'), (9, 'PM20240805'),
+    (10, 'PM20240810'), (11, 'PM20240815'), (12, 'PM20240820'),
+    (13, 'PM20240825'), (14, 'PM20240830'), (15, 'PM20240901'),
+    (1, 'PM20240905'), (2, 'PM20240910'), (3, 'PM20240915'),
+    (4, 'PM20240920'), (5, 'PM20240925'), (6, 'PM20240930');
+"""
 
         // Insert data into PHIEUTRA table
         val insertPT = """
@@ -353,28 +358,23 @@ class DatabaseHelper(context: Context) :
         """
 
         // Insert data into CHITIETPHIEUTRA table
-        val insertCTPT = "INSERT INTO $TABLE_CTPT_NAME ($COLUMN_CTPT_MASACH, $COLUMN_CTPT_MAPT) VALUES " +
-                "(1, 'PT20240701'), (2, 'PT20240705')," +
-                "(2, 'PT20240702'), (3, 'PT20240706')," +
-                "(3, 'PT20240703'), (4, 'PT20240707')," +
-                "(4, 'PT20240704'), (5, 'PT20240708')," +
-                "(5, 'PT20240709'), (6, 'PT20240710')," +
-                "(6, 'PT20240711'), (7, 'PT20240712')," +
-                "(7, 'PT20240713'), (8, 'PT20240714')," +
-                "(8, 'PT20240715'), (9, 'PT20240701')," +
-                "(9, 'PT20240705'), (10, 'PT20240702')," +
-                "(10, 'PT20240706'), (11, 'PT20240703')," +
-                "(11, 'PT20240707'), (12, 'PT20240704')," +
-                "(12, 'PT20240708'), (13, 'PT20240709')," +
-                "(13, 'PT20240710'), (14, 'PT20240711')," +
-                "(14, 'PT20240712'), (15, 'PT20240713')," +
-                "(15, 'PT20240714'), (1, 'PT20240715');"
-
-        db?.execSQL(insertTableTL)
-        db?.execSQL(insertTableNCC)
-        db?.execSQL(insertTableDG)
-        db?.execSQL(insertTableTT)
-        db?.execSQL(insertTableBook)
+        val insertCTPT =
+            "INSERT INTO $TABLE_CTPT_NAME ($COLUMN_CTPT_MASACH, $COLUMN_CTPT_MAPT) VALUES " +
+                    "(1, 'PT20240701'), (2, 'PT20240705')," +
+                    "(2, 'PT20240702'), (3, 'PT20240706')," +
+                    "(3, 'PT20240703'), (4, 'PT20240707')," +
+                    "(4, 'PT20240704'), (5, 'PT20240708')," +
+                    "(5, 'PT20240709'), (6, 'PT20240710')," +
+                    "(6, 'PT20240711'), (7, 'PT20240712')," +
+                    "(7, 'PT20240713'), (8, 'PT20240714')," +
+                    "(8, 'PT20240715'), (9, 'PT20240701')," +
+                    "(9, 'PT20240705'), (10, 'PT20240702')," +
+                    "(10, 'PT20240706'), (11, 'PT20240703')," +
+                    "(11, 'PT20240707'), (12, 'PT20240704')," +
+                    "(12, 'PT20240708'), (13, 'PT20240709')," +
+                    "(13, 'PT20240710'), (14, 'PT20240711')," +
+                    "(14, 'PT20240712'), (15, 'PT20240713')," +
+                    "(15, 'PT20240714'), (1, 'PT20240715');"
         db?.execSQL(insertPM)
         db?.execSQL(insertCTPM)
         db?.execSQL(insertPT)

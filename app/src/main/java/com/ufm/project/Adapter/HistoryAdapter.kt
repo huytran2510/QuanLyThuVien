@@ -22,8 +22,8 @@ class HistoryAdapter(private var historyList: List<HistoryBorrowBook>, private v
         holder.textViewId.text = "Mã hóa đơn : " + history.id.toString()
         holder.textViewNgayMuon.text = "Ngày mượn : " + history.ngayMuon
         holder.textViewNgayTra.text = "Ngày trả : " + history.ngayTra
-        holder.textViewMaKhachHang.text = "Mã khách hàng : " + history.maKhachHang.toString()
-        holder.textViewMaThu.text = "Mã thủ thư : " + history.maThu.toString()
+//        holder.textViewMaKhachHang.text = "Mã khách hàng : " + history.maKhachHang.toString()
+//        holder.textViewMaThu.text = "Mã thủ thư : " + history.maThu.toString()
         holder.textViewSoLuong.text = "Số lượng : " + history.soLuong.toString()
         holder.textViewGhiChu.text = "Tình trạng : " + history.tinhtrang
 
@@ -49,8 +49,8 @@ class HistoryAdapter(private var historyList: List<HistoryBorrowBook>, private v
         val textViewId: TextView = itemView.findViewById(R.id.textViewId)
         val textViewNgayMuon: TextView = itemView.findViewById(R.id.textViewNgayMuon)
         val textViewNgayTra: TextView = itemView.findViewById(R.id.textViewNgayTra)
-        val textViewMaKhachHang: TextView = itemView.findViewById(R.id.textViewMaKhachHang)
-        val textViewMaThu: TextView = itemView.findViewById(R.id.textViewMaThu)
+//        val textViewMaKhachHang: TextView = itemView.findViewById(R.id.textViewMaKhachHang)
+//        val textViewMaThu: TextView = itemView.findViewById(R.id.textViewMaThu)
         val textViewSoLuong: TextView = itemView.findViewById(R.id.textViewSoLuong)
         val textViewGhiChu: TextView = itemView.findViewById(R.id.textViewGhiChu)
         val buttonReturnBook: Button = itemView.findViewById(R.id.buttonReturnBook)

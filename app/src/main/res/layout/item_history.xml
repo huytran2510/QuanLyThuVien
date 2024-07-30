@@ -70,48 +70,7 @@
             android:textStyle="bold" />
     </TableRow>
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="4dp">
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:fontFamily="@font/poppins_bold"
-            android:src="@drawable/reader" />
-
-        <TextView
-            android:id="@+id/textViewMaKhachHang"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mã Khách Hàng"
-            android:layout_marginStart="8dp"
-            android:fontFamily="@font/poppins_bold"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="4dp">
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/librarian" />
-
-        <TextView
-            android:id="@+id/textViewMaThu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mã Thủ Thư"
-            android:fontFamily="@font/poppins_bold"
-            android:layout_marginStart="8dp"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
-    </TableRow>
 
     <TableRow
         android:layout_width="match_parent"

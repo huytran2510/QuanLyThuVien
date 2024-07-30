@@ -10,7 +10,4 @@ data class BookRVModal(
     var description: String,
     var pageCount: Int,
     var thumbnail: String,
-    var previewLink: String,
-    var infoLink: String,
-    var buyLink: String
 )

@@ -1,8 +1,10 @@
 package com.ufm.project.activity
 
+import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -16,17 +18,20 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.squareup.picasso.Picasso
+import com.ufm.project.Adapter.BookRVAdapter
 import com.ufm.project.MainActivity
 import com.ufm.project.R
+import com.ufm.project.dao.AccountDao
 import com.ufm.project.dao.BorrowBookDao
 import com.ufm.project.database.DatabaseHelper
+import com.ufm.project.modal.BookRVModal
 import com.ufm.project.service.EmailSender
 import com.ufm.project.ui.home.HomeFragment
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class BookDetailsActivity: AppCompatActivity() {
+class BookDetailsActivity : AppCompatActivity() {
     lateinit var titleTV: TextView
     lateinit var subtitleTV: TextView
     lateinit var publisherTV: TextView
@@ -37,7 +42,8 @@ class BookDetailsActivity: AppCompatActivity() {
     lateinit var buyBtn: Button
     lateinit var bookIV: ImageView
     private lateinit var borrowBookDao: BorrowBookDao
-    private lateinit var emailSender: EmailSender
+    private lateinit var bookAdapter: BookRVAdapter  // Add this line
+    private lateinit var bookList: ArrayList<BookRVModal>  // Add this line
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +61,7 @@ class BookDetailsActivity: AppCompatActivity() {
         buyBtn = findViewById(R.id.idBtnBuy)
         bookIV = findViewById(R.id.idIVbook)
 
+
         // getting the data which we have passed from our adapter class.
         val title = getIntent().getStringExtra("title")
         val subtitle = getIntent().getStringExtra("subtitle")
@@ -67,7 +74,7 @@ class BookDetailsActivity: AppCompatActivity() {
         val previewLink = getIntent().getStringExtra("previewLink")
         val infoLink = getIntent().getStringExtra("infoLink")
         val buyLink = getIntent().getStringExtra("buyLink")
-        val idBook = getIntent().getIntExtra("idBook", 0 )
+        val idBook = getIntent().getIntExtra("idBook", 0)
 
 
         // after getting the data we are setting
@@ -94,69 +101,143 @@ class BookDetailsActivity: AppCompatActivity() {
             // Create an AlertDialog builder and set the layout
             val dialogBuilder = AlertDialog.Builder(this)
                 .setView(dialogView)
-                .setTitle("Borrow Book")
 
             // Show the dialog
             val alertDialog = dialogBuilder.show()
-
+            val returnDateEditText: EditText = dialogView.findViewById(R.id.returnDateEditText)
+            val borrowDateEditText: EditText = dialogView.findViewById(R.id.borrowDateEditText)
             // Get the dialog's UI elements
-            val borrowDateSpinner: Spinner = dialogView.findViewById(R.id.borrowDateSpinner)
-            val returnDateSpinner: Spinner = dialogView.findViewById(R.id.returnDateSpinner)
             val quantityEditText: EditText = dialogView.findViewById(R.id.quantityEditText)
             val ghichuEditText: EditText = dialogView.findViewById(R.id.ghichuEditText)
             val confirmButton: Button = dialogView.findViewById(R.id.confirmButton)
 
-            // Create a list of dates for the Spinner
-            val dateList = mutableListOf<String>()
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val calendar = Calendar.getInstance()
 
-            for (i in 0..30) {
-                dateList.add(dateFormat.format(calendar.time))
-                calendar.add(Calendar.DAY_OF_MONTH, 1)
+            returnDateEditText.setOnClickListener {
+                showDatePickerDialog(returnDateEditText)
             }
+
+            borrowDateEditText.setOnClickListener {
+                showDatePickerDialog(borrowDateEditText)
+            }
+
+
             val (isLoggedIn, userId) = checkLoginState()
 
-            // Set up the Spinner with the date list
-            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, dateList)
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            borrowDateSpinner.adapter = adapter
-            returnDateSpinner.adapter = adapter
 
             // Set the confirm button click listener
             confirmButton.setOnClickListener {
                 // Get the selected dates and quantity
-                val borrowDate = borrowDateSpinner.selectedItem.toString()
-                val returnDate = returnDateSpinner.selectedItem.toString()
                 val quantity = quantityEditText.text.toString().toIntOrNull()
                 val ghichu = ghichuEditText.text.toString()
+                val borrowDate = borrowDateEditText.text.toString()
+                val returnDate = returnDateEditText.text.toString()
                 borrowBookDao = BorrowBookDao()
+                // write function get email by user id
+                // no i want write function get email by user id
+
+
                 // Validate the input
-                emailSender = EmailSender(this)
                 if (quantity != null) {
-                    // Handle the borrow book logic here
-                    // For example, insert the data into the database
                     val dbHelper = DatabaseHelper(this)
                     val db = dbHelper.writableDatabase
+                    val accountDao = AccountDao()
+                    val email = accountDao.getEmailKHFromIdTK(userId, db)
 
-                    borrowBookDao.borrowBook(borrowDate,returnDate,quantity,ghichu, userId, idBook, db)
-                    Toast.makeText(this, "Mượn thành công", Toast.LENGTH_SHORT).show()
-                    val toEmail = "huy251003@gmail.com" // Thay đổi email người nhận
-                    val subject = "Thông báo mượn sách thành công"
-                    val messageBody = "Bạn đã mượn thành công sách với các thông tin sau:\n" +
-                            "Ngày mượn: $borrowDate\n" +
-                            "Ngày trả: $returnDate\n" +
-                            "Số lượng: $quantity\n" +
-                            "Ghi chú: $ghichu"
-                    emailSender.sendEmail(toEmail, subject, messageBody)                    // Close the dialog
-                    alertDialog.dismiss()
+                    try {
+                        borrowBookDao.borrowBook(
+                            borrowDate,
+                            returnDate,
+                            quantity,
+                            ghichu,
+                            userId,
+                            idBook,
+                            db
+                        )
+                        Toast.makeText(this, "Mượn thành công", Toast.LENGTH_SHORT).show()
+
+                        val subject = "Thông báo mượn sách thành công"
+                        val messageBody = """
+                                Bạn đã mượn thành công sách với các thông tin sau:
+                                Ngày mượn: $borrowDate
+                                Ngày trả: $returnDate
+                                Số lượng: $quantity
+                                Ghi chú: $ghichu
+                            """.trimIndent()
+                        EmailSender(email, subject, messageBody).execute()
+                        alertDialog.dismiss()
+                        bookAdapter = BookRVAdapter(ArrayList(), this)
+                        bookList = fetchBooksFromDatabase(db)
+                        bookAdapter.reloadData(bookList)
+                        pageTV.text = ((pageCount - quantity).toString())
+                    } catch (e: Exception) {
+                        // Hiển thị thông báo lỗi
+                        Toast.makeText(this, "Có lỗi xảy ra: ${e.message}", Toast.LENGTH_LONG)
+                            .show()
+                        e.printStackTrace() // Log lỗi để dễ dàng debug nếu cần
+                    } finally {
+                        db.close() // Đảm bảo đóng database
+                    }
                 } else {
-                    // Show an error message
+                    // Hiển thị thông báo lỗi khi số lượng null
                     Toast.makeText(this, "Vui lòng nhập số lượng", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
+
+    private fun fetchBooksFromDatabase(db: SQLiteDatabase): ArrayList<BookRVModal> {
+        val bookList = ArrayList<BookRVModal>()
+        val cursor = db.query(
+            DatabaseHelper.TABLE_BOOK_NAME,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                val authorsString = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_TACGIA))
+                val authors = authorsString?.split(",")?.map { it.trim() }?.let { ArrayList(it) } ?: ArrayList()
+
+                val book = BookRVModal(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_MASACH)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_TENSACH)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_PHUDE)),
+                    authors,
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_NXB)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_NGAYNHAP)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_MOTA)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_SOLUONG)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_ANH))
+                )
+                bookList.add(book)
+            } while (cursor.moveToNext())
+        }
+        cursor?.close()
+        return bookList
+    }
+
+
+
+    private fun showDatePickerDialog(editText: EditText) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val selectedDate = "$selectedDay/${selectedMonth + 1}/$selectedYear"
+                editText.setText(selectedDate)
+            },
+            year, month, day
+        )
+        datePickerDialog.show()
+    }
+
 
     private fun checkLoginState(): Pair<Boolean, Int> {
         val sharedPreferences =
@@ -165,4 +246,6 @@ class BookDetailsActivity: AppCompatActivity() {
         val userId = if (isLoggedIn) sharedPreferences.getInt("userId", -1) else -1
         return Pair(isLoggedIn, userId)
     }
+
+
 }
