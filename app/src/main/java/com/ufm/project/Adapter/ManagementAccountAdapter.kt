@@ -2,16 +2,23 @@ package com.ufm.project.Adapter
 
 import android.content.Context
 import android.database.Cursor
+import android.graphics.Typeface
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ufm.project.R
 import com.ufm.project.dao.AccountDao
@@ -47,7 +54,33 @@ class ManagementAccountAdapter(
             holder.idAccount.text = "Mã TK: ${idAccount}"
             holder.username.text = "Tên đăng nhập: ${username}"
             holder.password.text = "Mật khẩu: ${password}"
-            holder.typeAccount.text="Loại TK: ${typeAccount}"
+
+            // Set the text with the prefix and apply styles
+            val prefix = "Loại TK: "
+            val spannableString = SpannableString("$prefix$typeAccount")
+
+//            // Make the prefix bold
+//            spannableString.setSpan(
+//                StyleSpan(Typeface.BOLD),
+//                0,
+//                prefix.length,
+//                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+//            )
+
+            // Apply color to the typeAccount value part
+            val color = if (typeAccount == "khachhang") {
+                ContextCompat.getColor(context, android.R.color.holo_red_dark)
+            } else {
+                ContextCompat.getColor(context, android.R.color.holo_blue_dark)
+            }
+            spannableString.setSpan(
+                ForegroundColorSpan(color),
+                prefix.length,
+                spannableString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            holder.typeAccount.text = spannableString
+
 
             holder.btnEdit.setOnClickListener(){
                 showEditDialog(idAccount)
@@ -148,7 +181,7 @@ class ManagementAccountAdapter(
         val username: TextView = itemView.findViewById(R.id.txtUserName)
         val password: TextView = itemView.findViewById(R.id.txtPassword)
         val typeAccount: TextView = itemView.findViewById(R.id.txtTypeAccount)
-        val btnEdit:Button= itemView.findViewById(R.id.btnEdit)
-        val btnDelete:Button= itemView.findViewById(R.id.btnDelete)
+        val btnEdit: ImageButton = itemView.findViewById(R.id.btnEdit)
+        val btnDelete:ImageButton= itemView.findViewById(R.id.btnDelete)
     }
 }

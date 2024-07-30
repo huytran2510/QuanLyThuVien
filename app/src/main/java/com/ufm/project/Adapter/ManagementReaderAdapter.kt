@@ -136,7 +136,6 @@ class ManagementReaderAdapter(
         }
         cursor.close()
         val dialog = AlertDialog.Builder(context)
-            .setTitle("Edit Borrow Book")
             .setView(dialogView)
             .setPositiveButton("CẬP NHẬT") { _, _ ->
                 val newBirthDay = "${spinnerYear.selectedItem}-${spinnerMonth.selectedItem}-${spinnerDay.selectedItem}"
@@ -207,7 +206,7 @@ class ManagementReaderAdapter(
         val birthDateReader: TextView = itemView.findViewById(R.id.textViewBirthdate)
         val phoneReader:TextView=itemView.findViewById(R.id.textViewPhone)
         val genderReader:TextView= itemView.findViewById(R.id.textViewGender)
-        val btnEdit: Button = itemView.findViewById(R.id.buttonEdit)
-        val btnDelete: Button = itemView.findViewById(R.id.buttonDelete)
+        val btnEdit: ImageButton = itemView.findViewById(R.id.btnEdit)
+        val btnDelete: ImageButton = itemView.findViewById(R.id.btnDelete)
     }
 }

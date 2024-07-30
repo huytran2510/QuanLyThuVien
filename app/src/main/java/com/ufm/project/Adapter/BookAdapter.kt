@@ -8,11 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.ufm.project.R
 import com.ufm.project.activity.AddBookActivity
 import com.ufm.project.dao.BookDao
+import com.ufm.project.database.DatabaseHelper
 
 data class Book(val idBook : Int ,val title: String, val author: String, val quantity : Int)
 
@@ -26,17 +29,28 @@ class BookAdapter(private val context: Context, private var books: MutableList<B
             convertView ?: LayoutInflater.from(context).inflate(R.layout.item_book, parent, false)
 
         val book = books[position]
+        bookDao = BookDao(context)
 
         val titleTextView = view.findViewById<TextView>(R.id.bookTitle)
         val authorTextView = view.findViewById<TextView>(R.id.bookAuthor)
         val quantityTextView = view.findViewById<TextView>(R.id.bookQuantity)
         val deleteButton = view.findViewById<ImageButton>(R.id.deleteButton)
         val editButton = view.findViewById<ImageButton>(R.id.editButton)
+        val img= view.findViewById<ImageView>(R.id.imgBookView)
+
 
         titleTextView.text = book.title
         authorTextView.text = book.author
         quantityTextView.text = "Số lượng còn : " + book.quantity
-        bookDao = BookDao(context)
+
+        val pictureCursor = bookDao.getPicture(book.idBook)
+        if (pictureCursor != null && pictureCursor.moveToFirst()) {
+            val picture = pictureCursor.getString(pictureCursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_ANH))
+            Glide.with(context)
+                .load(picture)
+                .into(img)
+            pictureCursor.close() // Don't forget to close the cursor
+        }
 
         deleteButton.setOnClickListener {
             AlertDialog.Builder(context)

@@ -69,7 +69,6 @@ class HomeFragment : Fragment() {
                 return false
             }
         })
-        booksList = ArrayList()
 
 
         // Load dữ liệu mặc định
@@ -78,6 +77,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun getBooksData2(searchQuery: String) {
+        booksList = ArrayList()
         val dbHelper = DatabaseHelper(requireContext())
         val db = dbHelper.readableDatabase
 

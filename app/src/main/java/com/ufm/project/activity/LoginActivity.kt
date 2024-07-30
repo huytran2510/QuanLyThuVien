@@ -24,6 +24,9 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        deleteDatabase("library.db")
+
         dbHelper = DatabaseHelper(this)
         db = dbHelper.writableDatabase
         Toast.makeText(this,"Tạo database thành công", Toast.LENGTH_SHORT).show()

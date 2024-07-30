@@ -5,39 +5,38 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.SearchView
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ufm.project.Adapter.ManagementReaderAdapter
+import com.ufm.project.Adapter.ManagementSupplierAdapter
 import com.ufm.project.Adapter.ManagementTypeBookAdapter
 import com.ufm.project.R
 import com.ufm.project.dao.BookDao
-import com.ufm.project.dao.ReaderDao
+import com.ufm.project.dao.SupplierDao
 import com.ufm.project.database.DatabaseHelper
 import com.ufm.project.databinding.FragementManagementTypeBookBinding
-import com.ufm.project.databinding.FragmentManagementreaderBinding
+import com.ufm.project.databinding.FragmentManagementSupplierBinding
 
-class ManagementTypeBookFragement:Fragment() {
-    private var _binding: FragementManagementTypeBookBinding? = null
+class ManagementSupplierFragement:Fragment() {
+
+    private var _binding: FragmentManagementSupplierBinding? = null
     private val binding get() = _binding!!
-    private lateinit var typeBookAdapter: ManagementTypeBookAdapter
+    private lateinit var supplierAdapter: ManagementSupplierAdapter
 
     private lateinit var dbHelper: DatabaseHelper
     private lateinit var db: SQLiteDatabase
 
-    private lateinit var typeBookDao: BookDao
+    private lateinit var supplierDao: SupplierDao
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragementManagementTypeBookBinding.inflate(inflater,container, false)
+        _binding = FragmentManagementSupplierBinding.inflate(inflater,container, false)
         return binding.root
     }
 
@@ -47,7 +46,7 @@ class ManagementTypeBookFragement:Fragment() {
         db = dbHelper.readableDatabase
 
         binding.fab.setOnClickListener { view ->
-            addSupplier()
+            addTypeBook()
         }
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -56,12 +55,12 @@ class ManagementTypeBookFragement:Fragment() {
             }
 
             override fun onQueryTextChange(query: String?): Boolean {
-                loadTypeBook(query ?: "")
+                loadSupplier(query ?: "")
                 return true
             }
         })
 
-        loadTypeBook("")
+        loadSupplier("")
 
     }
 
@@ -70,34 +69,38 @@ class ManagementTypeBookFragement:Fragment() {
         _binding = null
     }
 
-    private fun loadTypeBook(name: String) {
-        val cursor = BookDao(requireContext()).getAllTypeBook(name, db)
+    private fun loadSupplier(values: String) {
+        val cursor = SupplierDao(db, dbHelper).getAllSupplier(values)
         if (cursor != null) {
-            typeBookAdapter=ManagementTypeBookAdapter(requireContext(),cursor)
-            binding.recyclerViewTypeBook.adapter=typeBookAdapter
-            binding.recyclerViewTypeBook.layoutManager= LinearLayoutManager(requireContext())
+            supplierAdapter= ManagementSupplierAdapter(requireContext(),cursor)
+            binding.recyclerViewSupplier.adapter=supplierAdapter
+            binding.recyclerViewSupplier.layoutManager= LinearLayoutManager(requireContext())
         } else {
             // Handle the case when the cursor is null
             Toast.makeText(requireContext(), "No type book found", Toast.LENGTH_SHORT).show()
         }
     }
 
-    fun addSupplier(){
-        val dialogView = LayoutInflater.from(context).inflate(R.layout.diaglog_add_management_type_book, null)
-        val edtName = dialogView.findViewById<EditText>(R.id.edtNameTypeBook)
+    fun addTypeBook(){
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_management_supplier, null)
+        val edtName = dialogView.findViewById<EditText>(R.id.edtNameSupplier)
+        val edtLocal = dialogView.findViewById<EditText>(R.id.edtLocalSupplier)
+        val edtPhone = dialogView.findViewById<EditText>(R.id.edtPhoneSupplier)
 
         val dialog = AlertDialog.Builder(requireContext())
             .setView(dialogView)
             .setPositiveButton("Thêm") { _, _ ->
-                val nameType = edtName.text.toString()
+                val name = edtName.text.toString()
+                val local = edtName.text.toString()
+                val phone = edtName.text.toString()
 
                 val dbHelper = DatabaseHelper(requireContext())
                 val db = dbHelper.writableDatabase
-                val typeBookDao = BookDao(requireContext())
+                val supplierDao = SupplierDao(db,dbHelper)
 
                 try {
-                    typeBookDao.addTypeBook(nameType,db)
-                    loadTypeBook("")
+                    supplierDao.addSupplier(name, local, phone)
+                    loadSupplier("")
                     Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show()
                 } catch (e: Exception) {
                     Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()

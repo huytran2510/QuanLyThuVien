@@ -3,6 +3,9 @@ package com.ufm.project.Adapter
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -18,15 +21,20 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import androidx.compose.ui.graphics.Color
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.squareup.picasso.Picasso
 import com.ufm.project.R
 import com.ufm.project.activity.BookDetailsActivity
+import com.ufm.project.dao.AccountDao
 import com.ufm.project.dao.BorrowBookDao
 import com.ufm.project.database.DatabaseHelper
 import com.ufm.project.modal.BookRVModal
 import com.ufm.project.modal.BorrowBookModal
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class ManagerBorrowBookAdapter(
     private var context: Context,
@@ -60,10 +68,35 @@ class ManagerBorrowBookAdapter(
             holder.idBorrow.text = idBorrow
             holder.nameReader.text = nameReader
             holder.idReader.text = idReader.toString()
-            holder.status.text = status
 
+            // Create the SpannableString
+            val spannableString = SpannableString(status)
+
+            // Determine the color based on the status
+            val color = if (status == "Đã trả") {
+                ContextCompat.getColor(context, android.R.color.holo_green_dark)
+            } else {
+                ContextCompat.getColor(context, android.R.color.holo_red_dark)
+            }
+
+            // Apply the color span
+            spannableString.setSpan(
+                ForegroundColorSpan(color),
+                0,
+                spannableString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+
+            holder.status.text = spannableString
+
+            //Button chỉnh sửa
             holder.btnEdit.setOnClickListener(){
                 showEditDialog(idBorrow)
+            }
+
+            //Button xuất phiếu mượn
+            holder.btnExport.setOnClickListener(){
+                showExportDialog(idBorrow,quantityBorrow,noteBorrow,)
             }
 
 
@@ -251,9 +284,6 @@ class ManagerBorrowBookAdapter(
         spinnerReader.setSelection(selectedPosition)
     }
 
-
-
-
     private fun loadBookSpinner(spinnerBook: Spinner, idBorrow: String) {
         val dbHelper = DatabaseHelper(context)
         val db = dbHelper.readableDatabase
@@ -297,6 +327,32 @@ class ManagerBorrowBookAdapter(
         }
     }
 
+    fun showExportDialog(idBorrow: String, quantity: Int, note: String) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Thông báo")
+        builder.setMessage("Bạn muốn xuất phiếu mượn $idBorrow này?")
+        builder.setCancelable(false)
+
+        // Get current date in YYYY-MM-DD format
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val currentDate = sdf.format(Date())
+
+        builder.setPositiveButton("Xuất") { dialog, _ ->
+            val dbHelper = DatabaseHelper(context)
+            val db = dbHelper.writableDatabase
+            val borrowBookDao = BorrowBookDao()
+
+            val bookId = borrowBookDao.getBookIdByBorrowId(idBorrow, db)
+            borrowBookDao.exportPayBook(idBorrow.toInt(), currentDate, quantity, note, bookId, db)
+
+            notifyDataSetChanged()
+            Toast.makeText(context, "Xuất phiếu mượn thành công", Toast.LENGTH_SHORT).show()
+        }
+        builder.setNegativeButton("Hủy") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.create().show()
+    }
 
     class BookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val idBorrow: TextView = itemView.findViewById(R.id.txtMaPhieu)
@@ -304,5 +360,6 @@ class ManagerBorrowBookAdapter(
         val idReader: TextView = itemView.findViewById(R.id.txtMaDG)
         val status: TextView = itemView.findViewById(R.id.txtTrangThai)
         val btnEdit:ImageButton= itemView.findViewById(R.id.btnEditBorrowBook)
+        val btnExport:ImageButton=itemView.findViewById(R.id.btnExport)
     }
 }

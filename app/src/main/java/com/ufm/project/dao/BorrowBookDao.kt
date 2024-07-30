@@ -190,6 +190,47 @@ class BorrowBookDao {
         return db.rawQuery(query, null)
     }
 
+    fun exportPayBook(idBorrowBook: Int,returnDate : String,quantity: Int, ghichu : String, idBook : Long, db : SQLiteDatabase) {
+        val payID = generateRandomId()
+        val contentValues = ContentValues().apply {
+            put(DatabaseHelper.COLUMN_PT_MAPT, payID)
+            put(DatabaseHelper.COLUMN_PT_NGAYTRA , returnDate)
+            put(DatabaseHelper.COLUMN_PT_SOLUONGMUON, quantity)
+            put(DatabaseHelper.COLUMN_PT_NGAYTRA, quantity)
+            put(DatabaseHelper.COLUMN_PT_GHICHU , ghichu)
+            put(DatabaseHelper.COLUMN_PM_ID , idBorrowBook)
+        }
+
+        val contentValuesCTPT = ContentValues().apply {
+            put(DatabaseHelper.COLUMN_CTPT_MASACH, idBook)
+            put(DatabaseHelper.COLUMN_CTPT_MAPT , payID)
+        }
+
+        db.insert(DatabaseHelper.TABLE_PT_NAME, null, contentValues)
+        db.insert(DatabaseHelper.TABLE_CTPT_NAME, null, contentValuesCTPT)
+    }
+
+    fun generateRandomId(): String {
+        val dateFormat = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault())
+        val currentTime = Date()
+        return dateFormat.format(currentTime)
+    }
+
+    fun getBookIdByBorrowId(borrowId: String, db: SQLiteDatabase): Long {
+        val query = "SELECT ${DatabaseHelper.COLUMN_CTPM_MASACH} FROM ${DatabaseHelper.TABLE_CTPM_NAME} WHERE ${DatabaseHelper.COLUMN_CTPM_MAPM} = ?"
+        val cursor = db.rawQuery(query, arrayOf(borrowId))
+
+        return try {
+            if (cursor.moveToFirst()) {
+                cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_CTPM_MASACH))
+            } else {
+                -1 // Default value indicating no book ID found
+            }
+        } finally {
+            cursor.close()
+        }
+    }
+
 
 
 
