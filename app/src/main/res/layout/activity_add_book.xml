@@ -163,6 +163,34 @@
             android:background="@drawable/edit_text_background"
             android:layout_height="wrap_content"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chọn ảnh"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="16dp"/>
+
+        <Button
+            android:id="@+id/button_select_file"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/select_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"/>
+
+
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_below="@id/button_select_file"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:contentDescription="Selected Image"/>
+
 
 
         <Button

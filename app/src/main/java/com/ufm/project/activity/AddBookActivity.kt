@@ -1,21 +1,30 @@
 package com.ufm.project.activity
 
+import android.app.Activity
 import android.content.ContentValues
+import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.SimpleCursorAdapter
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.ufm.project.Adapter.Book
 import com.ufm.project.R
 import com.ufm.project.database.DatabaseHelper
 import com.ufm.project.modal.BookEdit
 import com.ufm.project.ui.admin.ManagementBookFragment
+import java.util.UUID
 
 class AddBookActivity : AppCompatActivity() {
     private lateinit var spinnerLoai: Spinner
@@ -40,6 +49,11 @@ class AddBookActivity : AppCompatActivity() {
     private val months = (1..12).map { it.toString() }
     private val years = (2000..2024).map { it.toString() }
 
+
+    private val PICK_FILE_REQUEST_CODE = 1234
+    private var fileUri: Uri? = null
+    private lateinit var storageReference: StorageReference
+    private lateinit var imageView: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_book)
@@ -80,6 +94,15 @@ class AddBookActivity : AppCompatActivity() {
             btnSave.text = "Cập nhật"
         }
 
+        storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quanlythuvien-a3de6.appspot.com")
+
+        val buttonSelectFile: Button = findViewById(R.id.button_select_file)
+        imageView = findViewById(R.id.image_view)
+
+        buttonSelectFile.setOnClickListener {
+            selectFile()
+        }
+
         btnSave.setOnClickListener {
             if (bookId != -1) {
                 editBook(bookId)
@@ -93,6 +116,38 @@ class AddBookActivity : AppCompatActivity() {
             onBackPressed() // Quay lại trang trước đó
         }
     }
+
+    private fun selectFile() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        startActivityForResult(intent, PICK_FILE_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_FILE_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            fileUri = data.data
+            imageView.setImageURI(fileUri)  // Hiển thị hình ảnh đã chọn trong ImageView
+        }
+    }
+
+    private fun uploadFile(fileUri: Uri, onSuccess: (String) -> Unit, onFailure: (Exception) -> Unit) {
+        val fileName = UUID.randomUUID().toString()
+        val fileReference = storageReference.child("uploads/$fileName")
+
+        fileReference.putFile(fileUri)
+            .addOnSuccessListener {
+                fileReference.downloadUrl.addOnSuccessListener { uri ->
+                    val downloadUrl = uri.toString()
+                    onSuccess(downloadUrl)
+                }.addOnFailureListener { exception ->
+                    onFailure(exception)
+                }
+            }.addOnFailureListener { exception ->
+                onFailure(exception)
+            }
+    }
+
     private fun loadSpinners() {
         val db = dbHelper.readableDatabase
 
@@ -154,29 +209,39 @@ class AddBookActivity : AppCompatActivity() {
 
         // Validate input
         if (title.isEmpty() || author.isEmpty()) {
-            Toast.makeText(this, "Vui lòng nhập ", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Vui lòng nhập tiêu đề và tác giả", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val db = dbHelper.writableDatabase
-        val contentValues = ContentValues().apply {
-            put(DatabaseHelper.COLUMN_BOOK_TENSACH, title)
-            put(DatabaseHelper.COLUMN_BOOK_TACGIA, author)
-            put(DatabaseHelper.COLUMN_BOOK_PHUDE, subtitle)
-            put(DatabaseHelper.COLUMN_BOOK_MOTA, description)
-            put(DatabaseHelper.COLUMN_BOOK_NXB, publisher)
-            put(DatabaseHelper.COLUMN_BOOK_NGAYNHAP, date)
-            put(DatabaseHelper.COLUMN_BOOK_SOLUONG, quantity)
-            put(DatabaseHelper.COLUMN_MALOAI, selectedLoai)
-            put(DatabaseHelper.COLUMN_NCC_ID, selectedNCC)
+        if (fileUri == null) {
+            Toast.makeText(this, "Vui lòng chọn hình ảnh", Toast.LENGTH_SHORT).show()
+            return
         }
-        try {
-            db.insert(DatabaseHelper.TABLE_BOOK_NAME, null, contentValues)
-            Toast.makeText(this, "Thêm sách thành công", Toast.LENGTH_SHORT).show()
-            finish()
-        } catch (e: Exception) {
-            Toast.makeText(this, "Thêm sách thất bại", Toast.LENGTH_SHORT).show()
-        }
+
+        uploadFile(fileUri!!, onSuccess = { downloadUrl ->
+            val db = dbHelper.writableDatabase
+            val contentValues = ContentValues().apply {
+                put(DatabaseHelper.COLUMN_BOOK_TENSACH, title)
+                put(DatabaseHelper.COLUMN_BOOK_TACGIA, author)
+                put(DatabaseHelper.COLUMN_BOOK_PHUDE, subtitle)
+                put(DatabaseHelper.COLUMN_BOOK_MOTA, description)
+                put(DatabaseHelper.COLUMN_BOOK_NXB, publisher)
+                put(DatabaseHelper.COLUMN_BOOK_NGAYNHAP, date)
+                put(DatabaseHelper.COLUMN_BOOK_SOLUONG, quantity)
+                put(DatabaseHelper.COLUMN_MALOAI, selectedLoai)
+                put(DatabaseHelper.COLUMN_NCC_ID, selectedNCC)
+                put(DatabaseHelper.COLUMN_BOOK_ANH, downloadUrl) // Lưu URL hình ảnh
+            }
+            try {
+                db.insert(DatabaseHelper.TABLE_BOOK_NAME, null, contentValues)
+                Toast.makeText(this, "Thêm sách thành công", Toast.LENGTH_SHORT).show()
+                finish()
+            } catch (e: Exception) {
+                Toast.makeText(this, "Thêm sách thất bại", Toast.LENGTH_SHORT).show()
+            }
+        }, onFailure = { exception ->
+            Toast.makeText(this, "Tải lên hình ảnh thất bại: ${exception.message}", Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun editBook(bookId: Int) {

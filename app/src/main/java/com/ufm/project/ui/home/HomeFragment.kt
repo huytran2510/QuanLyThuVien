@@ -42,7 +42,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        reloadData()
 
         // Khởi tạo các view
         loadingPB = binding.idLoadingPB
@@ -144,12 +143,7 @@ class HomeFragment : Fragment() {
         mRecyclerView.adapter = adapter
     }
 
-    private fun reloadData() {
-        // Ensure you run this on the main thread
-        requireActivity().runOnUiThread {
-            getBooksData2("")
-        }
-    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
