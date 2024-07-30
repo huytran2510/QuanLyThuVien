@@ -17,6 +17,10 @@ class BookRVAdapter(
     private var bookList: ArrayList<BookRVModal>,
     private var ctx: Context
 ) : RecyclerView.Adapter<BookRVAdapter.BookViewHolder>() {
+    fun reloadData(newBookList: ArrayList<BookRVModal>) {
+        this.bookList = newBookList
+        notifyDataSetChanged()
+    }
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -27,6 +31,7 @@ class BookRVAdapter(
         )
         return BookRVAdapter.BookViewHolder(itemView)
     }
+
     override fun onBindViewHolder(holder: BookRVAdapter.BookViewHolder, position: Int) {
         val bookInfo = bookList.get(position)
         // below line is use to set image from URL in our image view.
@@ -47,9 +52,9 @@ class BookRVAdapter(
             i.putExtra("description", bookInfo.description)
             i.putExtra("pageCount", bookInfo.pageCount)
             i.putExtra("thumbnail", bookInfo.thumbnail)
-            i.putExtra("previewLink", bookInfo.previewLink)
-            i.putExtra("infoLink", bookInfo.infoLink)
-            i.putExtra("buyLink", bookInfo.buyLink)
+//            i.putExtra("previewLink", bookInfo.previewLink)
+//            i.putExtra("infoLink", bookInfo.infoLink)
+//            i.putExtra("buyLink", bookInfo.buyLink)
             i.putExtra("idBook", bookInfo.idBook)
             // after passing that data we are
             // starting our new  intent.

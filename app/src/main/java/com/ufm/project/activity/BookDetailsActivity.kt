@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -17,11 +18,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.squareup.picasso.Picasso
+import com.ufm.project.Adapter.BookRVAdapter
 import com.ufm.project.MainActivity
 import com.ufm.project.R
 import com.ufm.project.dao.AccountDao
 import com.ufm.project.dao.BorrowBookDao
 import com.ufm.project.database.DatabaseHelper
+import com.ufm.project.modal.BookRVModal
 import com.ufm.project.service.EmailSender
 import com.ufm.project.ui.home.HomeFragment
 import java.text.SimpleDateFormat
@@ -39,6 +42,8 @@ class BookDetailsActivity : AppCompatActivity() {
     lateinit var buyBtn: Button
     lateinit var bookIV: ImageView
     private lateinit var borrowBookDao: BorrowBookDao
+    private lateinit var bookAdapter: BookRVAdapter  // Add this line
+    private lateinit var bookList: ArrayList<BookRVModal>  // Add this line
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -160,6 +165,10 @@ class BookDetailsActivity : AppCompatActivity() {
                             """.trimIndent()
                         EmailSender(email, subject, messageBody).execute()
                         alertDialog.dismiss()
+                        bookAdapter = BookRVAdapter(ArrayList(), this)
+                        bookList = fetchBooksFromDatabase(db)
+                        bookAdapter.reloadData(bookList)
+                        pageTV.text = ((pageCount - quantity).toString())
                     } catch (e: Exception) {
                         // Hiển thị thông báo lỗi
                         Toast.makeText(this, "Có lỗi xảy ra: ${e.message}", Toast.LENGTH_LONG)
@@ -175,6 +184,42 @@ class BookDetailsActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun fetchBooksFromDatabase(db: SQLiteDatabase): ArrayList<BookRVModal> {
+        val bookList = ArrayList<BookRVModal>()
+        val cursor = db.query(
+            DatabaseHelper.TABLE_BOOK_NAME,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                val authorsString = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_TACGIA))
+                val authors = authorsString?.split(",")?.map { it.trim() }?.let { ArrayList(it) } ?: ArrayList()
+
+                val book = BookRVModal(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_MASACH)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_TENSACH)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_PHUDE)),
+                    authors,
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_NXB)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_NGAYNHAP)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_MOTA)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_SOLUONG)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_ANH))
+                )
+                bookList.add(book)
+            } while (cursor.moveToNext())
+        }
+        cursor?.close()
+        return bookList
+    }
+
+
 
     private fun showDatePickerDialog(editText: EditText) {
         val calendar = Calendar.getInstance()

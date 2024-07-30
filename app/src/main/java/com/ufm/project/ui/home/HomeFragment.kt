@@ -42,6 +42,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        reloadData()
 
         // Khởi tạo các view
         loadingPB = binding.idLoadingPB
@@ -69,13 +70,15 @@ class HomeFragment : Fragment() {
                 return false
             }
         })
+        booksList = ArrayList()
+
 
         // Load dữ liệu mặc định
         getBooksData2("")
+
     }
 
     private fun getBooksData2(searchQuery: String) {
-        booksList = ArrayList()
         val dbHelper = DatabaseHelper(requireContext())
         val db = dbHelper.readableDatabase
 
@@ -127,10 +130,7 @@ class HomeFragment : Fragment() {
                     ngaynhap,
                     mota,
                     soluong,
-                    anh,
-                    "", // You might want to adapt this to the correct value or remove it
-                    "", // You might want to adapt this to the correct value or remove it
-                    ""
+                    anh
                 )
                 booksList.add(bookInfo)
             }
@@ -142,9 +142,14 @@ class HomeFragment : Fragment() {
         val mRecyclerView = binding.idRVBooks
         mRecyclerView.layoutManager = layoutManager
         mRecyclerView.adapter = adapter
-        adapter.notifyDataSetChanged()
     }
 
+    private fun reloadData() {
+        // Ensure you run this on the main thread
+        requireActivity().runOnUiThread {
+            getBooksData2("")
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

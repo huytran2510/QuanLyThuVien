@@ -3,6 +3,7 @@ package com.ufm.project.dao
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.widget.EditText
 //import com.ufm.project.Adapter.managerBorrowBookAdapter
 import com.ufm.project.database.DatabaseHelper
 import com.ufm.project.database.DatabaseHelper.Companion.COLUMN_BOOK_MASACH
