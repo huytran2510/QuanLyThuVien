@@ -132,6 +132,7 @@ class DatabaseHelper(context: Context) :
                 "$COLUMN_DG_NGAYSINH DATE," +
                 "$COLUMN_DG_DIENTHOAI VARCHAR," +
                 "$COLUMN_DG_GIOITINH VARCHAR," +
+                "$COLUMN_DG_EMAIL VARCHAR," +
                 "$COLUMN_TK_ID INTEGER ," +
                 "FOREIGN KEY ($COLUMN_TK_ID) REFERENCES $TABLE_TK_NAME($COLUMN_TK_ID) ON DELETE CASCADE )"
 
@@ -375,11 +376,14 @@ class DatabaseHelper(context: Context) :
                     "(13, 'PT20240710'), (14, 'PT20240711')," +
                     "(14, 'PT20240712'), (15, 'PT20240713')," +
                     "(15, 'PT20240714'), (1, 'PT20240715');"
+        db?.execSQL(insertTableDG)
+        db?.execSQL(insertTableNCC)
+        db?.execSQL(insertTableTT)
+        db?.execSQL(insertTableBook)
         db?.execSQL(insertPM)
         db?.execSQL(insertCTPM)
         db?.execSQL(insertPT)
         db?.execSQL(insertCTPT)
-
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {

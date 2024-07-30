@@ -3,6 +3,7 @@ package com.ufm.project.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
@@ -18,6 +19,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import com.ufm.project.R
 import com.ufm.project.databinding.ActivityAdminBinding
 import com.ufm.project.databinding.ActivityMainBinding
@@ -36,6 +39,27 @@ class AdminActivity : AppCompatActivity() {
 
         val drawerLayout: DrawerLayout = binding.drawerLayoutAdmin
         val navView: NavigationView = binding.navViewAdmin
+
+        val headerView = navView.getHeaderView(0)
+        val imageView = headerView.findViewById<ImageView>(R.id.imageView)
+
+        val imageUrl = "https://tsqhdn.ufm.edu.vn/Resources/Images/SubDomain/cecr/Logo_UFM_NEW-01.png"
+
+        Picasso.get()
+            .load(imageUrl)
+            .resize(250, 250)  // Kích thước bạn muốn resize
+            .centerInside()    // Hoặc .centerCrop() tùy thuộc vào nhu cầu của bạn
+            .into(imageView, object : Callback {
+                override fun onSuccess() {
+                    // Xử lý khi tải thành công
+                }
+
+                override fun onError(e: Exception?) {
+                    // Xử lý khi tải thất bại
+                    Toast.makeText(this@AdminActivity, "Failed to load image", Toast.LENGTH_SHORT).show()
+                }
+            })
+
         val navController = findNavController(R.id.nav_host_fragment_content_admin)
         appBarConfiguration = AppBarConfiguration(
             setOf(
