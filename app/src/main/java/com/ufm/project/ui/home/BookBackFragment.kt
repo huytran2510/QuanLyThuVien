@@ -1,6 +1,7 @@
 package com.ufm.project.ui.home
 
 import android.content.ContentValues
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,7 +16,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.ufm.project.R
+import com.ufm.project.dao.BorrowBookDao
 import com.ufm.project.database.DatabaseHelper
+import java.sql.SQLException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -150,6 +153,7 @@ class BookBackFragment : Fragment() {
                     put(DatabaseHelper.COLUMN_CTPT_MAPT, mapt)
                 }
                 databaseHelper.writableDatabase.insert(DatabaseHelper.TABLE_CTPT_NAME, null, insertCTPT)
+                updateBookQuantity(bookId.toInt(),quantity)
             }
             Toast.makeText(requireContext(), "Hoàn tất trả sách", Toast.LENGTH_SHORT).show()
 
@@ -194,6 +198,45 @@ class BookBackFragment : Fragment() {
         }
         cursor.close()
         return borrowedBooks
+    }
+
+    private fun updateBookQuantity(bookId: Int, quantity: Int) {
+        // Kiểm tra dữ liệu đầu vào
+        if (quantity <= 0) {
+            throw IllegalArgumentException("Số lượng phải lớn hơn 0")
+        }
+        val db = DatabaseHelper(requireContext()).writableDatabase
+        val query = "SELECT ${DatabaseHelper.COLUMN_BOOK_SOLUONG} FROM ${DatabaseHelper.TABLE_BOOK_NAME} WHERE ${DatabaseHelper.COLUMN_BOOK_MASACH} = ?"
+        val cursor = db.rawQuery(query, arrayOf(bookId.toString()))
+
+        try {
+            if (cursor.moveToFirst()) {
+                val currentQuantity = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_SOLUONG))
+                val newQuantity = currentQuantity + quantity
+
+                if (newQuantity >= 0) {
+                    val contentValues = ContentValues().apply {
+                        put(DatabaseHelper.COLUMN_BOOK_SOLUONG, newQuantity)
+                    }
+                    val rowsUpdated = db.update(DatabaseHelper.TABLE_BOOK_NAME, contentValues, "${DatabaseHelper.COLUMN_BOOK_MASACH} = ?", arrayOf(bookId.toString()))
+
+                    // Kiểm tra xem có bao nhiêu hàng được cập nhật
+                    if (rowsUpdated <= 0) {
+                        throw SQLException("Không thể cập nhật số lượng sách")
+                    }
+                } else {
+                    throw IllegalArgumentException("Không đủ sách có sẵn")
+                }
+            } else {
+                throw IllegalArgumentException("Không tìm thấy sách với mã ID $bookId")
+            }
+        } catch (e: Exception) {
+            // Xử lý ngoại lệ nếu có
+            e.printStackTrace()
+            throw e // Hoặc hiển thị thông báo lỗi cho người dùng
+        } finally {
+            cursor.close()
+        }
     }
 
 }
