@@ -36,6 +36,11 @@
         android:label="@string/menu_management_reader"
         tools:layout="@layout/fragment_managementreader" />
 
+    <fragment
+        android:id="@+id/nav_management_supplier"
+        android:name="com.ufm.project.ui.admin.ManagementSupplierFragement"
+        android:label="Quản lý nhà cung cấp"
+        tools:layout="@layout/fragment_management_supplier" />
 
     <fragment
         android:id="@+id/nav_statistics_borrow_book"
@@ -60,4 +65,6 @@
         android:name="com.ufm.project.ui.admin.TopBooksFragment"
         android:label="Top sách được mượn nhiều nhất"
         tools:layout="@layout/fragment_top_book" />
+
+
 </navigation>

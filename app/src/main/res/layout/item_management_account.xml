@@ -3,64 +3,82 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp">
+    android:padding="10dp">
 
-    <!-- Cột dữ liệu -->
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="@drawable/conner_background">
 
-        <TextView
-            android:id="@+id/txtIdAccount"
+        <!-- Cột dữ liệu -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtIdAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mã TK"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên Đăng Nhập" />
+
+            <TextView
+                android:id="@+id/txtPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mật Khẩu"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txtTypeAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Loại TK"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <!-- Cột nút bấm -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mã TK"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:paddingStart="16dp">
 
-        <TextView
-            android:id="@+id/txtUserName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tên Đăng Nhập" />
+            <ImageButton
+                android:id="@+id/btnEdit"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="Edit"
+                android:src="@drawable/baseline_mode_edit_outline_24" />
 
-        <TextView
-            android:id="@+id/txtPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mật Khẩu"
-            android:textSize="14sp" />
+            <ImageButton
+                android:id="@+id/btnDelete"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="Delete"
+                android:src="@drawable/baseline_remove_circle_outline_24" />
 
-        <TextView
-            android:id="@+id/txtTypeAccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Loại TK"
-            android:textSize="14sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <!-- Cột nút bấm -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingStart="16dp">
 
-        <Button
-            android:id="@+id/btnEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Sửa" />
-
-        <Button
-            android:id="@+id/btnDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Xóa" />
-    </LinearLayout>
 
 </LinearLayout>

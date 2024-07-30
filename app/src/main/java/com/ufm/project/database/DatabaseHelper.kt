@@ -140,22 +140,22 @@ class DatabaseHelper(context: Context) :
                 "$COLUMN_NCC_DIACHI VARCHAR," +
                 "$COLUMN_NCC_DIENTHOAI VARCHAR)"
 
-        val createTablePM = "CREATE TABLE $TABLE_PM_NAME (" +
-                "$COLUMN_PM_ID VARCHAR PRIMARY KEY ," +
-                "$COLUMN_PM_NGAYMUON DATE," +
-                "$COLUMN_PM_NGAYTRA DATE," +
-                "$COLUMN_DG_ID INTEGER," +
-                "$COLUMN_PM_MATHU INTEGER," +
-                "$COLUMN_PM_SOLUONG INTEGER," +
-                "$COLUMN_PM_GHICHU VARCHAR ," +
-                "FOREIGN KEY ($COLUMN_DG_ID) REFERENCES $TABLE_DG_NAME($COLUMN_DG_ID) ON DELETE CASCADE ," +
-                "FOREIGN KEY ($COLUMN_PM_MATHU) REFERENCES $TABLE_TT_NAME($COLUMN_TT_ID) ON DELETE CASCADE )"
+            val createTablePM = "CREATE TABLE $TABLE_PM_NAME (" +
+                    "$COLUMN_PM_ID VARCHAR PRIMARY KEY ," +
+                    "$COLUMN_PM_NGAYMUON DATE," +
+                    "$COLUMN_PM_NGAYTRA DATE," +
+                    "$COLUMN_DG_ID INTEGER," +
+                    "$COLUMN_PM_MATHU INTEGER," +
+                    "$COLUMN_PM_SOLUONG INTEGER," +
+                    "$COLUMN_PM_GHICHU VARCHAR ," +
+                    "FOREIGN KEY ($COLUMN_DG_ID) REFERENCES $TABLE_DG_NAME($COLUMN_DG_ID) ON DELETE CASCADE ," +
+                    "FOREIGN KEY ($COLUMN_PM_MATHU) REFERENCES $TABLE_TT_NAME($COLUMN_TT_ID) ON DELETE CASCADE )"
 
-        val createTableCTPM = "CREATE TABLE $TABLE_CTPM_NAME (" +
-                "$COLUMN_CTPM_MASACH INTEGER," +
-                "$COLUMN_CTPM_MAPM VARCHAR," +
-                "FOREIGN KEY ($COLUMN_CTPM_MASACH) REFERENCES $TABLE_BOOK_NAME($COLUMN_BOOK_MASACH) ON DELETE CASCADE," +
-                "FOREIGN KEY ($COLUMN_CTPM_MAPM) REFERENCES $TABLE_PM_NAME($COLUMN_PM_ID) ON DELETE CASCADE)"
+            val createTableCTPM = "CREATE TABLE $TABLE_CTPM_NAME (" +
+                    "$COLUMN_CTPM_MASACH INTEGER," +
+                    "$COLUMN_CTPM_MAPM VARCHAR," +
+                    "FOREIGN KEY ($COLUMN_CTPM_MASACH) REFERENCES $TABLE_BOOK_NAME($COLUMN_BOOK_MASACH) ON DELETE CASCADE," +
+                    "FOREIGN KEY ($COLUMN_CTPM_MAPM) REFERENCES $TABLE_PM_NAME($COLUMN_PM_ID) ON DELETE CASCADE)"
 
         val createTableTL = "CREATE TABLE $TABLE_TL_NAME (" +
                 "$COLUMN_MALOAI INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -216,7 +216,6 @@ class DatabaseHelper(context: Context) :
                 "('Kinh tế - Quản trị'),\n" +
                 "('Sách giáo khoa'),\n" +
                 "('Sách thiếu nhi');"
-        db?.execSQL(insertTableTL)
 
         //INSERT TAI KHOAN
         db?.execSQL("INSERT INTO $TABLE_TK_NAME ($COLUMN_TK_USERNAME, $COLUMN_TK_PASSWORD, $COLUMN_TK_LOAITK) VALUES ('admin', '123456789', 'admin')")
@@ -264,8 +263,7 @@ class DatabaseHelper(context: Context) :
                 "  (3, 'Nhà sách Kim Đồng', '65 Nguyễn Văn Cừ, Quận 1, TP.HCM', '(028) 3829 2222'),\n" +
                 "  (4, 'Nhà sách Cá Chép', '125 Nguyễn Đình Chiểu, Quận 3, TP.HCM', '(028) 3820 7755'),\n" +
                 "  (5, 'Nhà sách Phương Nam', '281 - 283 Nguyễn Đình Chiểu, Quận 3, TP.HCM', '(028) 3822 8181');\n"
-        db?.execSQL(insertTableNCC)
-        db?.execSQL(insertTableDG)
+
         val insertTableBook = "INSERT INTO $TABLE_BOOK_NAME ($COLUMN_BOOK_TENSACH, $COLUMN_BOOK_PHUDE, $COLUMN_BOOK_MOTA, $COLUMN_BOOK_TACGIA, $COLUMN_BOOK_NXB, $COLUMN_BOOK_NGAYNHAP, $COLUMN_BOOK_SOLUONG, $COLUMN_BOOK_ANH, $COLUMN_MALOAI, $COLUMN_NCC_ID )\n VALUES \n "  +
                 "('Dế Mèn Phiêu Lưu Ký', 'Cuộc phiêu lưu kỳ thú của Dế Mèn trên cánh đồng xanh', 'Một câu chuyện đầy màu sắc và trí tưởng tượng của Dế Mèn, từ việc khám phá thế giới xung quanh đến những thử thách bất ngờ. Cuốn sách mở ra một thế giới tuổi thơ tươi đẹp với các bài học sâu sắc.', 'Tô Hoài', 'NXB Kim Đồng', '2023-01-15', 15, 'https://static.8cache.com/cover/o/eJzLyTDW1_VIzDROLfM3Noh31A8LM8zQLQlx8Uj11HeEgrw8V_0o5-Ck1IDyQEf3bP1iAwDLihCU/de-men-phieu-luu-ky.jpg',1, 1 ), \n" +
                 "('Harry Potter và Hòn Đá Phù Thủy', 'Cuộc phiêu lưu ma thuật tại trường Hogwarts','Cuốn sách đưa bạn vào thế giới kỳ diệu của Harry Potter với những bí ẩn chưa được giải đáp và những cuộc chiến đấu ngoạn mục chống lại các thế lực đen tối. Một hành trình đầy ma thuật và phiêu lưu ở trường Hogwarts.', 'J.K. Rowling','NXB Thế Giới', '2023-02-20', 20,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaFrm74pTLUb7H9tmrDEpEkenXX9_--_Hcyw&s', 3, 2 ), \n " +

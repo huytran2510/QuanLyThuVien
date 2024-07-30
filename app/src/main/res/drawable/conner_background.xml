@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/light_pattel"/> <!-- Thay thế bằng màu nền của bạn -->
-    <corners android:radius="20dp"/> <!-- Đặt bán kính bo góc -->
-    <padding android:left="8dp" android:top="8dp" android:right="8dp" android:bottom="8dp"/>
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Shadow layer -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#14000000" /> <!-- Màu của đổ bóng với alpha thấp -->
+            <corners android:radius="20dp" />
+        </shape>
+    </item>
+
+    <!-- Main background layer -->
+    <item android:top="2dp" android:left="2dp" android:right="2dp" android:bottom="2dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/light_pattel" /> <!-- Thay thế bằng màu nền của bạn -->
+            <corners android:radius="20dp" />
+        </shape>
+    </item>
+</layer-list>

@@ -47,6 +47,7 @@ android {
 dependencies {
     //Thư viện load ảnh hiển thị
     implementation ("com.github.bumptech.glide:glide:4.12.0")
+    implementation(libs.filament.android)
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
 
     implementation ("com.google.android.material:material:1.9.0")

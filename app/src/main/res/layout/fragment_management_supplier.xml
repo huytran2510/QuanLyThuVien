@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,14 +14,14 @@
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_margin="10dp"
             android:background="@drawable/edit_text_background"
             android:queryHint="Nhập giá trị tìm kiếm" />
 
-        <ListView
-            android:id="@+id/bookListView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewSupplier"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="top" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

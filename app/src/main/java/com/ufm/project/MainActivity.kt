@@ -13,8 +13,11 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.navigation.ui.NavigationUI
 import com.ufm.project.activity.LoginActivity
 import com.ufm.project.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -38,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home,R.id.nav_trasach, R.id.nav_slideshow
+                R.id.nav_home,R.id.nav_trasach
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -50,7 +53,11 @@ class MainActivity : AppCompatActivity() {
                     showLogoutConfirmationDialog()
                     true
                 }
-                else -> false
+                else -> {
+                    NavigationUI.onNavDestinationSelected(menuItem, navController)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
             }
         }
 

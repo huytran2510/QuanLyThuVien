@@ -1,45 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="16dp"
     android:gravity="center_vertical">
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical" >
-        <TextView
-            android:id="@+id/bookTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Book Title"
-            android:fontFamily="@font/poppins_regular"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/bookAuthor"
-            android:layout_width="match_parent"
-            android:fontFamily="@font/poppins_regular"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Author"
-            android:textSize="14sp"/>
+        <ImageView
+            android:id="@+id/imgBookView"
+            android:layout_width="90dp"
+            android:layout_height="150dp"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/book" />
 
-        <TextView
-            android:fontFamily="@font/poppins_regular"
-            android:id="@+id/bookQuantity"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Quantity"
-            android:textSize="14sp"/>
+            android:orientation="vertical"
+            android:paddingStart="8dp"
+            android:paddingLeft="8dp">
+
+            <TextView
+                android:id="@+id/bookTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Book Title"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/bookAuthor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Author"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/bookQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Quantity"
+                android:textSize="14sp" />
+        </LinearLayout>
     </LinearLayout>
-
-
 
     <ImageButton
         android:id="@+id/editButton"

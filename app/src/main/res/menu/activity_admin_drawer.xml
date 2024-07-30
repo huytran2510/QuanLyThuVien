@@ -5,9 +5,10 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_admin"
+        <item
+            android:id="@+id/nav_admin"
             android:icon="@drawable/baseline_menu_book_24"
-            android:title="Quản lý sách"/>
+            android:title="Quản lý sách" />
 
         <item android:id="@+id/nav_management_type_book"
             android:icon="@drawable/baseline_insert_drive_file_24"
@@ -20,6 +21,10 @@
         <item android:id="@+id/nav_management_reader"
             android:icon="@drawable/logo_reader"
             android:title="Quản lý độc giả" />
+
+        <item android:id="@+id/nav_management_supplier"
+            android:icon="@drawable/logo_reader"
+            android:title="Quản lý nhà cung cấp" />
 
         <item android:id="@+id/nav_statistics_borrow_book"
             android:icon="@drawable/logo_reader"

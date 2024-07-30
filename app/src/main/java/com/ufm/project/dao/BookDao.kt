@@ -16,6 +16,17 @@ class BookDao (context: Context) {
         return db.delete(DatabaseHelper.TABLE_BOOK_NAME, "${DatabaseHelper.COLUMN_BOOK_MASACH} = ?", arrayOf(bookId.toString())) > 0
     }
 
+    fun getPicture(idBook: Int): Cursor {
+        val db = dbHelper.writableDatabase
+        val query = """
+        SELECT ${DatabaseHelper.TABLE_BOOK_NAME}.*
+        FROM ${DatabaseHelper.TABLE_BOOK_NAME}
+        WHERE ${DatabaseHelper.COLUMN_BOOK_MASACH} = ?
+    """
+        return db.rawQuery(query, arrayOf(idBook.toString()))
+    }
+
+
 
     fun getAllTypeBook(name: String, db: SQLiteDatabase): Cursor?{
         val query="""
