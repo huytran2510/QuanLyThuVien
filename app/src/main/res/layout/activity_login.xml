@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color">
@@ -14,8 +15,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="-128dp"
         android:src="@drawable/bg_art">
-
-
     </ImageView>
 
     <LinearLayout
@@ -27,13 +26,20 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="151dp"
+            app:srcCompat="@drawable/logo_ufm" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
             android:text="Đăng nhập"
-            android:textColor="#8C7AE6"
+            android:textColor="#034ea2"
             android:textSize="25dp" />
 
         <EditText
@@ -68,7 +74,7 @@
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_background"
+            android:background="@drawable/side_nav_bar"
             android:src="@drawable/baseline_send_24"
             android:drawablePadding="0dp"
             android:contentDescription="@string/app_name"
