@@ -5,46 +5,50 @@
     tools:showIn="navigation_view">
 
     <!-- Nhóm Quản lý -->
-    <group android:checkableBehavior="single" android:title="Quản lý">
+    <group
+        android:checkableBehavior="single"
+        android:title="Quản lý"
+        android:id="@+id/group1">
         <item
             android:id="@+id/nav_admin"
-            android:icon="@drawable/baseline_menu_book_24"
             android:fontFamily="@font/poppins_regular"
-            android:title="Quản lý sách"/>
+            android:icon="@drawable/baseline_menu_book_24"
+            android:title="Quản lý sách" />
 
         <item
             android:id="@+id/nav_management_type_book"
-            android:icon="@drawable/type_book"
             android:fontFamily="@font/poppins_regular"
-            android:title="Quản lý loại sách"/>
+            android:icon="@drawable/type_book"
+            android:title="Quản lý loại sách" />
 
         <item
             android:id="@+id/nav_management_borrow_book"
-            android:icon="@drawable/borrow_book"
             android:fontFamily="@font/poppins_regular"
-            android:title="Quản lý phiếu mượn"/>
+            android:icon="@drawable/borrow_book"
+            android:title="Quản lý phiếu mượn" />
 
         <item
             android:id="@+id/nav_management_return_book"
-            android:icon="@drawable/borrow_book"
             android:fontFamily="@font/poppins_regular"
-            android:title="Quản lý phiếu trả"/>
+            android:icon="@drawable/baseline_analytics_24"
+            android:title="Quản lý phiếu trả" />
 
         <item
             android:id="@+id/nav_management_reader"
-            android:icon="@drawable/logo_reader"
             android:fontFamily="@font/poppins_regular"
-            android:title="Quản lý độc giả"/>
+            android:icon="@drawable/logo_reader"
+            android:title="Quản lý độc giả" />
 
         <item
             android:id="@+id/nav_management_account"
-            android:icon="@drawable/baseline_manage_accounts_24"
             android:fontFamily="@font/poppins_regular"
-            android:title="Quản lý tài khoản"/>
+            android:icon="@drawable/baseline_manage_accounts_24"
+            android:title="Quản lý tài khoản" />
     </group>
 
+
     <!-- Nhóm Thống kê -->
-    <group android:checkableBehavior="single" android:title="Thống kê">
+    <group android:checkableBehavior="single" android:title="Thống kê" android:id="@+id/group2">
         <item
             android:id="@+id/nav_statistics_borrow_book"
             android:icon="@drawable/statistic_book"
@@ -69,6 +73,7 @@
             android:icon="@drawable/top_borrow_book"
             android:title="Top sách được mượn nhiều nhất"/>
     </group>
+
 
     <!-- Mục Đăng Xuất -->
     <item
