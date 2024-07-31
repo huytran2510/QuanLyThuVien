@@ -22,6 +22,7 @@
             <TextView
                 android:id="@+id/txtIdAccount"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/poppins_regular"
                 android:layout_height="wrap_content"
                 android:text="Mã TK"
                 android:textSize="16sp"
@@ -30,6 +31,7 @@
             <TextView
                 android:id="@+id/txtUserName"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/poppins_regular"
                 android:layout_height="wrap_content"
                 android:text="Tên Đăng Nhập" />
 
@@ -37,12 +39,14 @@
                 android:id="@+id/txtPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
                 android:text="Mật Khẩu"
                 android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txtTypeAccount"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/poppins_regular"
                 android:layout_height="wrap_content"
                 android:text="Loại TK"
                 android:textSize="14sp" />

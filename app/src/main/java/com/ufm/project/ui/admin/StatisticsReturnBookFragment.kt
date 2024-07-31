@@ -172,7 +172,7 @@ class StatisticsReturnBookFragment : Fragment() {
             BarEntry(index.toFloat(), stat.second.toFloat())
         }
 
-        val barDataSet = BarDataSet(entries, "Số lượng sách được mượn")
+        val barDataSet = BarDataSet(entries, "Số lượng sách được trả")
         barDataSet.colors = ColorTemplate.COLORFUL_COLORS.toList()
 
         val barData = BarData(barDataSet)

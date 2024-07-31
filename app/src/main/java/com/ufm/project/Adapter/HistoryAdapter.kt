@@ -19,7 +19,7 @@ class HistoryAdapter(private var historyList: List<HistoryBorrowBook>, private v
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         val history = historyList[position]
-        holder.textViewId.text = "Mã hóa đơn : " + history.id.toString()
+        holder.textViewId.text = "Mã phiếu mượn : " + history.id.toString()
         holder.textViewNgayMuon.text = "Ngày mượn : " + history.ngayMuon
         holder.textViewNgayTra.text = "Ngày trả : " + history.ngayTra
 //        holder.textViewMaKhachHang.text = "Mã khách hàng : " + history.maKhachHang.toString()

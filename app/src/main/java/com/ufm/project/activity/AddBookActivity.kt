@@ -6,6 +6,8 @@ import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -88,6 +90,17 @@ class AddBookActivity : AppCompatActivity() {
         loadSpinners()
         managerBookFragment = ManagementBookFragment()
 
+        etBookQuantity.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                validateQuantity()
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+
         val bookId = intent.getIntExtra("book_id", -1)
         if (bookId != -1) {
             loadBookDetails(bookId)
@@ -114,6 +127,25 @@ class AddBookActivity : AppCompatActivity() {
         val btnBack = findViewById<FloatingActionButton>(R.id.btnBack)
         btnBack.setOnClickListener {
             onBackPressed() // Quay lại trang trước đó
+        }
+    }
+
+    private fun validateQuantity() {
+        val quantityString = etBookQuantity.text.toString().trim()
+
+        val inputQuantity: Int
+        try {
+            inputQuantity = quantityString.toInt()
+        } catch (e: NumberFormatException) {
+            etBookQuantity.error = "Phải nhập số"
+            return
+        }
+
+        // Validate inputQuantity against the provided quantity
+        if (inputQuantity < 0) {
+            etBookQuantity.error = "Số không được bé hơn  0"
+        } else {
+            etBookQuantity.error = null // Clear error if valid
         }
     }
 

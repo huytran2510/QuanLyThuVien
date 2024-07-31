@@ -1,5 +1,6 @@
 package com.ufm.project.Adapter
 
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
@@ -32,6 +33,7 @@ import com.ufm.project.dao.BorrowBookDao
 import com.ufm.project.database.DatabaseHelper
 import com.ufm.project.modal.BookRVModal
 import com.ufm.project.modal.BorrowBookModal
+import java.sql.SQLException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -136,6 +138,45 @@ class ManagerBorrowBookAdapter(
 
     override fun getItemCount(): Int {
         return cursor.count
+    }
+
+    private fun updateBookQuantity(bookId: Int, quantity: Int) {
+        // Kiểm tra dữ liệu đầu vào
+        if (quantity <= 0) {
+            throw IllegalArgumentException("Số lượng phải lớn hơn 0")
+        }
+        val db = DatabaseHelper(context).writableDatabase
+        val query = "SELECT ${DatabaseHelper.COLUMN_BOOK_SOLUONG} FROM ${DatabaseHelper.TABLE_BOOK_NAME} WHERE ${DatabaseHelper.COLUMN_BOOK_MASACH} = ?"
+        val cursor = db.rawQuery(query, arrayOf(bookId.toString()))
+
+        try {
+            if (cursor.moveToFirst()) {
+                val currentQuantity = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_SOLUONG))
+                val newQuantity = currentQuantity + quantity
+
+                if (newQuantity >= 0) {
+                    val contentValues = ContentValues().apply {
+                        put(DatabaseHelper.COLUMN_BOOK_SOLUONG, newQuantity)
+                    }
+                    val rowsUpdated = db.update(DatabaseHelper.TABLE_BOOK_NAME, contentValues, "${DatabaseHelper.COLUMN_BOOK_MASACH} = ?", arrayOf(bookId.toString()))
+
+                    // Kiểm tra xem có bao nhiêu hàng được cập nhật
+                    if (rowsUpdated <= 0) {
+                        throw SQLException("Không thể cập nhật số lượng sách")
+                    }
+                } else {
+                    throw IllegalArgumentException("Không đủ sách có sẵn")
+                }
+            } else {
+                throw IllegalArgumentException("Không tìm thấy sách với mã ID $bookId")
+            }
+        } catch (e: Exception) {
+            // Xử lý ngoại lệ nếu có
+            e.printStackTrace()
+            throw e // Hoặc hiển thị thông báo lỗi cho người dùng
+        } finally {
+            cursor.close()
+        }
     }
 
     private fun showEditDialog(idBorrow: String) {
@@ -287,14 +328,13 @@ class ManagerBorrowBookAdapter(
     private fun loadBookSpinner(spinnerBook: Spinner, idBorrow: String) {
         val dbHelper = DatabaseHelper(context)
         val db = dbHelper.readableDatabase
+
+        // Truy vấn tất cả sách
         val query = """
-        SELECT ${DatabaseHelper.TABLE_CTPM_NAME}.${DatabaseHelper.COLUMN_BOOK_MASACH}, ${DatabaseHelper.TABLE_BOOK_NAME}.${DatabaseHelper.COLUMN_BOOK_TENSACH}
-        FROM ${DatabaseHelper.TABLE_BOOK_NAME} 
-        INNER JOIN ${DatabaseHelper.TABLE_CTPM_NAME} 
-        ON ${DatabaseHelper.TABLE_BOOK_NAME}.${DatabaseHelper.COLUMN_BOOK_MASACH} = ${DatabaseHelper.TABLE_CTPM_NAME}.${DatabaseHelper.COLUMN_CTPM_MASACH}
-        WHERE ${DatabaseHelper.TABLE_CTPM_NAME}.${DatabaseHelper.COLUMN_CTPM_MAPM} = ?
+        SELECT ${DatabaseHelper.COLUMN_BOOK_MASACH}, ${DatabaseHelper.COLUMN_BOOK_TENSACH}
+        FROM ${DatabaseHelper.TABLE_BOOK_NAME}
     """
-        val cursor = db.rawQuery(query, arrayOf(idBorrow))
+        val cursor = db.rawQuery(query, null)
 
         val bookList = mutableListOf<String>()
         val bookIdList = mutableListOf<Int>()
@@ -306,19 +346,28 @@ class ManagerBorrowBookAdapter(
                 val bookName = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_TENSACH))
                 bookList.add(bookName)
                 bookIdList.add(bookId)
-
-                if (selectedBookId == null) {
-                    selectedBookId = bookId // Assuming the first bookId is the one we need to select
-                }
             } while (cursor.moveToNext())
         }
         cursor.close()
+
+        // Truy vấn thông tin sách của idBorrow
+        val borrowQuery = """
+        SELECT ${DatabaseHelper.COLUMN_BOOK_MASACH}
+        FROM ${DatabaseHelper.TABLE_CTPM_NAME}
+        WHERE ${DatabaseHelper.COLUMN_CTPM_MAPM} = ?
+    """
+        val borrowCursor = db.rawQuery(borrowQuery, arrayOf(idBorrow))
+
+        if (borrowCursor.moveToFirst()) {
+            selectedBookId = borrowCursor.getInt(borrowCursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_MASACH))
+        }
+        borrowCursor.close()
 
         val adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, bookList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerBook.adapter = adapter
 
-        // Set the selection to the book that matches the current borrow transaction
+        // Đặt lựa chọn dựa trên idBorrow
         selectedBookId?.let {
             val position = bookIdList.indexOf(it)
             if (position >= 0) {
@@ -343,7 +392,9 @@ class ManagerBorrowBookAdapter(
             val borrowBookDao = BorrowBookDao()
 
             val bookId = borrowBookDao.getBookIdByBorrowId(idBorrow, db)
-            borrowBookDao.exportPayBook(idBorrow.toInt(), currentDate, quantity, note, bookId, db)
+            borrowBookDao.exportPayBook(idBorrow, currentDate, quantity, note, bookId, db)
+
+            updateBookQuantity(bookId.toInt(),quantity)
 
             notifyDataSetChanged()
             Toast.makeText(context, "Xuất phiếu mượn thành công", Toast.LENGTH_SHORT).show()

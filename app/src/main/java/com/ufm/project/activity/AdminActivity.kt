@@ -39,7 +39,6 @@ class AdminActivity : AppCompatActivity() {
 
         val drawerLayout: DrawerLayout = binding.drawerLayoutAdmin
         val navView: NavigationView = binding.navViewAdmin
-
         val headerView = navView.getHeaderView(0)
         val imageView = headerView.findViewById<ImageView>(R.id.imageView)
 
@@ -59,8 +58,8 @@ class AdminActivity : AppCompatActivity() {
                     Toast.makeText(this@AdminActivity, "Failed to load image", Toast.LENGTH_SHORT).show()
                 }
             })
-
         val navController = findNavController(R.id.nav_host_fragment_content_admin)
+
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_admin,
@@ -86,8 +85,6 @@ class AdminActivity : AppCompatActivity() {
                 }
             }
         }
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -190,7 +190,7 @@ class BorrowBookDao {
         return db.rawQuery(query, null)
     }
 
-    fun exportPayBook(idBorrowBook: Int,returnDate : String,quantity: Int, ghichu : String, idBook : Long, db : SQLiteDatabase) {
+    fun exportPayBook(idBorrowBook: String,returnDate : String,quantity: Int, ghichu : String, idBook : Long, db : SQLiteDatabase) {
         val payID = generateRandomId()
         val contentValues = ContentValues().apply {
             put(DatabaseHelper.COLUMN_PT_MAPT, payID)

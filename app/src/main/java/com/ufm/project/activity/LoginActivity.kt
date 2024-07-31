@@ -25,7 +25,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        deleteDatabase("library.db")
 
         dbHelper = DatabaseHelper(this)
         db = dbHelper.writableDatabase

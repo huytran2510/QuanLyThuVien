@@ -24,6 +24,7 @@
                 android:id="@+id/textViewIDReader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
                 android:text="Mã Độc Giả"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -31,12 +32,14 @@
             <TextView
                 android:id="@+id/textViewName"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/poppins_regular"
                 android:layout_height="wrap_content"
                 android:text="Tên Độc Giả" />
 
             <TextView
                 android:id="@+id/textViewAddress"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/poppins_regular"
                 android:layout_height="wrap_content"
                 android:text="Địa Chỉ"
                 android:textSize="14sp" />
@@ -44,6 +47,7 @@
             <TextView
                 android:id="@+id/textViewBirthdate"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/poppins_regular"
                 android:layout_height="wrap_content"
                 android:text="Ngày Sinh"
                 android:textSize="14sp" />
@@ -51,6 +55,7 @@
             <TextView
                 android:id="@+id/textViewPhone"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/poppins_regular"
                 android:layout_height="wrap_content"
                 android:text="Điện Thoại"
                 android:textSize="14sp" />
@@ -58,6 +63,7 @@
             <TextView
                 android:id="@+id/textViewGender"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/poppins_regular"
                 android:layout_height="wrap_content"
                 android:text="Giới Tính"
                 android:textSize="14sp" />
