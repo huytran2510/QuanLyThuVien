@@ -16,6 +16,7 @@
             android:id="@+id/txtIdTypeBook"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
             android:layout_weight="1"
             android:text="Mã loại sách  "
             android:textSize="16sp"
@@ -23,6 +24,7 @@
 
         <TextView
             android:id="@+id/txtNameTypeBook"
+            android:fontFamily="@font/poppins_regular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

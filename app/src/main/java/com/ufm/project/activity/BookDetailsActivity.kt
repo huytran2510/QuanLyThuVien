@@ -44,7 +44,8 @@ class BookDetailsActivity : AppCompatActivity() {
     private lateinit var borrowBookDao: BorrowBookDao
     private lateinit var bookAdapter: BookRVAdapter  // Add this line
     private lateinit var bookList: ArrayList<BookRVModal>  // Add this line
-
+    private var borrowDate: Calendar? = null
+    private var returnDate: Calendar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,8 +77,6 @@ class BookDetailsActivity : AppCompatActivity() {
         val buyLink = getIntent().getStringExtra("buyLink")
         val idBook = getIntent().getIntExtra("idBook", 0)
 
-
-        // after getting the data we are setting
         // that data to our text views and image view.
         titleTV.setText(title)
         subtitleTV.setText(subtitle)
@@ -113,11 +112,11 @@ class BookDetailsActivity : AppCompatActivity() {
 
 
             returnDateEditText.setOnClickListener {
-                showDatePickerDialog(returnDateEditText)
+                showDatePickerDialog(returnDateEditText, true)
             }
 
             borrowDateEditText.setOnClickListener {
-                showDatePickerDialog(borrowDateEditText)
+                showDatePickerDialog(borrowDateEditText, false)
             }
 
 
@@ -132,10 +131,8 @@ class BookDetailsActivity : AppCompatActivity() {
                 val borrowDate = borrowDateEditText.text.toString()
                 val returnDate = returnDateEditText.text.toString()
                 borrowBookDao = BorrowBookDao()
+
                 // write function get email by user id
-                // no i want write function get email by user id
-
-
                 // Validate the input
                 if (quantity != null) {
                     val dbHelper = DatabaseHelper(this)
@@ -221,7 +218,7 @@ class BookDetailsActivity : AppCompatActivity() {
 
 
 
-    private fun showDatePickerDialog(editText: EditText) {
+    private fun showDatePickerDialog(editText: EditText, isReturnDate: Boolean) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
@@ -232,6 +229,19 @@ class BookDetailsActivity : AppCompatActivity() {
             { _, selectedYear, selectedMonth, selectedDay ->
                 val selectedDate = "$selectedDay/${selectedMonth + 1}/$selectedYear"
                 editText.setText(selectedDate)
+
+                val selectedCalendar = Calendar.getInstance()
+                selectedCalendar.set(selectedYear, selectedMonth, selectedDay)
+
+                if (isReturnDate) {
+                    returnDate = selectedCalendar
+                    if (borrowDate != null && returnDate!!.before(borrowDate)) {
+                        Toast.makeText(this, "Ngày trả lại không được sớm hơn ngày mượn!!!!\n", Toast.LENGTH_SHORT).show()
+                        editText.setText("") // Clear the invalid return date
+                    }
+                } else {
+                    borrowDate = selectedCalendar
+                }
             },
             year, month, day
         )

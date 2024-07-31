@@ -1,5 +1,6 @@
 package com.ufm.project.ui.home
 
+import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
@@ -15,26 +16,27 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ufm.project.R
 import com.ufm.project.dao.BorrowBookDao
 import com.ufm.project.database.DatabaseHelper
 import java.sql.SQLException
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
 class BookBackFragment : Fragment() {
     private lateinit var etBorrowingSlipCode: EditText
     private lateinit var etQuantity: EditText
-    private lateinit var etReturnDate: EditText
     private lateinit var rgBookCondition: RadioGroup
     private lateinit var etNotes: EditText
     private lateinit var btnCompleteReturn: Button
     private lateinit var databaseHelper: DatabaseHelper
     private var borrowBookId: String? = null
     private var quantity: Int? = 0
-
-
+    private lateinit var btnBack : FloatingActionButton
+    private lateinit var returnDateEditText: EditText
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,10 +46,14 @@ class BookBackFragment : Fragment() {
 
         etBorrowingSlipCode = view.findViewById(R.id.etBorrowingSlipCode)
         etQuantity = view.findViewById(R.id.etQuantity)
-        etReturnDate = view.findViewById(R.id.etReturnDate)
         rgBookCondition = view.findViewById(R.id.rgBookCondition)
         etNotes = view.findViewById(R.id.etNotes)
         btnCompleteReturn = view.findViewById(R.id.btnCompleteReturn)
+        returnDateEditText = view.findViewById(R.id.returnDateEditText)
+
+        returnDateEditText.setOnClickListener {
+            showDatePickerDialog(returnDateEditText)
+        }
 
         borrowBookId = arguments?.getString("borrowBookId")
         quantity = arguments?.getInt("quantity")
@@ -75,7 +81,28 @@ class BookBackFragment : Fragment() {
             }
         }
 
+        btnBack = view.findViewById(R.id.btnBack)
+        btnBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed() // Quay lại trang trước đó
+        }
         return view
+    }
+
+    private fun showDatePickerDialog(editText: EditText) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val selectedDate = "$selectedDay/${selectedMonth + 1}/$selectedYear"
+                editText.setText(selectedDate)
+            },
+            year, month, day
+        )
+        datePickerDialog.show()
     }
 
     private fun validateQuantity() {
@@ -102,7 +129,8 @@ class BookBackFragment : Fragment() {
     private fun completeReturn() {
         val borrowingSlipCode = etBorrowingSlipCode.text.toString().trim()
         val quantityString = etQuantity.text.toString().trim()
-        val returnDate = etReturnDate.text.toString().trim()
+        val returnDate = returnDateEditText.text.toString()
+
         val bookConditionId = rgBookCondition.checkedRadioButtonId
         val bookCondition = if (bookConditionId != -1) {
             view?.findViewById<RadioButton>(bookConditionId)?.text.toString()
@@ -135,7 +163,7 @@ class BookBackFragment : Fragment() {
         // Insert into PT (Phiếu Trả)
         val insertPT = ContentValues().apply {
             put(DatabaseHelper.COLUMN_PT_MAPT,mapt )
-            put(DatabaseHelper.COLUMN_PT_NGAYTRA, returnDate)
+            put(DatabaseHelper.COLUMN_PT_NGAYTRA, convertDateFormat(returnDate))
             put(DatabaseHelper.COLUMN_PT_SOLUONGMUON, borrowedQuantity)
             put(DatabaseHelper.COLUMN_PT_SOLUONGTRA, quantity)
             put(DatabaseHelper.COLUMN_PM_ID, borrowingSlipCode)
@@ -160,13 +188,26 @@ class BookBackFragment : Fragment() {
             // Clear input fields
             etBorrowingSlipCode.text.clear()
             etQuantity.text.clear()
-            etReturnDate.text.clear()
             etNotes.text.clear()
             rgBookCondition.clearCheck()
         } else {
             Toast.makeText(requireContext(), "Lỗi khi thêm phiếu trả", Toast.LENGTH_SHORT).show()
         }
     }
+
+    fun convertDateFormat(inputDate: String): String {
+        // Định dạng ngày đầu vào
+        val inputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        // Định dạng ngày đầu ra
+        val outputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+        // Chuyển đổi từ định dạng đầu vào sang đối tượng Date
+        val date = inputFormat.parse(inputDate)
+
+        // Chuyển đổi từ đối tượng Date sang định dạng đầu ra
+        return outputFormat.format(date)
+    }
+
     fun generateBorrowId(): String {
         val dateFormat = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault())
         val currentTime = Date()

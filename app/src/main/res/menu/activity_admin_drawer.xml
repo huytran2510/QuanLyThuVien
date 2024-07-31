@@ -9,26 +9,37 @@
         <item
             android:id="@+id/nav_admin"
             android:icon="@drawable/baseline_menu_book_24"
+            android:fontFamily="@font/poppins_regular"
             android:title="Quản lý sách"/>
 
         <item
             android:id="@+id/nav_management_type_book"
             android:icon="@drawable/type_book"
+            android:fontFamily="@font/poppins_regular"
             android:title="Quản lý loại sách"/>
 
         <item
             android:id="@+id/nav_management_borrow_book"
             android:icon="@drawable/borrow_book"
+            android:fontFamily="@font/poppins_regular"
             android:title="Quản lý phiếu mượn"/>
+
+        <item
+            android:id="@+id/nav_management_return_book"
+            android:icon="@drawable/borrow_book"
+            android:fontFamily="@font/poppins_regular"
+            android:title="Quản lý phiếu trả"/>
 
         <item
             android:id="@+id/nav_management_reader"
             android:icon="@drawable/logo_reader"
+            android:fontFamily="@font/poppins_regular"
             android:title="Quản lý độc giả"/>
 
         <item
             android:id="@+id/nav_management_account"
             android:icon="@drawable/baseline_manage_accounts_24"
+            android:fontFamily="@font/poppins_regular"
             android:title="Quản lý tài khoản"/>
     </group>
 
@@ -37,20 +48,24 @@
         <item
             android:id="@+id/nav_statistics_borrow_book"
             android:icon="@drawable/statistic_book"
+            android:fontFamily="@font/poppins_regular"
             android:title="Thống kê phiếu mượn sách"/>
 
         <item
             android:id="@+id/nav_statistics_return_book"
             android:icon="@drawable/return_book"
+            android:fontFamily="@font/poppins_regular"
             android:title="Thống kê phiếu trả sách"/>
 
         <item
             android:id="@+id/nav_statistics_of_book_return"
             android:icon="@drawable/seo_report"
+            android:fontFamily="@font/poppins_regular"
             android:title="Thống kê tình trạng trả sách"/>
 
         <item
             android:id="@+id/nav_statistics_top_book"
+            android:fontFamily="@font/poppins_regular"
             android:icon="@drawable/top_borrow_book"
             android:title="Top sách được mượn nhiều nhất"/>
     </group>
@@ -58,6 +73,7 @@
     <!-- Mục Đăng Xuất -->
     <item
         android:id="@+id/nav_logout"
+        android:fontFamily="@font/poppins_regular"
         android:icon="@drawable/baseline_logout_24"
         android:title="Đăng Xuất"/>
 </menu>

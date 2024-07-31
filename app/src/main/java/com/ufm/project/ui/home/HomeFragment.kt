@@ -75,7 +75,10 @@ class HomeFragment : Fragment() {
         getBooksData2("")
 
     }
-
+    override fun onResume() {
+        super.onResume()
+        getBooksData2("")
+    }
     private fun getBooksData2(searchQuery: String) {
         booksList = ArrayList()
         val dbHelper = DatabaseHelper(requireContext())

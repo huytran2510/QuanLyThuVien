@@ -2,6 +2,7 @@ package com.ufm.project.ui.admin
 
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,20 +63,51 @@ class StatisticsBorrowBookFragment : Fragment() {
         setupSpinners()
     }
 
-    private fun getAvailableYears(db: SQLiteDatabase): List<String> {
-        val query = """
+    private fun getAvailableYears(db: SQLiteDatabase?): List<String> {
+        return try {
+            requireNotNull(db) { "Database cannot be null" }
+            Log.d("StatisticsBorrowBookFragment", "Database is not null")
+
+            val query = """
             SELECT DISTINCT strftime('%Y', ${DatabaseHelper.COLUMN_PM_NGAYMUON}) as year
             FROM ${DatabaseHelper.TABLE_PM_NAME}
             ORDER BY year
         """
-        val cursor = db.rawQuery(query, null)
-        val years = mutableListOf<String>()
-        while (cursor.moveToNext()) {
-            val year = cursor.getString(cursor.getColumnIndexOrThrow("year"))
-            years.add(year)
+            Log.d("StatisticsBorrowBookFragment", "Query: $query")
+
+            require(DatabaseHelper.COLUMN_PM_NGAYMUON.isNotEmpty()) { "DatabaseHelper.COLUMN_PM_NGAYMUON cannot be empty" }
+            Log.d("StatisticsBorrowBookFragment", "DatabaseHelper.COLUMN_PM_NGAYMUON is not empty")
+
+            require(DatabaseHelper.TABLE_PM_NAME.isNotEmpty()) { "DatabaseHelper.TABLE_PM_NAME cannot be empty" }
+            Log.d("StatisticsBorrowBookFragment", "DatabaseHelper.TABLE_PM_NAME is not empty")
+
+            val cursor = db.rawQuery(query, null)
+            val years = mutableListOf<String>()
+
+            cursor.use {
+                while (it.moveToNext()) {
+                    val columnIndex = it.getColumnIndexOrThrow("year")
+                    Log.d("StatisticsBorrowBookFragment", "Column index for 'year': $columnIndex")
+
+                    val year = it.getString(columnIndex)
+                    Log.d("StatisticsBorrowBookFragment", "Year retrieved: $year")
+
+                    years.add(year)
+                }
+            }
+
+            Log.d("StatisticsBorrowBookFragment", "Years: $years")
+            years
+        } catch (e: IllegalArgumentException) {
+            Log.e("StatisticsBorrowBookFragment", "IllegalArgumentException in getAvailableYears: ${e.message}", e)
+            emptyList()
+        } catch (e: IllegalStateException) {
+            Log.e("StatisticsBorrowBookFragment", "IllegalStateException in getAvailableYears: ${e.message}", e)
+            emptyList()
+        } catch (e: Exception) {
+            Log.e("StatisticsBorrowBookFragment", "Exception in getAvailableYears: ${e.message}", e)
+            emptyList()
         }
-        cursor.close()
-        return years
     }
 
     private fun getAvailableMonths(db: SQLiteDatabase, year: String): List<String> {

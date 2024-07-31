@@ -24,6 +24,7 @@
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="match_parent"
+                android:fontFamily="@font/poppins_regular"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Mã PM"
@@ -36,11 +37,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/poppins_regular"
                 android:text="idBorrowBook" />
 
             <TextView
                 android:id="@+id/textView8"
                 android:layout_width="match_parent"
+                android:fontFamily="@font/poppins_regular"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
@@ -52,6 +55,7 @@
             <TextView
                 android:id="@+id/txtMaDG"
                 android:layout_width="match_parent"
+                android:fontFamily="@font/poppins_regular"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="idReader" />
@@ -68,6 +72,7 @@
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
                 android:layout_weight="1"
                 android:text="Tên ĐG"
                 android:textColor="@color/light_text"
@@ -78,6 +83,7 @@
                 android:id="@+id/txtTenDocGia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
                 android:layout_weight="1"
                 android:text="nameReader" />
 
@@ -89,12 +95,14 @@
                 android:layout_weight="1"
                 android:text="Trạng thái"
                 android:textColor="@color/light_text"
+                android:fontFamily="@font/poppins_regular"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtTrangThai"
                 android:layout_width="match_parent"
+                android:fontFamily="@font/poppins_bold"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Status" />

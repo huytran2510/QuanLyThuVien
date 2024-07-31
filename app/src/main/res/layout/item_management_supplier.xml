@@ -25,6 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Mã NCC"
+                android:fontFamily="@font/poppins_regular"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -32,18 +33,21 @@
                 android:id="@+id/txtNameSupplier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
                 android:text="Tên NCC" />
 
             <TextView
                 android:id="@+id/txtLocalSupplier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
                 android:text="Địa chỉ"
                 android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txtPhoneSupplier"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/poppins_regular"
                 android:layout_height="wrap_content"
                 android:text="Điện thoại"
                 android:textSize="14sp" />

@@ -49,6 +49,11 @@ class ManagementBookFragment : Fragment() {
         return root
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadBooksFromDatabase()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

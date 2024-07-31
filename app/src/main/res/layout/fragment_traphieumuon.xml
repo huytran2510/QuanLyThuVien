@@ -1,10 +1,10 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.home.BookBackFragment" >
+    tools:context=".ui.home.BookBackFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -72,13 +72,13 @@
             android:layout_marginTop="16dp" />
 
         <EditText
-            android:textColor="@color/black"
-            android:id="@+id/etReturnDate"
+            android:id="@+id/returnDateEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nhập ngày trả (dd/MM/yyyy)"
+            android:focusable="false"
             android:background="@drawable/edit_text_background"
-            android:inputType="date" />
+            android:clickable="true"
+            android:hint="Chọn ngày trả" />
 
         <!-- Tình trạng sách -->
         <TextView
@@ -140,5 +140,15 @@
             android:text="Hoàn Tất"
             android:textStyle="bold"
             android:layout_marginTop="24dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginBottom="50dp"
+            app:srcCompat="@drawable/baseline_arrow_back_24" />
     </LinearLayout>
+
 </ScrollView>
