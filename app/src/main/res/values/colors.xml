@@ -18,6 +18,7 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorCustomButton">#4CAF50</color>
+    <color name="colorFab">#034ea2</color>
 
     <color name="profilePrimaryDark">#FF3B30</color>
     <color name="profileAccentColor">#F7F7F7</color>

@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Profile"
+            android:text="THÔNG TIN CÁ NHÂN"
             android:textStyle="bold"
             android:textSize="30sp"
             android:fontFamily="@font/poppins_bold"
@@ -50,7 +50,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="test"
+                        android:text="Tên"
                         android:id="@+id/edtName"
                         android:textAlignment="center"
                         android:textSize="20sp"
@@ -297,6 +297,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_bold"
                     android:text="Cập nhật"
+                    android:textColor="@color/white"
                     android:backgroundTint="#005496"/>
             </LinearLayout>
 

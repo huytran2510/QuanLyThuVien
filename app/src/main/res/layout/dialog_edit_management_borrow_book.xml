@@ -22,15 +22,15 @@
                 android:text="CẬP NHÂT PHIẾU MƯỢN"
                 android:gravity="center"
                 android:fontFamily="@font/poppins_bold"
-                android:textSize="24dp"
-                android:textColor="@color/black"/>
+                android:textSize="20dp"
+                android:textColor="@color/colorFab"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Chọn Mã Độc Giả"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_bold"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 android:layout_marginTop="16dp"/>
 
             <Spinner
@@ -45,7 +45,7 @@
                 android:text="Chọn Sách"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_bold"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 android:layout_marginTop="16dp"/>
 
             <Spinner
@@ -60,7 +60,7 @@
                 android:text="Ngày Mượn"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_bold"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 android:layout_marginTop="16dp"/>
 
             <LinearLayout
@@ -92,7 +92,7 @@
                 android:text="Ngày Hết Hạn"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_bold"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 android:layout_marginTop="16dp"/>
 
             <LinearLayout
@@ -124,7 +124,7 @@
                 android:text="Số Lượng Mượn"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_bold"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 android:layout_marginTop="16dp"/>
 
             <EditText
@@ -140,15 +140,15 @@
                 android:text="Ghi Chú"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_bold"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 android:layout_marginTop="16dp"/>
 
             <EditText
                 android:id="@+id/edtGhiChu"
-                android:background="@drawable/edit_text_background"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:hint="Nhập ghi chú"/>
+                android:layout_height="110dp"
+                android:background="@drawable/edit_text_background"
+                android:hint="Nhập ghi chú" />
 
             <Button
                 android:id="@+id/btnEditBorrowBook"
@@ -160,7 +160,7 @@
                 android:layout_margin="20dp"
                 android:padding="10dp"
                 android:textColor="@color/white"
-                android:backgroundTint="#FF0000"
+                android:backgroundTint="@color/colorFab"
                 android:layout_marginTop="16dp"/>
         </LinearLayout>
     </ScrollView>
