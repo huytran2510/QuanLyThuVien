@@ -97,6 +97,6 @@
         android:layout_height="200dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@drawable/book" />
 
 </LinearLayout>

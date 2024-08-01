@@ -18,18 +18,18 @@
                 android:id="@+id/textView11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="CẬP NHÂT THỂ LOẠI SÁCH"
+                android:text="CẬP NHẬT THỂ LOẠI SÁCH"
                 android:gravity="center"
                 android:fontFamily="@font/poppins_bold"
-                android:textSize="24dp"
-                android:textColor="@color/black"/>
+                android:textSize="20dp"
+                android:textColor="@color/colorFab"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tên thể loại sách"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_bold"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 android:layout_marginTop="16dp"/>
 
             <EditText

@@ -40,6 +40,12 @@
             android:title="Quản lý độc giả" />
 
         <item
+            android:id="@+id/nav_management_supplier"
+            android:fontFamily="@font/poppins_regular"
+            android:icon="@drawable/baseline_connect_without_contact_24"
+            android:title="Quản lý nhà cung cấp" />
+
+        <item
             android:id="@+id/nav_management_account"
             android:fontFamily="@font/poppins_regular"
             android:icon="@drawable/baseline_manage_accounts_24"

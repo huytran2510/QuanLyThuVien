@@ -148,7 +148,8 @@
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginBottom="50dp"
-            app:srcCompat="@drawable/baseline_arrow_back_24" />
+            app:srcCompat="@drawable/baseline_arrow_back_24"
+            android:backgroundTint="@color/colorFab"/>
     </LinearLayout>
 
 </ScrollView>

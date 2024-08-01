@@ -51,7 +51,7 @@
             android:drawableStart="@drawable/baseline_person_24"
             android:drawablePadding="10dp"
             android:fontFamily="@font/poppins_regular"
-            android:hint="Username"
+            android:hint="Tên đăng nhập"
             android:inputType="textPersonName"
             android:padding="10dp"
             android:textColor="@color/primary_text" />
@@ -65,7 +65,7 @@
             android:drawableStart="@drawable/baseline_lock_outline_24"
             android:drawablePadding="10dp"
             android:fontFamily="@font/poppins_regular"
-            android:hint="Password"
+            android:hint="Mật khẩu"
             android:inputType="textPassword"
             android:padding="10dp"
             android:textColor="@color/primary_text" />
