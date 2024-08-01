@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.ufm.project.Adapter.Book
 import com.ufm.project.Adapter.BookAdapter
@@ -42,16 +43,27 @@ class ManagementBookFragment : Fragment() {
             startActivity(intent)
         }
 
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                loadBooksFromDatabase(query ?: "")
+                return true
+            }
+        })
+
 
         // Load books from database
-        loadBooksFromDatabase()
+        loadBooksFromDatabase("")
 
         return root
     }
 
     override fun onResume() {
         super.onResume()
-        loadBooksFromDatabase()
+        loadBooksFromDatabase("")
     }
 
     override fun onDestroyView() {
@@ -59,13 +71,16 @@ class ManagementBookFragment : Fragment() {
         _binding = null
     }
 
-    private fun loadBooksFromDatabase() {
+    private fun loadBooksFromDatabase(query: String) {
         val db = dbHelper.readableDatabase
+        val selection = if (query.isEmpty()) null else "${DatabaseHelper.COLUMN_BOOK_TENSACH} LIKE ?"
+        val selectionArgs = if (query.isEmpty()) null else arrayOf("%$query%")
+
         val cursor = db.query(
             DatabaseHelper.TABLE_BOOK_NAME,  // Replace with your table name
             null,     // All columns
-            null,     // No WHERE clause
-            null,     // No WHERE arguments
+            selection,     // WHERE clause
+            selectionArgs, // WHERE arguments
             null,     // No GROUP BY
             null,     // No HAVING
             null      // No ORDER BY
@@ -73,18 +88,12 @@ class ManagementBookFragment : Fragment() {
 
         books.clear()
         while (cursor.moveToNext()) {
-            val idBook = (cursor.getColumnIndex(DatabaseHelper.COLUMN_BOOK_MASACH))
-            val title = (cursor.getColumnIndex(DatabaseHelper.COLUMN_BOOK_TENSACH))
-            val author = (cursor.getColumnIndex(DatabaseHelper.COLUMN_BOOK_TACGIA))
-            val quantity = (cursor.getColumnIndex(DatabaseHelper.COLUMN_BOOK_SOLUONG))
-            val img= (cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_ANH))
-            if (title != -1 && author != -1) {
-                val bookId = cursor.getInt(idBook)
-                val bookTitle = cursor.getString(title)
-                val bookAuthor = cursor.getString(author)
-                val bookQuantity = cursor.getInt(quantity)
-                books.add(Book(bookId,bookTitle, bookAuthor, bookQuantity))
-            }
+            val idBook = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_MASACH))
+            val title = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_TENSACH))
+            val author = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_TACGIA))
+            val quantity = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BOOK_SOLUONG))
+
+            books.add(Book(idBook, title, author, quantity))
         }
         cursor.close()
         bookAdapter.notifyDataSetChanged()
